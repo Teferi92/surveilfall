@@ -1,0 +1,42 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
+android {
+    compileSdkVersion 28
+
+    defaultConfig {
+        minSdkVersion 21
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+androidExtensions {
+    experimental = true
+}
+
+dependencies {
+    // Dependency modules
+    api project(':data')
+    api "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+
+    // Google Support Annotations
+    api "androidx.annotation:annotation:1.0.1"
+
+    // Google-Dagger dependencies
+    annotationProcessor "com.google.dagger:dagger-compiler:2.9"
+    api "com.google.dagger:dagger:2.9"
+}
+
+repositories {
+    mavenCentral()
+}
