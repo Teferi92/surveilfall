@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Surveilfall</string>
+    <string name="search">Search</string>
+    <string name="sets">Sets</string>
+    <string name="artists">Artists</string>
+    <string name="settings">Settings</string>
 </resources>

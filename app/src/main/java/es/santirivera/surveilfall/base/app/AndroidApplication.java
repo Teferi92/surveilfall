@@ -10,7 +10,6 @@ public class AndroidApplication extends Application {
 
     private ApplicationComponent component;
 
-
     @Override
     public void onCreate() {
         super.onCreate();

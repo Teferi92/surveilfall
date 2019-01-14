@@ -2,6 +2,7 @@ package es.santirivera.surveilfall.base.presenter;
 
 import android.content.Context;
 import android.os.Bundle;
+
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import butterknife.ButterKnife;
@@ -32,9 +33,11 @@ public abstract class BasePresenter<ListenerType extends BaseNavigation> extends
 
     protected Context context;
 
-    @Inject protected UseCaseHandler useCaseHandler;
+    @Inject
+    protected UseCaseHandler useCaseHandler;
 
-    @Inject protected UseCaseProvider useCaseProvider;
+    @Inject
+    protected UseCaseProvider useCaseProvider;
 
     protected BaseView baseView;
 
@@ -92,6 +95,7 @@ public abstract class BasePresenter<ListenerType extends BaseNavigation> extends
         super.onActivityCreated(savedInstanceState);
         loadViewData();
     }
+
     /**
      * @param viewCreatedListener the viewCreatedListener to set
      */
@@ -110,4 +114,6 @@ public abstract class BasePresenter<ListenerType extends BaseNavigation> extends
     protected abstract BaseView instanceView();
 
     protected abstract void loadViewData();
+
+    public abstract String getTitleForActivity();
 }

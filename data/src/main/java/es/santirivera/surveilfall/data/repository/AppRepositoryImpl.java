@@ -2,9 +2,15 @@ package es.santirivera.surveilfall.data.repository;
 
 import android.content.Context;
 
-import java.io.IOException;
+import org.jetbrains.annotations.NotNull;
 
+import java.io.IOException;
+import java.util.List;
+
+import androidx.annotation.NonNull;
 import es.santirivera.surveilfall.data.exceptions.WSNetworkException;
+import es.santirivera.surveilfall.data.model.CardList;
+import es.santirivera.surveilfall.data.model.Catalog;
 import es.santirivera.surveilfall.data.model.SetList;
 import es.santirivera.surveilfall.data.net.NetworkManager;
 import es.santirivera.surveilfall.data.net.WServices;
@@ -31,6 +37,7 @@ public class AppRepositoryImpl implements AppRepository {
         return getClass().getSimpleName();
     }
 
+    @NonNull
     @Override
     public RepositoryResponse<SetList> getSetList() {
         Call<SetList> call = wServices.getSetList();
@@ -48,5 +55,38 @@ public class AppRepositoryImpl implements AppRepository {
 
     private void checkConnectivity() {
         networkManager.checkConnectivity();
+    }
+
+    @NotNull
+    @Override
+    public RepositoryResponse<List<String>> getArtistNames() {
+        Call<Catalog> call = wServices.getArtistNames();
+        try {
+            Response<Catalog> response = call.execute();
+            if (response.isSuccessful()) {
+                return new NetRepositoryResponse<>(response.body().getData());
+            } else {
+                return new NetErrorResponse<>();
+            }
+        } catch (IOException e) {
+            throw new WSNetworkException(e);
+        }
+    }
+
+
+    @NotNull
+    @Override
+    public RepositoryResponse<CardList> cardsForQuery(@NotNull String artist, int page, String printsToInclude) {
+        Call<CardList> call = wServices.cardsForQuery(artist, page, printsToInclude);
+        try {
+            Response<CardList> response = call.execute();
+            if (response.isSuccessful()) {
+                return new NetRepositoryResponse<>(response.body());
+            } else {
+                return new NetErrorResponse<>();
+            }
+        } catch (IOException e) {
+            throw new WSNetworkException(e);
+        }
     }
 }

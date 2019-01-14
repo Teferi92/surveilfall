@@ -17,7 +17,7 @@ public abstract class UseCase<Request, Result, Err extends StringErrorOutput> {
         return getClass().getSimpleName();
     }
 
-    void setRequestValues(Request requestValues) {
+    public void setRequestValues(Request requestValues) {
         mRequestValues = requestValues;
     }
 

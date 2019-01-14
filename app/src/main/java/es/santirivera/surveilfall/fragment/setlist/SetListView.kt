@@ -16,7 +16,7 @@ class SetListView(baseActivity: BaseActivity, presenter: SetListListener) : Base
     private var recyclerView: RecyclerView? = null
 
     override fun getContentView(): Int {
-        return R.layout.fragment_player_list
+        return R.layout.fragment_simple_list
     }
 
     override fun prepareView() {
@@ -27,7 +27,7 @@ class SetListView(baseActivity: BaseActivity, presenter: SetListListener) : Base
     fun onSetsReceived(sets: List<Set>) {
         val parentSets = ArrayList<Set>()
         for (set in sets) {
-            if (set.parentSetCode.length == 0) {
+            if (set.parentSetCode.isEmpty()) {
                 parentSets.add(set)
             }
         }

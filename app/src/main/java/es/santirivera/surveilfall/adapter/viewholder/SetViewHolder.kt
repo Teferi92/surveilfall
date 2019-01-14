@@ -28,5 +28,4 @@ class SetViewHolder(itemView: View, val listener: OnSetClickedListener) : Recycl
         requestBuilder.load(set.iconUri).into(imageViewIcon)
     }
 
-
 }

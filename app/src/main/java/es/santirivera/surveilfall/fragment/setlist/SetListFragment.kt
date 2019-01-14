@@ -1,5 +1,6 @@
 package es.santirivera.surveilfall.fragment.setlist
 
+import es.santirivera.surveilfall.R
 import es.santirivera.surveilfall.activity.MainActivity
 import es.santirivera.surveilfall.base.activity.BaseActivity
 import es.santirivera.surveilfall.base.presenter.BasePresenter
@@ -9,6 +10,7 @@ import es.santirivera.surveilfall.domain.use_cases.GetSetsUseCase
 import es.santirivera.surveilfall.domain.use_cases.base.UseCasePartialCallback
 
 class SetListFragment : BasePresenter<SetListListener>(), SetListListener {
+
 
     private var view: SetListView? = null
     private val setCallback: SetCallback = SetCallback()
@@ -24,6 +26,10 @@ class SetListFragment : BasePresenter<SetListListener>(), SetListListener {
 
     override fun onSetClicked(set: Set) {
         (activity as MainActivity).onSetClicked(set)
+    }
+
+    override fun getTitleForActivity(): String {
+        return getString(R.string.sets)
     }
 
     private inner class SetCallback : UseCasePartialCallback<GetSetsUseCase.OkOutput, GetSetsUseCase.ErrorOutput>() {
