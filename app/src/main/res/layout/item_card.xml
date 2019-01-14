@@ -9,7 +9,7 @@
         android:id="@+id/imageViewIcon"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_margin="8dp"
+        android:layout_margin="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintDimensionRatio="H,672:936"
         app:layout_constraintEnd_toEndOf="parent"

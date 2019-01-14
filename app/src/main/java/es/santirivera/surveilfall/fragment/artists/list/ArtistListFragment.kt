@@ -11,7 +11,6 @@ import es.santirivera.surveilfall.domain.use_cases.base.UseCasePartialCallback
 
 class ArtistListFragment : BasePresenter<ArtistListListener>(), ArtistListListener {
 
-
     private var view: ArtistListView? = null
 
     override fun instanceView(): BaseView<*> {

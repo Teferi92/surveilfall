@@ -1,5 +1,6 @@
 package es.santirivera.surveilfall.data.net
 
+import android.content.Context
 import es.santirivera.surveilfall.data.exceptions.NetworkUnavailableException
 
 
@@ -9,4 +10,6 @@ interface NetworkManager {
 
     @Throws(NetworkUnavailableException::class)
     fun checkWifi(): Boolean
+
+    fun isInternetAvailable(context: Context): Boolean
 }

@@ -12,13 +12,13 @@ import es.santirivera.surveilfall.fragment.setlist.CardListView
 
 class CardListFragment : BasePresenter<CardListListener>(), CardListListener {
 
-
     private var view: CardListView? = null
     private val cardCallback: CardListCallback = CardListCallback()
     var query: String? = ""
     var fragmentTitle: String? = ""
 
-    private var page = 1;
+    private var page = 1
+    private var lastAskedPage = 1
 
     override fun instanceView(): BaseView<*> {
         view = CardListView(activity as BaseActivity, this)
@@ -40,7 +40,10 @@ class CardListFragment : BasePresenter<CardListListener>(), CardListListener {
     }
 
     override fun onBottomReached(currentPage: Int) {
-
+        if (page > lastAskedPage) {
+            loadViewData()
+            lastAskedPage++
+        }
     }
 
     private inner class CardListCallback : UseCasePartialCallback<GetCardsForQueryUseCase.OkOutput, GetCardsForQueryUseCase.ErrorOutput>() {

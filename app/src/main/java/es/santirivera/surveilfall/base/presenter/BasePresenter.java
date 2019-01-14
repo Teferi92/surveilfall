@@ -1,5 +1,6 @@
 package es.santirivera.surveilfall.base.presenter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 
@@ -60,6 +61,16 @@ public abstract class BasePresenter<ListenerType extends BaseNavigation> extends
         }
 
         super.onAttach(context);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        String title = getTitleForActivity();
+        Activity activity = getActivity();
+        if (title != null && title.length() > 0 && activity != null) {
+            activity.setTitle(title);
+        }
     }
 
     @Override

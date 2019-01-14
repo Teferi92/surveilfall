@@ -35,10 +35,10 @@ class MainActivity : BaseActivity(),
 
     override fun onDrawerItemClicked(item: DrawerItem) {
         when (item) {
-            DrawerItem.SEARCH -> TODO()
+            DrawerItem.SEARCH -> openSets()
             DrawerItem.SETS -> openSets()
             DrawerItem.ARTISTS -> openArtists()
-            DrawerItem.SETTINGS -> TODO()
+            DrawerItem.SETTINGS -> openSets()
         }
         drawerLayout?.closeDrawer(GravityCompat.START)
     }
@@ -66,10 +66,7 @@ class MainActivity : BaseActivity(),
 
         drawerList!!.layoutManager = LinearLayoutManager(this)
         drawerList!!.adapter = LeftDrawerAdapter(this)
-    }
 
-    override fun onPostCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
-        super.onPostCreate(savedInstanceState, persistentState)
         openArtists()
     }
 
@@ -77,13 +74,6 @@ class MainActivity : BaseActivity(),
         return if (drawerToggle!!.onOptionsItemSelected(item)) {
             true
         } else super.onOptionsItemSelected(item)
-    }
-
-    override fun onAttachFragment(fragment: Fragment) {
-        super.onAttachFragment(fragment)
-        if (fragment is BasePresenter<*>) {
-            title = fragment.titleForActivity
-        }
     }
 
     override fun onSetClicked(set: Set) {
@@ -124,10 +114,12 @@ class MainActivity : BaseActivity(),
     private fun executeQuery(query: String, title: String) {
         val fragment = CardListFragment()
         fragment.query = query
-        fragment.fragmentTitle = title;
+        fragment.fragmentTitle = title
         supportFragmentManager
                 .beginTransaction()
+                .addToBackStack("query")
                 .replace(R.id.content, fragment)
                 .commit()
     }
+
 }

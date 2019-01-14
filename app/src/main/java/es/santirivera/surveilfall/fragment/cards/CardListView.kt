@@ -27,7 +27,7 @@ class CardListView(baseActivity: BaseActivity, presenter: CardListListener) : Ba
 
     override fun prepareView() {
         recyclerView = mainView.findViewById(R.id.recyclerView)
-        val layoutManager = GridLayoutManager(baseActivity, 3)
+        val layoutManager = GridLayoutManager(baseActivity, 2)
         recyclerView!!.layoutManager = layoutManager
         recyclerView!!.adapter = cardAdapter
         recyclerView!!.addOnScrollListener(object : RecyclerView.OnScrollListener() {

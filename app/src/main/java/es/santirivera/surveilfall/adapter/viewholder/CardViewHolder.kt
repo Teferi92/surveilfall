@@ -7,7 +7,7 @@ import com.bumptech.glide.Glide
 import es.santirivera.surveilfall.R
 import es.santirivera.surveilfall.data.model.Card
 
-class CardViewHolder(itemView: View, val listener: OnCardClickedListener) : RecyclerView.ViewHolder(itemView) {
+class CardViewHolder(itemView: View, private val listener: OnCardClickedListener) : RecyclerView.ViewHolder(itemView) {
 
     interface OnCardClickedListener {
         fun onCardClicked(card: Card)
@@ -20,7 +20,7 @@ class CardViewHolder(itemView: View, val listener: OnCardClickedListener) : Recy
         itemView.setOnClickListener {
             listener.onCardClicked(card)
         }
-        requestBuilder.load(card.imageUris.normal).into(imageViewIcon)
+        requestBuilder.load(card.imageUris?.large).into(imageViewIcon)
     }
 
 }

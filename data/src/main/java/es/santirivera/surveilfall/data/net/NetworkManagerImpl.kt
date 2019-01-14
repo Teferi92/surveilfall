@@ -11,7 +11,7 @@ class NetworkManagerImpl(private val context: Context) : NetworkManager {
     /**
      * Checks if there is any active network
      */
-    private fun isInternetAvailable(context: Context): Boolean {
+    override fun isInternetAvailable(context: Context): Boolean {
         val activeNetwork = getActiveNetwork(context)
         return activeNetwork != null && activeNetwork.isConnectedOrConnecting
     }
