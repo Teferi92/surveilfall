@@ -5,8 +5,8 @@ import es.santirivera.surveilfall.activity.MainActivity
 import es.santirivera.surveilfall.base.activity.BaseActivity
 import es.santirivera.surveilfall.base.presenter.BasePresenter
 import es.santirivera.surveilfall.base.view.BaseView
-import es.santirivera.surveilfall.domain.use_cases.GetArtistNamesUseCase
-import es.santirivera.surveilfall.domain.use_cases.base.UseCasePartialCallback
+import es.santirivera.surveilfall.domain.usecases.GetArtistNamesUseCase
+import es.santirivera.surveilfall.domain.usecases.base.UseCasePartialCallback
 
 
 class ArtistListFragment : BasePresenter<ArtistListListener>(), ArtistListListener {
@@ -27,7 +27,7 @@ class ArtistListFragment : BasePresenter<ArtistListListener>(), ArtistListListen
     }
 
     override fun getTitleForActivity(): String {
-        return getString(R.string.artists);
+        return getString(R.string.artists)
     }
 
     private inner class ArtistCallback : UseCasePartialCallback<GetArtistNamesUseCase.OkOutput, GetArtistNamesUseCase.ErrorOutput>() {

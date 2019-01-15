@@ -9,6 +9,7 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 import es.santirivera.surveilfall.data.exceptions.WSNetworkException;
+import es.santirivera.surveilfall.data.model.Card;
 import es.santirivera.surveilfall.data.model.CardList;
 import es.santirivera.surveilfall.data.model.Catalog;
 import es.santirivera.surveilfall.data.model.SetList;
@@ -80,6 +81,21 @@ public class AppRepositoryImpl implements AppRepository {
         Call<CardList> call = wServices.cardsForQuery(artist, page, printsToInclude);
         try {
             Response<CardList> response = call.execute();
+            if (response.isSuccessful()) {
+                return new NetRepositoryResponse<>(response.body());
+            } else {
+                return new NetErrorResponse<>();
+            }
+        } catch (IOException e) {
+            throw new WSNetworkException(e);
+        }
+    }
+
+    @Override
+    public RepositoryResponse<Card> cardInSet(@NotNull String setCode, int cardInSet) {
+        Call<Card> call = wServices.cardInSet(setCode, cardInSet);
+        try {
+            Response<Card> response = call.execute();
             if (response.isSuccessful()) {
                 return new NetRepositoryResponse<>(response.body());
             } else {

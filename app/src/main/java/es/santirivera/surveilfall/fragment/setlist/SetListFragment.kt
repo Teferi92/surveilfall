@@ -6,8 +6,8 @@ import es.santirivera.surveilfall.base.activity.BaseActivity
 import es.santirivera.surveilfall.base.presenter.BasePresenter
 import es.santirivera.surveilfall.base.view.BaseView
 import es.santirivera.surveilfall.data.model.Set
-import es.santirivera.surveilfall.domain.use_cases.GetSetsUseCase
-import es.santirivera.surveilfall.domain.use_cases.base.UseCasePartialCallback
+import es.santirivera.surveilfall.domain.usecases.GetSetsUseCase
+import es.santirivera.surveilfall.domain.usecases.base.UseCasePartialCallback
 
 class SetListFragment : BasePresenter<SetListListener>(), SetListListener {
 

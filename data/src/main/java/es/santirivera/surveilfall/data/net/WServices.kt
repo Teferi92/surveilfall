@@ -1,5 +1,6 @@
 package es.santirivera.surveilfall.data.net
 
+import es.santirivera.surveilfall.data.model.Card
 import es.santirivera.surveilfall.data.model.CardList
 import es.santirivera.surveilfall.data.model.Catalog
 import es.santirivera.surveilfall.data.model.SetList
@@ -18,5 +19,8 @@ interface WServices {
 
     @GET("/cards/search")
     fun cardsForQuery(@Query("q") artist: String, @Query("page") page: Int, @Query("unique") prints: String): Call<CardList>
+
+    @GET("/cards/{setCode}/{numberInSet}")
+    fun cardInSet(@Path("setCode") setCode: String, @Path("numberInSet") numberInSet: Int): Call<Card>
 
 }

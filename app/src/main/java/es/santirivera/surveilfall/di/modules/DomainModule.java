@@ -5,10 +5,10 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 import es.santirivera.surveilfall.data.repository.AppRepository;
-import es.santirivera.surveilfall.domain.use_cases.base.UseCaseHandler;
-import es.santirivera.surveilfall.domain.use_cases.base.UseCaseScheduler;
-import es.santirivera.surveilfall.domain.use_cases.base.UseCaseThreadPoolScheduler;
-import es.santirivera.surveilfall.domain.use_cases.providers.UseCaseProvider;
+import es.santirivera.surveilfall.domain.usecases.base.UseCaseHandler;
+import es.santirivera.surveilfall.domain.usecases.base.UseCaseScheduler;
+import es.santirivera.surveilfall.domain.usecases.base.UseCaseThreadPoolScheduler;
+import es.santirivera.surveilfall.domain.usecases.providers.UseCaseProvider;
 
 @Module
 public class DomainModule {

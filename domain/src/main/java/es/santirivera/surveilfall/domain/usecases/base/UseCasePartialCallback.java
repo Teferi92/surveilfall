@@ -1,4 +1,4 @@
-package es.santirivera.surveilfall.domain.use_cases.base;
+package es.santirivera.surveilfall.domain.usecases.base;
 
 public abstract class UseCasePartialCallback<Ok, Error extends StringErrorOutput> implements UseCaseTaggedCallback<Ok, Error> {
 

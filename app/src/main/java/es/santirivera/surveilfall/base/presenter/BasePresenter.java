@@ -10,8 +10,8 @@ import butterknife.ButterKnife;
 import es.santirivera.surveilfall.base.activity.BaseActivity;
 import es.santirivera.surveilfall.base.interfaces.BaseNavigation;
 import es.santirivera.surveilfall.base.view.BaseView;
-import es.santirivera.surveilfall.domain.use_cases.base.UseCaseHandler;
-import es.santirivera.surveilfall.domain.use_cases.providers.UseCaseProvider;
+import es.santirivera.surveilfall.domain.usecases.base.UseCaseHandler;
+import es.santirivera.surveilfall.domain.usecases.providers.UseCaseProvider;
 
 import android.view.LayoutInflater;
 import android.view.View;

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package es.santirivera.surveilfall.domain.use_cases.base;
+package es.santirivera.surveilfall.domain.usecases.base;
 
 import java.lang.ref.WeakReference;
 import java.util.concurrent.Future;

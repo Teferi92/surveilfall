@@ -1,4 +1,4 @@
-package es.santirivera.surveilfall.domain.use_cases.base;
+package es.santirivera.surveilfall.domain.usecases.base;
 
 import androidx.annotation.NonNull;
 

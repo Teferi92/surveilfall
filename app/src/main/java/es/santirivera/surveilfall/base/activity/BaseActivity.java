@@ -12,8 +12,8 @@ import es.santirivera.surveilfall.base.app.AndroidApplication;
 import es.santirivera.surveilfall.di.components.ActivityComponent;
 import es.santirivera.surveilfall.di.components.DaggerActivityComponent;
 import es.santirivera.surveilfall.di.modules.ApplicationModule;
-import es.santirivera.surveilfall.domain.use_cases.base.UseCaseHandler;
-import es.santirivera.surveilfall.domain.use_cases.providers.UseCaseProvider;
+import es.santirivera.surveilfall.domain.usecases.base.UseCaseHandler;
+import es.santirivera.surveilfall.domain.usecases.providers.UseCaseProvider;
 
 public abstract class BaseActivity extends AppCompatActivity {
 

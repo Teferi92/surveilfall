@@ -86,7 +86,9 @@ data class Card(
         @SerializedName("oversized")
         val oversized: Boolean = false,
         @SerializedName("story_spotlight")
-        val storySpotlight: Boolean = false) {
+        val storySpotlight: Boolean = false,
+        @SerializedName("card_faces")
+        val cardFaces: List<CardFace>?) {
 
     override fun equals(other: Any?): Boolean {
         return if (other is Card) {

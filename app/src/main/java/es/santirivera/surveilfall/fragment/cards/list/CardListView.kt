@@ -1,11 +1,9 @@
 package es.santirivera.surveilfall.fragment.setlist
 
-import android.util.Log
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import es.santirivera.surveilfall.R
 import es.santirivera.surveilfall.adapter.CardAdapter
-import es.santirivera.surveilfall.adapter.SetAdapter
 import es.santirivera.surveilfall.adapter.viewholder.CardViewHolder
 import es.santirivera.surveilfall.base.activity.BaseActivity
 import es.santirivera.surveilfall.base.view.BaseView
@@ -16,7 +14,6 @@ import java.util.*
 class CardListView(baseActivity: BaseActivity, presenter: CardListListener) : BaseView<CardListListener>(baseActivity, presenter), CardViewHolder.OnCardClickedListener {
 
     private var recyclerView: RecyclerView? = null
-    private val cardList = ArrayList<Card>()
     private val cardAdapter = CardAdapter(this)
 
     private var currentPage: Int = 0;

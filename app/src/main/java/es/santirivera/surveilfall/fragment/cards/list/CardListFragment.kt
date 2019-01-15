@@ -5,8 +5,8 @@ import es.santirivera.surveilfall.base.activity.BaseActivity
 import es.santirivera.surveilfall.base.presenter.BasePresenter
 import es.santirivera.surveilfall.base.view.BaseView
 import es.santirivera.surveilfall.data.model.Card
-import es.santirivera.surveilfall.domain.use_cases.GetCardsForQueryUseCase
-import es.santirivera.surveilfall.domain.use_cases.base.UseCasePartialCallback
+import es.santirivera.surveilfall.domain.usecases.GetCardsForQueryUseCase
+import es.santirivera.surveilfall.domain.usecases.base.UseCasePartialCallback
 import es.santirivera.surveilfall.fragment.setlist.CardListListener
 import es.santirivera.surveilfall.fragment.setlist.CardListView
 
