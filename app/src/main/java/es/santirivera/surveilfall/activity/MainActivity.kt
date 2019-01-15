@@ -94,6 +94,7 @@ class MainActivity : BaseActivity(),
 
 
     private fun openSets() {
+        supportFragmentManager.popBackStack()
         val fragment = SetListFragment()
         supportFragmentManager
                 .beginTransaction()
@@ -103,6 +104,7 @@ class MainActivity : BaseActivity(),
     }
 
     private fun openArtists() {
+        supportFragmentManager.popBackStack()
         val fragment = ArtistListFragment()
         supportFragmentManager
                 .beginTransaction()
