@@ -25,16 +25,7 @@ class SetListView(baseActivity: BaseActivity, presenter: SetListListener) : Base
     }
 
     fun onSetsReceived(sets: List<Set>) {
-        val parentSets = ArrayList<Set>()
-        for (set in sets) {
-            if (set.parentSetCode.isEmpty()) {
-                parentSets.add(set)
-            }
-        }
-
-        val adapter = SetAdapter(parentSets, this)
-        recyclerView!!.adapter = adapter
-
+        recyclerView!!.adapter = SetAdapter(sets, this)
     }
 
     override fun onSetClicked(set: Set) {

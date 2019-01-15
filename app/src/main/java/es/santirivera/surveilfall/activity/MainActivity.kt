@@ -31,8 +31,7 @@ class MainActivity : BaseActivity(),
         ArtistListListener,
         CardListListener,
         DrawerViewHolder.OnDrawerItemClickedListener {
-
-
+    
     override fun onDrawerItemClicked(item: DrawerItem) {
         when (item) {
             DrawerItem.SEARCH -> openSets()
@@ -77,6 +76,7 @@ class MainActivity : BaseActivity(),
     }
 
     override fun onSetClicked(set: Set) {
+        executeQuery("e:${set.code}", set.name)
         Toast.makeText(this, set.name, Toast.LENGTH_SHORT).show()
     }
 
