@@ -2,7 +2,6 @@ package es.santirivera.surveilfall.activity
 
 
 import android.view.MenuItem
-import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
@@ -19,6 +18,7 @@ import es.santirivera.surveilfall.fragment.artists.list.ArtistListFragment
 import es.santirivera.surveilfall.fragment.artists.list.ArtistListListener
 import es.santirivera.surveilfall.fragment.cards.CardListFragment
 import es.santirivera.surveilfall.fragment.cards.detail.CardDetailFragment
+import es.santirivera.surveilfall.fragment.cards.detail.CardDetailListener
 import es.santirivera.surveilfall.fragment.setlist.CardListListener
 import es.santirivera.surveilfall.fragment.setlist.SetListFragment
 import es.santirivera.surveilfall.fragment.setlist.SetListListener
@@ -27,7 +27,9 @@ class MainActivity : BaseActivity(),
         SetListListener,
         ArtistListListener,
         CardListListener,
+        CardDetailListener,
         DrawerViewHolder.OnDrawerItemClickedListener {
+
 
     override fun onDrawerItemClicked(item: DrawerItem) {
         when (item) {
@@ -63,25 +65,7 @@ class MainActivity : BaseActivity(),
         drawerList!!.layoutManager = LinearLayoutManager(this)
         drawerList!!.adapter = LeftDrawerAdapter(this)
 
-        if (intent == null || intent.data == null) {
-            openArtists()
-        } else {
-            val uri = intent.data!!
-            val path = uri.path!!
-            when {
-                path == "/search" -> executeQuery(uri.getQueryParameter("q")!!, "Query from URL", false)
-                path.startsWith("/card") -> {
-                    try {
-                        executeCardQuery(uri.pathSegments[1], uri.pathSegments[2].toInt(), false)
-                    } catch (e: Exception) {
-                        // Malformed URI
-                        Toast.makeText(this, "Malformed scryfall URI", Toast.LENGTH_SHORT).show()
-                        finish()
-                    }
-                }
-                else -> openArtists()
-            }
-        }
+        openSets()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -99,11 +83,31 @@ class MainActivity : BaseActivity(),
     }
 
     override fun onCardClicked(card: Card) {
-        Toast.makeText(this, card.name, Toast.LENGTH_SHORT).show()
+        openCard(card, true)
     }
 
     override fun onBottomReached(currentPage: Int) {
         // Never called
+    }
+
+    override fun onDownloadRequested() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onResolutionSelected() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onRulingsRequested() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onShareRequested() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onAddToFavoritesRequested() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
 
@@ -141,13 +145,12 @@ class MainActivity : BaseActivity(),
         transaction.commit()
     }
 
-    private fun executeCardQuery(setCode: String, cardInSet: Int, addToBackStack: Boolean) {
+    private fun openCard(card: Card, addToBackStack: Boolean) {
         val fragment = CardDetailFragment()
-        fragment.setCode = setCode
-        fragment.cardInSet = cardInSet
+        fragment.card = card
         var transaction = supportFragmentManager.beginTransaction()
         if (addToBackStack) {
-            transaction = transaction.addToBackStack("cardQuery")
+            transaction = transaction.addToBackStack("cardDetail")
         } else {
             transaction.disallowAddToBackStack()
         }

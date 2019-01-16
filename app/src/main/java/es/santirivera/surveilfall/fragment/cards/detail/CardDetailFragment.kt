@@ -1,5 +1,6 @@
 package es.santirivera.surveilfall.fragment.cards.detail
 
+import es.santirivera.surveilfall.activity.MainActivity
 import es.santirivera.surveilfall.base.activity.BaseActivity
 import es.santirivera.surveilfall.base.presenter.BasePresenter
 import es.santirivera.surveilfall.base.view.BaseView
@@ -76,5 +77,9 @@ class CardDetailFragment : BasePresenter<CardDetailListener>(), CardDetailListen
 
     override fun onAddToFavoritesRequested() {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onArtistClicked(artist:String) {
+        (activity as MainActivity).onArtistClicked(artist)
     }
 }

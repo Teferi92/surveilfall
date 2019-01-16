@@ -3,7 +3,7 @@ package es.santirivera.surveilfall.data.model
 import com.google.gson.annotations.SerializedName
 
 data class Card(
-        @SerializedName("oracleText")
+        @SerializedName("oracle_text")
         val oracleText: String = "",
         @SerializedName("prints_search_uri")
         val printsSearchUri: String = "",
@@ -14,16 +14,20 @@ data class Card(
         @SerializedName("scryfall_uri")
         val scryfallUri: String = "",
         @SerializedName("mana_cost")
-        val manaCost: String = "",
+        val manaCost: String? = "",
         @SerializedName("id")
         val id: String = "",
         @SerializedName("scryfall_set_uri")
         val scryfallSetUri: String = "",
         @SerializedName("loyalty")
-        val loyalty: String = "",
+        val loyalty: String? = "",
+        @SerializedName("power")
+        val power: String? = "",
+        @SerializedName("toughness")
+        val toughness: String? = "",
         @SerializedName("frame_effect")
         val frameEffect: String = "",
-        @SerializedName("type_lyne")
+        @SerializedName("type_line")
         val typeLine: String = "",
         @SerializedName("color_identity")
         val colorIdentity: List<String>?,
@@ -88,7 +92,9 @@ data class Card(
         @SerializedName("story_spotlight")
         val storySpotlight: Boolean = false,
         @SerializedName("card_faces")
-        val cardFaces: List<CardFace>?) {
+        val cardFaces: List<CardFace>?,
+        @SerializedName("flavor_text")
+        val flavorText: String? = "") {
 
     override fun equals(other: Any?): Boolean {
         return if (other is Card) {

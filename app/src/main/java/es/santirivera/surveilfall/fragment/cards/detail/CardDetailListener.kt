@@ -9,5 +9,6 @@ interface CardDetailListener : BaseNavigation {
     fun onRulingsRequested()
     fun onShareRequested()
     fun onAddToFavoritesRequested()
+    fun onArtistClicked(artist: String)
 
 }
