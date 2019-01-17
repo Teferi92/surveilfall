@@ -6,5 +6,14 @@
     <color name="secondaryColor">#263238</color>
     <color name="secondaryLightColor">#4f5b62</color>
     <color name="secondaryDarkColor">#000a12</color>
+    <color name="textColorDark">#000000</color>
     <color name="textColor">#ffffff</color>
+
+    <!-- Legality -->
+    <color name="banned">#CC7D83</color>
+    <color name="restricted">#7FA6B6</color>
+    <color name="not_legal">#AEAEAE</color>
+    <color name="legal">#75986E</color>
+
+
 </resources>
