@@ -20,7 +20,7 @@ class CardViewHolder(itemView: View, private val listener: OnCardClickedListener
         itemView.setOnClickListener {
             listener.onCardClicked(card)
         }
-        requestBuilder.load(card.imageUris?.large).into(imageViewIcon)
+        requestBuilder.load(card.imageUris?.normal).into(imageViewIcon)
     }
 
 }
