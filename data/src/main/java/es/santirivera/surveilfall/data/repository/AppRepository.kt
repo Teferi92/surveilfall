@@ -18,5 +18,7 @@ interface AppRepository {
 
     fun cardInSet(setCode: String, cardInSet: Int): RepositoryResponse<Card>
 
+    fun randomCard(query: String): RepositoryResponse<Card>
+
 }
 

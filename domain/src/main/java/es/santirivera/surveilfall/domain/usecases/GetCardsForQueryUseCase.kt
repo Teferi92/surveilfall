@@ -18,7 +18,7 @@ class GetCardsForQueryUseCase(private val appRepository: AppRepository) : UseCas
             val list = response.responseData
             UseCaseResponse.ok(OkOutput(list!!))
         } else {
-            UseCaseResponse.error(ErrorOutput("Error retrieving sets from Scryfall"))
+            UseCaseResponse.error(ErrorOutput("Error retrieving query from Scryfall"))
         }
     }
 

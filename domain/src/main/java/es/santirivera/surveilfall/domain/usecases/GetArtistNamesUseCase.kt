@@ -13,7 +13,7 @@ class GetArtistNamesUseCase(private val appRepository: AppRepository) : UseCase<
             val list = response.responseData
             UseCaseResponse.ok(OkOutput(list!!))
         } else {
-            UseCaseResponse.error(ErrorOutput("Error retrieving sets from Scryfall"))
+            UseCaseResponse.error(ErrorOutput("Error retrieving artists from Scryfall"))
         }
     }
 

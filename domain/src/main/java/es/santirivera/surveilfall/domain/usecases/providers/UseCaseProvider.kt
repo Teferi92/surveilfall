@@ -1,10 +1,7 @@
 package es.santirivera.surveilfall.domain.usecases.providers
 
 import es.santirivera.surveilfall.data.repository.AppRepository
-import es.santirivera.surveilfall.domain.usecases.GetArtistNamesUseCase
-import es.santirivera.surveilfall.domain.usecases.GetCardInSetUseCase
-import es.santirivera.surveilfall.domain.usecases.GetCardsForQueryUseCase
-import es.santirivera.surveilfall.domain.usecases.GetSetsUseCase
+import es.santirivera.surveilfall.domain.usecases.*
 
 class UseCaseProvider(private val appRepository: AppRepository) {
 
@@ -19,4 +16,7 @@ class UseCaseProvider(private val appRepository: AppRepository) {
 
     val getCardInSetUseCase: GetCardInSetUseCase
         get() = GetCardInSetUseCase(appRepository)
+
+    val getRandomCardUseCase: GetRandomCardUseCase
+        get() = GetRandomCardUseCase(appRepository)
 }

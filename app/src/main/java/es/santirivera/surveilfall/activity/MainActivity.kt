@@ -1,7 +1,10 @@
 package es.santirivera.surveilfall.activity
 
 
+import android.content.Context
 import android.view.MenuItem
+import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
@@ -19,6 +22,8 @@ import es.santirivera.surveilfall.fragment.artists.list.ArtistListListener
 import es.santirivera.surveilfall.fragment.cards.CardListFragment
 import es.santirivera.surveilfall.fragment.cards.detail.CardDetailFragment
 import es.santirivera.surveilfall.fragment.cards.detail.CardDetailListener
+import es.santirivera.surveilfall.fragment.search.SearchFragment
+import es.santirivera.surveilfall.fragment.search.SearchListener
 import es.santirivera.surveilfall.fragment.setlist.CardListListener
 import es.santirivera.surveilfall.fragment.setlist.SetListFragment
 import es.santirivera.surveilfall.fragment.setlist.SetListListener
@@ -28,12 +33,13 @@ class MainActivity : BaseActivity(),
         ArtistListListener,
         CardListListener,
         CardDetailListener,
+        SearchListener,
         DrawerViewHolder.OnDrawerItemClickedListener {
 
 
     override fun onDrawerItemClicked(item: DrawerItem) {
         when (item) {
-            DrawerItem.SEARCH -> openSets()
+            DrawerItem.SEARCH -> openSearch()
             DrawerItem.SETS -> openSets()
             DrawerItem.ARTISTS -> openArtists()
             DrawerItem.SETTINGS -> openSets()
@@ -65,7 +71,7 @@ class MainActivity : BaseActivity(),
         drawerList!!.layoutManager = LinearLayoutManager(this)
         drawerList!!.adapter = LeftDrawerAdapter(this)
 
-        executeQuery("Why", "test", false)
+        openSearch()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -110,6 +116,24 @@ class MainActivity : BaseActivity(),
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
+    override fun onSearchClicked(query: String) {
+        hideKeyboard()
+        if (query != "") {
+            executeQuery(query, getString(R.string.search), true)
+        }
+    }
+
+    private fun hideKeyboard() {
+        val view = this.currentFocus
+        if (view != null) {
+            val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(view.windowToken, 0)
+        }
+    }
+
+    override fun onRandomClicked(query: String) {
+        Toast.makeText(this, query, Toast.LENGTH_LONG).show()
+    }
 
     private fun openSets() {
         supportFragmentManager.popBackStack()
@@ -124,6 +148,16 @@ class MainActivity : BaseActivity(),
     private fun openArtists() {
         supportFragmentManager.popBackStack()
         val fragment = ArtistListFragment()
+        supportFragmentManager
+                .beginTransaction()
+                .disallowAddToBackStack()
+                .replace(R.id.content, fragment)
+                .commit()
+    }
+
+    private fun openSearch() {
+        supportFragmentManager.popBackStack()
+        val fragment = SearchFragment()
         supportFragmentManager
                 .beginTransaction()
                 .disallowAddToBackStack()

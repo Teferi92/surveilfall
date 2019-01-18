@@ -8,4 +8,7 @@
     <string name="illustration">Illustration by %1$s</string>
     <string name="loyalty">Loyalty: %1$s</string>
     <string name="power_toughness">%1$s/%2$s</string>
+    <string name="search_title_text">Welcome to Surveilfall.</string>
+    <string name="search_hint">Your query here</string>
+    <string name="random_result">Random result</string>
 </resources>

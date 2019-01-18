@@ -6,19 +6,19 @@ import es.santirivera.surveilfall.domain.usecases.base.StringErrorOutput
 import es.santirivera.surveilfall.domain.usecases.base.UseCase
 import es.santirivera.surveilfall.domain.usecases.base.UseCaseResponse
 
-class GetCardInSetUseCase(private val appRepository: AppRepository) : UseCase<GetCardInSetUseCase.Input, GetCardInSetUseCase.OkOutput, GetCardInSetUseCase.ErrorOutput>() {
+class GetRandomCardUseCase(private val appRepository: AppRepository) : UseCase<GetRandomCardUseCase.Input, GetRandomCardUseCase.OkOutput, GetRandomCardUseCase.ErrorOutput>() {
 
     override fun executeUseCase(requestValues: Input?): UseCaseResponse<OkOutput, ErrorOutput> {
-        val response = appRepository.cardInSet(requestValues!!.setCode, requestValues.cardInSet)
+        val response = appRepository.randomCard(requestValues!!.query)
         return if (response.isSuccess!!) {
             val card = response.responseData
             UseCaseResponse.ok(OkOutput(card!!))
         } else {
-            UseCaseResponse.error(ErrorOutput("Error retrieving card from Scryfall"))
+            UseCaseResponse.error(ErrorOutput("Error retrieving random card from Scryfall"))
         }
     }
 
-    class Input(val setCode: String, val cardInSet: Int)
+    class Input(val query: String)
 
     class OkOutput(val card: Card)
 

@@ -105,4 +105,19 @@ public class AppRepositoryImpl implements AppRepository {
             throw new WSNetworkException(e);
         }
     }
+
+    @Override
+    public RepositoryResponse<Card> randomCard(String query) {
+        Call<Card> call = wServices.randomCard(query);
+        try {
+            Response<Card> response = call.execute();
+            if (response.isSuccessful()) {
+                return new NetRepositoryResponse<>(response.body());
+            } else {
+                return new NetErrorResponse<>();
+            }
+        } catch (IOException e) {
+            throw new WSNetworkException(e);
+        }
+    }
 }

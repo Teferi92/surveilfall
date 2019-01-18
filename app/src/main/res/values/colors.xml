@@ -3,11 +3,13 @@
     <color name="primaryColor">#3d5afe</color>
     <color name="primaryLightColor">#8187ff</color>
     <color name="primaryDarkColor">#0031ca</color>
+    <color name="primaryDarkerColor">#00134d</color>
     <color name="secondaryColor">#263238</color>
     <color name="secondaryLightColor">#4f5b62</color>
     <color name="secondaryDarkColor">#000a12</color>
     <color name="textColorDark">#000000</color>
     <color name="textColor">#ffffff</color>
+    <color name="hintColor">#999999</color>
 
     <!-- Legality -->
     <color name="banned">#CC7D83</color>
