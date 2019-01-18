@@ -4,6 +4,7 @@ import android.view.View
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import es.santirivera.surveilfall.R
 import es.santirivera.surveilfall.data.model.Card
 
@@ -20,7 +21,8 @@ class CardViewHolder(itemView: View, private val listener: OnCardClickedListener
         itemView.setOnClickListener {
             listener.onCardClicked(card)
         }
-        requestBuilder.load(card.imageUris?.normal).into(imageViewIcon)
+        val requestOptions = RequestOptions().placeholder(R.drawable.placeholder)
+        requestBuilder.load(card.imageUris?.normal).apply(requestOptions).into(imageViewIcon)
     }
 
 }

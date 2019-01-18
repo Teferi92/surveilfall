@@ -80,7 +80,7 @@ data class Card(
         @SerializedName("full_art")
         val fullArt: Boolean = false,
         @SerializedName("image_uris")
-        val imageUris: ImageUris,
+        val imageUris: ImageUris?,
         @SerializedName("uri")
         val uri: String = "",
         @SerializedName("layout")
@@ -95,6 +95,28 @@ data class Card(
         val cardFaces: List<CardFace>?,
         @SerializedName("flavor_text")
         val flavorText: String? = "") {
+
+    fun toCardDataList(): ArrayList<CardData> {
+        val list = ArrayList<CardData>()
+        if (cardFaces != null && cardFaces.isNotEmpty()) {
+            for (face in cardFaces) {
+                if (face.artist == null || face.artist == "") {
+                    face.artist = artist
+                }
+
+                val data = CardData(
+                        face.name, face.typeLine, face.oracleText,
+                        face.loyalty, face.power, face.toughness, face.manaCost,
+                        face.flavorText, face.artist
+                )
+                list.add(data)
+            }
+        } else {
+            val data = CardData(name, typeLine, oracleText, loyalty, power, toughness, manaCost, flavorText, artist)
+            list.add(data)
+        }
+        return list
+    }
 
     override fun equals(other: Any?): Boolean {
         return if (other is Card) {

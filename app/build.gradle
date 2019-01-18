@@ -19,6 +19,11 @@ android {
     }
 }
 
+configurations {
+    cleanedAnnotations
+    compile.exclude group: 'org.jetbrains', module: 'annotations'
+}
+
 androidExtensions {
     experimental = true
 }
@@ -43,7 +48,7 @@ dependencies {
 
     api 'com.jakewharton:butterknife:8.8.1'
 
-    api group: 'com.caverock', name: 'androidsvg', version: '1.3'
+    implementation 'com.github.Teferi92:androidsvg:8daf2406d2'
 
     annotationProcessor "com.google.dagger:dagger-compiler:2.9"
     api "com.google.dagger:dagger:2.9"
@@ -53,5 +58,6 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0'
 }
 repositories {
+    maven { url 'https://jitpack.io' }
     mavenCentral()
 }

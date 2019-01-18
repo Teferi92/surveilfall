@@ -9,8 +9,7 @@ import es.santirivera.surveilfall.data.model.Card
 
 class CardAdapter(val listener: CardViewHolder.OnCardClickedListener) : RecyclerView.Adapter<CardViewHolder>() {
 
-
-    val cards: ArrayList<Card> = ArrayList()
+    private val cards: ArrayList<Card> = ArrayList()
 
     fun addCard(card: Card) {
         if (!cards.contains(card)) {

@@ -65,7 +65,7 @@ class MainActivity : BaseActivity(),
         drawerList!!.layoutManager = LinearLayoutManager(this)
         drawerList!!.adapter = LeftDrawerAdapter(this)
 
-        openSets()
+        executeQuery("Why", "test", false)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
