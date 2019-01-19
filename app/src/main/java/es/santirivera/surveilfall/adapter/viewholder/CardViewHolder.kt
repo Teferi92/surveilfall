@@ -22,7 +22,11 @@ class CardViewHolder(itemView: View, private val listener: OnCardClickedListener
             listener.onCardClicked(card)
         }
         val requestOptions = RequestOptions().placeholder(R.drawable.placeholder)
-        requestBuilder.load(card.imageUris?.normal).apply(requestOptions).into(imageViewIcon)
+        var imageUris = card.imageUris
+        if (imageUris == null && card.cardFaces != null){
+            imageUris = card.cardFaces!![0].imageUris
+        }
+        requestBuilder.load(imageUris?.normal).apply(requestOptions).into(imageViewIcon)
     }
 
 }

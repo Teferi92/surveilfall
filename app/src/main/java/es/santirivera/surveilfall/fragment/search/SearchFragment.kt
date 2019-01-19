@@ -36,6 +36,11 @@ class SearchFragment : BasePresenter<SearchListener>(), SearchListener {
         useCaseHandler.execute(useCase, input, RandomCaseCallback())
     }
 
+    override fun shouldShowMenu(): Boolean {
+        return true
+    }
+
+
     inner class RandomCaseCallback : UseCasePartialCallback<GetRandomCardUseCase.OkOutput, GetRandomCardUseCase.ErrorOutput>() {
         override fun isReady(): Boolean {
             return true

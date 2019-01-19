@@ -107,12 +107,12 @@ data class Card(
                 val data = CardData(
                         face.name, face.typeLine, face.oracleText,
                         face.loyalty, face.power, face.toughness, face.manaCost,
-                        face.flavorText, face.artist
+                        face.flavorText, face.artist, face.imageUris
                 )
                 list.add(data)
             }
         } else {
-            val data = CardData(name, typeLine, oracleText, loyalty, power, toughness, manaCost, flavorText, artist)
+            val data = CardData(name, typeLine, oracleText, loyalty, power, toughness, manaCost, flavorText, artist, imageUris)
             list.add(data)
         }
         return list

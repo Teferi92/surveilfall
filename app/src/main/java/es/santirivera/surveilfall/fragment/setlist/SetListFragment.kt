@@ -32,6 +32,10 @@ class SetListFragment : BasePresenter<SetListListener>(), SetListListener {
         return getString(R.string.sets)
     }
 
+    override fun shouldShowMenu(): Boolean {
+        return true
+    }
+
     private inner class SetCallback : UseCasePartialCallback<GetSetsUseCase.OkOutput, GetSetsUseCase.ErrorOutput>() {
 
         override fun isReady(): Boolean {

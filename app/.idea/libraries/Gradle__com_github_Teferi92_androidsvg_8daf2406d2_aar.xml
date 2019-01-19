@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="Gradle: com.github.Teferi92:androidsvg:8daf2406d2@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/androidsvg-8daf2406d2.aar/d625b944bfa5df0bc9ddbf1d77a5d7c8/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/androidsvg-8daf2406d2.aar/d625b944bfa5df0bc9ddbf1d77a5d7c8/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.Teferi92/androidsvg/8daf2406d2/f29724f9473d309b47d7d59215997373eb284870/androidsvg-8daf2406d2-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

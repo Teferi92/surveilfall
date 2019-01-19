@@ -10,6 +10,7 @@ import es.santirivera.surveilfall.domain.usecases.base.UseCasePartialCallback
 
 class CardDetailFragment : BasePresenter<CardDetailListener>(), CardDetailListener {
 
+
     private var view: CardDetailView? = null
 
     var card: Card? = null
@@ -52,5 +53,9 @@ class CardDetailFragment : BasePresenter<CardDetailListener>(), CardDetailListen
 
     override fun onArtistClicked(artist: String) {
         (activity as MainActivity).onArtistClicked(artist)
+    }
+
+    override fun shouldShowMenu(): Boolean {
+        return false
     }
 }

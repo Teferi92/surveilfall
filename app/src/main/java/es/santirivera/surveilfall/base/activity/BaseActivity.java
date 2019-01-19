@@ -59,8 +59,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         return component;
     }
 
-
     protected abstract void prepareInterface();
-
+    public abstract void setDrawerEnabled(boolean show);
 
 }

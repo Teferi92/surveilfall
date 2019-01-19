@@ -13,12 +13,6 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.25" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guidelineHalf"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.5" />
 
     <TextView
         android:id="@+id/textViewTitle"
@@ -32,6 +26,9 @@
         app:layout_constraintTop_toTopOf="@id/guidelineTop" />
 
     <EditText
+        android:maxLines="1"
+        android:inputType="text"
+        android:imeOptions="actionNext"
         android:id="@+id/editTextSearch"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -44,33 +41,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textViewTitle" />
-
-    <Button
-        android:id="@+id/buttonSearch"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:background="@drawable/search_button_bg"
-        android:text="@string/search"
-        android:textAllCaps="false"
-        android:textColor="@color/textColor"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="@id/guidelineHalf"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/editTextSearch" />
-
-    <Button
-        android:id="@+id/buttonRandom"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:background="@drawable/search_button_bg"
-        android:text="@string/random_result"
-        android:textAllCaps="false"
-        android:textColor="@color/textColor"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@id/guidelineHalf"
-        app:layout_constraintTop_toBottomOf="@id/editTextSearch" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

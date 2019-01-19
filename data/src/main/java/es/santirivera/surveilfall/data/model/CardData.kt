@@ -8,4 +8,5 @@ class CardData(val name: String?,
                val toughness: String?,
                val manaCost: String?,
                val flavorText: String?,
-               val artist: String?)
+               val artist: String?,
+               val imageUris : ImageUris?)

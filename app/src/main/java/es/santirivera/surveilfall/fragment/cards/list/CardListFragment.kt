@@ -16,6 +16,7 @@ class CardListFragment : BasePresenter<CardListListener>(), CardListListener {
     private val cardCallback: CardListCallback = CardListCallback()
     var query: String? = ""
     var fragmentTitle: String? = ""
+    var prints : GetCardsForQueryUseCase.PrintsToInclude = GetCardsForQueryUseCase.PrintsToInclude.PRINTS
 
     private var page = 1
     private var lastAskedPage = 1
@@ -26,7 +27,7 @@ class CardListFragment : BasePresenter<CardListListener>(), CardListListener {
     }
 
     override fun loadViewData() {
-        val input = GetCardsForQueryUseCase.Input(this.query!!, page, GetCardsForQueryUseCase.PrintsToInclude.PRINTS)
+        val input = GetCardsForQueryUseCase.Input(this.query!!, page, prints)
         val useCase = useCaseProvider.getCardsForQueryUseCase
         useCaseHandler.execute(useCase, input, cardCallback)
     }
@@ -44,6 +45,10 @@ class CardListFragment : BasePresenter<CardListListener>(), CardListListener {
             loadViewData()
             lastAskedPage++
         }
+    }
+
+    override fun shouldShowMenu(): Boolean {
+        return true
     }
 
     private inner class CardListCallback : UseCasePartialCallback<GetCardsForQueryUseCase.OkOutput, GetCardsForQueryUseCase.ErrorOutput>() {

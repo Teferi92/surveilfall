@@ -14,7 +14,7 @@ import java.util.*
 class CardListView(baseActivity: BaseActivity, presenter: CardListListener) : BaseView<CardListListener>(baseActivity, presenter), CardViewHolder.OnCardClickedListener {
 
     private var recyclerView: RecyclerView? = null
-    private val cardAdapter = CardAdapter(this)
+    private val cardAdapter = CardAdapter(this, true)
 
     private var currentPage: Int = 0;
 

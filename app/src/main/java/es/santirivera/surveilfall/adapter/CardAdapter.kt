@@ -7,12 +7,12 @@ import es.santirivera.surveilfall.R
 import es.santirivera.surveilfall.adapter.viewholder.CardViewHolder
 import es.santirivera.surveilfall.data.model.Card
 
-class CardAdapter(val listener: CardViewHolder.OnCardClickedListener) : RecyclerView.Adapter<CardViewHolder>() {
+class CardAdapter(val listener: CardViewHolder.OnCardClickedListener, val filterRepeats: Boolean) : RecyclerView.Adapter<CardViewHolder>() {
 
     private val cards: ArrayList<Card> = ArrayList()
 
     fun addCard(card: Card) {
-        if (!cards.contains(card)) {
+        if (!filterRepeats || (filterRepeats && !cards.contains(card))){
             cards.add(card)
         }
     }

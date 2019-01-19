@@ -4,7 +4,6 @@ package es.santirivera.surveilfall.activity
 import android.content.Context
 import android.view.MenuItem
 import android.view.inputmethod.InputMethodManager
-import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
@@ -17,11 +16,13 @@ import es.santirivera.surveilfall.adapter.viewholder.DrawerViewHolder
 import es.santirivera.surveilfall.base.activity.BaseActivity
 import es.santirivera.surveilfall.data.model.Card
 import es.santirivera.surveilfall.data.model.Set
+import es.santirivera.surveilfall.domain.usecases.GetCardsForQueryUseCase
 import es.santirivera.surveilfall.fragment.artists.list.ArtistListFragment
 import es.santirivera.surveilfall.fragment.artists.list.ArtistListListener
 import es.santirivera.surveilfall.fragment.cards.CardListFragment
 import es.santirivera.surveilfall.fragment.cards.detail.CardDetailFragment
 import es.santirivera.surveilfall.fragment.cards.detail.CardDetailListener
+import es.santirivera.surveilfall.fragment.momir.MomirFragment
 import es.santirivera.surveilfall.fragment.search.SearchFragment
 import es.santirivera.surveilfall.fragment.search.SearchListener
 import es.santirivera.surveilfall.fragment.setlist.CardListListener
@@ -42,7 +43,7 @@ class MainActivity : BaseActivity(),
             DrawerItem.SEARCH -> openSearch()
             DrawerItem.SETS -> openSets()
             DrawerItem.ARTISTS -> openArtists()
-            DrawerItem.SETTINGS -> openSets()
+            DrawerItem.MOMIR -> openMomir()
         }
         drawerLayout?.closeDrawer(GravityCompat.START)
     }
@@ -77,15 +78,21 @@ class MainActivity : BaseActivity(),
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return if (drawerToggle!!.onOptionsItemSelected(item)) {
             true
-        } else super.onOptionsItemSelected(item)
+        } else if (item.itemId == android.R.id.home){
+            onBackPressed()
+            true
+        } else {
+            super.onOptionsItemSelected(item)
+        }
     }
 
+
     override fun onSetClicked(set: Set) {
-        executeQuery("e:${set.code}", set.name, true)
+        executeQuery("e:${set.code}", set.name, true, GetCardsForQueryUseCase.PrintsToInclude.CARDS)
     }
 
     override fun onArtistClicked(artist: String) {
-        executeQuery("a:\"$artist\"", artist, true)
+        executeQuery("a:\"$artist\"", artist, true, GetCardsForQueryUseCase.PrintsToInclude.PRINTS)
     }
 
     override fun onCardClicked(card: Card) {
@@ -119,7 +126,7 @@ class MainActivity : BaseActivity(),
     override fun onSearchClicked(query: String) {
         hideKeyboard()
         if (query != "") {
-            executeQuery(query, getString(R.string.search), true)
+            executeQuery(query, getString(R.string.search), true, GetCardsForQueryUseCase.PrintsToInclude.CARDS)
         }
     }
 
@@ -132,7 +139,6 @@ class MainActivity : BaseActivity(),
     }
 
     override fun onRandomClicked(query: String) {
-        Toast.makeText(this, query, Toast.LENGTH_LONG).show()
     }
 
     private fun openSets() {
@@ -153,6 +159,7 @@ class MainActivity : BaseActivity(),
                 .disallowAddToBackStack()
                 .replace(R.id.content, fragment)
                 .commit()
+        setDrawerEnabled(true)
     }
 
     private fun openSearch() {
@@ -165,10 +172,21 @@ class MainActivity : BaseActivity(),
                 .commit()
     }
 
-    private fun executeQuery(query: String, title: String, addToBackStack: Boolean) {
+    private fun openMomir(){
+        supportFragmentManager.popBackStack()
+        val fragment = MomirFragment()
+        supportFragmentManager
+                .beginTransaction()
+                .disallowAddToBackStack()
+                .replace(R.id.content, fragment)
+                .commit()
+    }
+
+    private fun executeQuery(query: String, title: String, addToBackStack: Boolean, prints: GetCardsForQueryUseCase.PrintsToInclude) {
         val fragment = CardListFragment()
         fragment.query = query
         fragment.fragmentTitle = title
+        fragment.prints = prints
         var transaction = supportFragmentManager.beginTransaction()
         if (addToBackStack) {
             transaction = transaction.addToBackStack("cardListQuery")
@@ -190,6 +208,16 @@ class MainActivity : BaseActivity(),
         }
         transaction = transaction.replace(R.id.content, fragment)
         transaction.commit()
+    }
+
+    override fun setDrawerEnabled(enable: Boolean) {
+        val lockMode = if (enable)
+            DrawerLayout.LOCK_MODE_UNLOCKED
+        else
+            DrawerLayout.LOCK_MODE_LOCKED_CLOSED
+        drawerLayout!!.setDrawerLockMode(lockMode)
+        drawerToggle!!.isDrawerIndicatorEnabled = enable
+        drawerToggle!!.syncState()
     }
 
 }

@@ -67,10 +67,12 @@ public abstract class BasePresenter<ListenerType extends BaseNavigation> extends
     public void onResume() {
         super.onResume();
         String title = getTitleForActivity();
-        Activity activity = getActivity();
+        boolean showMenu = shouldShowMenu();
+        BaseActivity activity = (BaseActivity) getActivity();
         if (title != null && title.length() > 0 && activity != null) {
             activity.setTitle(title);
         }
+        activity.setDrawerEnabled(showMenu);
     }
 
     @Override
@@ -127,4 +129,6 @@ public abstract class BasePresenter<ListenerType extends BaseNavigation> extends
     protected abstract void loadViewData();
 
     public abstract String getTitleForActivity();
+
+    public abstract boolean shouldShowMenu();
 }

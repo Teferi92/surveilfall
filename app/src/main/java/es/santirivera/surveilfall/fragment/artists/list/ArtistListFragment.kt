@@ -30,6 +30,11 @@ class ArtistListFragment : BasePresenter<ArtistListListener>(), ArtistListListen
         return getString(R.string.artists)
     }
 
+    override fun shouldShowMenu(): Boolean {
+        return true
+    }
+
+
     private inner class ArtistCallback : UseCasePartialCallback<GetArtistNamesUseCase.OkOutput, GetArtistNamesUseCase.ErrorOutput>() {
 
         override fun isReady(): Boolean {

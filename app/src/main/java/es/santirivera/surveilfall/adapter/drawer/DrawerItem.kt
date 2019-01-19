@@ -6,5 +6,5 @@ enum class DrawerItem(val nameId: Int) {
     SEARCH(R.string.search),
     SETS(R.string.sets),
     ARTISTS(R.string.artists),
-    SETTINGS(R.string.settings),
+    MOMIR(R.string.momir)
 }

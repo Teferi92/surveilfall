@@ -12,13 +12,26 @@
             android:id="@+id/imageViewCardImage"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginStart="48dp"
+            android:layout_marginStart="42dp"
+            android:src="@drawable/placeholder"
             android:layout_marginTop="16dp"
-            android:layout_marginEnd="48dp"
+            android:layout_marginEnd="42dp"
+            android:paddingBottom="16dp"
             app:layout_constraintDimensionRatio="H,672:936"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabFlipCard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="24dp"
+            android:src="@drawable/back_side"
+            app:fabSize="normal"
+            app:rippleColor="@color/primaryColor"
+            app:layout_constraintBottom_toBottomOf="@id/imageViewCardImage"
+            app:layout_constraintEnd_toEndOf="parent" />
 
         <RelativeLayout
             android:layout_width="0dp"
