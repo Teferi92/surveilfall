@@ -3,6 +3,7 @@ package es.santirivera.surveilfall.fragment.cards.list
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import androidx.appcompat.widget.SearchView
 import es.santirivera.surveilfall.R
 import es.santirivera.surveilfall.activity.MainActivity
 import es.santirivera.surveilfall.base.activity.BaseActivity
@@ -11,12 +12,11 @@ import es.santirivera.surveilfall.base.view.BaseView
 import es.santirivera.surveilfall.data.model.Card
 import es.santirivera.surveilfall.domain.usecases.GetCardsForQueryUseCase
 import es.santirivera.surveilfall.domain.usecases.base.UseCasePartialCallback
-
-import androidx.appcompat.widget.SearchView
 import es.santirivera.surveilfall.fragment.search.SearchListener
 
 
 class CardListFragment : BasePresenter<CardListListener>(), CardListListener {
+
 
     private var view: CardListView? = null
     private val cardCallback: CardListCallback = CardListCallback()
@@ -27,6 +27,8 @@ class CardListFragment : BasePresenter<CardListListener>(), CardListListener {
     var prints: GetCardsForQueryUseCase.PrintsToInclude = GetCardsForQueryUseCase.PrintsToInclude.PRINTS
     var isQueryEditable: Boolean = false
     var searchListener: SearchListener? = null
+
+    var justOpened = false;
 
     private var page = 1
     private var lastAskedPage = 1
@@ -81,6 +83,7 @@ class CardListFragment : BasePresenter<CardListListener>(), CardListListener {
         searchView.setQuery(query, false)
         searchView.clearFocus()
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+
             override fun onQueryTextSubmit(newQuery: String): Boolean {
                 performNewQuery(newQuery)
                 if (!searchView.isIconified) {
@@ -91,10 +94,27 @@ class CardListFragment : BasePresenter<CardListListener>(), CardListListener {
             }
 
             override fun onQueryTextChange(s: String): Boolean {
-                return s.isEmpty()
+                if (s == "" && justOpened) {
+                    justOpened = false
+                    searchView.setQuery(query, false)
+                }
+                return false
             }
+
         })
     }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item == search) {
+            justOpened = true
+            val searchView = search!!.actionView as SearchView
+            searchView.setQuery(query, false)
+            searchView.clearFocus()
+            return true
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
 
     private inner class CardListCallback : UseCasePartialCallback<GetCardsForQueryUseCase.OkOutput, GetCardsForQueryUseCase.ErrorOutput>() {
         override fun isReady(): Boolean {
