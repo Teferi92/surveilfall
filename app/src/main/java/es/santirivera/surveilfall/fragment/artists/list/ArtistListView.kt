@@ -1,6 +1,6 @@
 package es.santirivera.surveilfall.fragment.artists.list
 
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import es.santirivera.surveilfall.R
 import es.santirivera.surveilfall.adapter.SimpleStringAdapter
@@ -11,15 +11,14 @@ import es.santirivera.surveilfall.base.view.BaseView
 
 class ArtistListView(baseActivity: BaseActivity, presenter: ArtistListListener) : BaseView<ArtistListListener>(baseActivity, presenter), StringViewHolder.OnStringClickedListener {
 
+    override val contentView: Int get() = R.layout.fragment_simple_list
+
     private var recyclerView: RecyclerView? = null
 
-    override fun getContentView(): Int {
-        return R.layout.fragment_simple_list
-    }
 
     override fun prepareView() {
-        recyclerView = mainView.findViewById(R.id.recyclerView)
-        recyclerView!!.layoutManager = LinearLayoutManager(baseActivity)
+        recyclerView = mainView?.findViewById(R.id.recyclerView)
+        recyclerView?.layoutManager = GridLayoutManager(baseActivity, 2)
     }
 
     override fun onStringClicked(item: String) {

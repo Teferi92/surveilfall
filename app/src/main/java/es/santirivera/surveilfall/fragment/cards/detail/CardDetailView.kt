@@ -18,39 +18,38 @@ import es.santirivera.surveilfall.data.model.CardData
 
 class CardDetailView(baseActivity: BaseActivity, presenter: CardDetailListener) : BaseView<CardDetailListener>(baseActivity, presenter), CardDataViewHolder.OnArtistClickedListener {
 
+
     private var imageViewCard: ImageView? = null
     private var recyclerViewCardData: RecyclerView? = null
     private var recyclerViewLegality: RecyclerView? = null
-    private var fab : FloatingActionButton? = null
+    private var fab: FloatingActionButton? = null
 
     private var currentFace = 0
-    private var cardDataList : ArrayList<CardData>? = null
+    private var cardDataList: ArrayList<CardData>? = null
 
-    override fun getContentView(): Int {
-        return R.layout.fragment_card_detail
-    }
+    override val contentView: Int get() = R.layout.fragment_card_detail
 
     override fun prepareView() {
-        imageViewCard = mainView.findViewById(R.id.imageViewCardImage)
-        recyclerViewCardData = mainView.findViewById(R.id.recyclerViewCardData)
-        recyclerViewLegality = mainView.findViewById(R.id.recyclerViewLegality)
-        fab = mainView.findViewById(R.id.fabFlipCard)
+        imageViewCard = mainView?.findViewById(R.id.imageViewCardImage)
+        recyclerViewCardData = mainView?.findViewById(R.id.recyclerViewCardData)
+        recyclerViewLegality = mainView?.findViewById(R.id.recyclerViewLegality)
+        fab = mainView?.findViewById(R.id.fabFlipCard)
     }
 
     fun onCardLoaded(card: Card) {
         cardDataList = card.toCardDataList()
         val requestOptions = RequestOptions().placeholder(R.drawable.placeholder)
 
-        if (card.imageUris != null){
+        if (card.imageUris != null) {
             // Only one face
-             Glide.with(imageViewCard as ImageView).load(card.imageUris!!.png).apply(requestOptions).into(imageViewCard as ImageView)
+            Glide.with(imageViewCard as ImageView).load(card.imageUris!!.png).apply(requestOptions).into(imageViewCard as ImageView)
             fab!!.hide()
         } else {
             // Two faces
             Glide.with(imageViewCard as ImageView).load(cardDataList!![0].imageUris!!.png).apply(requestOptions).into(imageViewCard as ImageView)
             fab!!.show()
             fab!!.setOnClickListener {
-                currentFace = if (currentFace == 1){
+                currentFace = if (currentFace == 1) {
                     fab!!.setImageResource(R.drawable.ic_back_side)
                     0
                 } else {

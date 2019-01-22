@@ -14,6 +14,8 @@ import es.santirivera.surveilfall.domain.usecases.base.UseCasePartialCallback
 
 class MomirFragment : BasePresenter<MomirListener>(), MomirListener {
 
+    override val titleForActivity: String? get() = getString(R.string.momir)
+
     private var view: MomirView? = null
     private var help: MenuItem? = null
 
@@ -42,9 +44,6 @@ class MomirFragment : BasePresenter<MomirListener>(), MomirListener {
         return super.onOptionsItemSelected(item)
     }
 
-    override fun getTitleForActivity(): String {
-        return getString(R.string.momir)
-    }
 
     override fun shouldShowMenu(): Boolean {
         return true
@@ -56,9 +55,9 @@ class MomirFragment : BasePresenter<MomirListener>(), MomirListener {
 
     override fun onCardRequested(cmc: Int) {
         // Dialog to determine the cmc
-        val useCase = useCaseProvider.getRandomCardUseCase
+        val useCase = useCaseProvider?.getRandomCardUseCase
         val input = GetRandomCardUseCase.Input("t:creature -is:funny cmc:$cmc")
-        useCaseHandler.execute(useCase, input, MomirCallback())
+        useCaseHandler?.execute(useCase, input, MomirCallback())
     }
 
     inner class MomirCallback : UseCasePartialCallback<GetRandomCardUseCase.OkOutput, GetRandomCardUseCase.ErrorOutput>() {

@@ -17,7 +17,7 @@ import es.santirivera.surveilfall.fragment.search.SearchListener
 
 class CardListFragment : BasePresenter<CardListListener>(), CardListListener {
 
-
+    override val titleForActivity: String? get() = if (isQueryEditable) query!! else fragmentTitle!!
     private var view: CardListView? = null
     private val cardCallback: CardListCallback = CardListCallback()
     private var search: MenuItem? = null
@@ -28,10 +28,15 @@ class CardListFragment : BasePresenter<CardListListener>(), CardListListener {
     var isQueryEditable: Boolean = false
     var searchListener: SearchListener? = null
 
-    var justOpened = false;
+    var justOpened = false
 
     private var page = 1
     private var lastAskedPage = 1
+
+    override fun onPause() {
+        super.onPause()
+        searchListener?.onNewQuery(query!!)
+    }
 
     override fun instanceView(): BaseView<*> {
         setHasOptionsMenu(isQueryEditable)
@@ -41,17 +46,14 @@ class CardListFragment : BasePresenter<CardListListener>(), CardListListener {
 
     override fun loadViewData() {
         val input = GetCardsForQueryUseCase.Input(this.query!!, page, prints)
-        val useCase = useCaseProvider.getCardsForQueryUseCase
-        useCaseHandler.execute(useCase, input, cardCallback)
+        val useCase = useCaseProvider?.getCardsForQueryUseCase
+        useCaseHandler?.execute(useCase, input, cardCallback)
     }
 
     override fun onCardClicked(card: Card) {
         (activity as MainActivity).onCardClicked(card)
     }
 
-    override fun getTitleForActivity(): String {
-        return if (isQueryEditable) query!! else fragmentTitle!!
-    }
 
     fun performNewQuery(newQuery: String) {
         query = newQuery

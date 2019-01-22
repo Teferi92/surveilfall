@@ -11,6 +11,7 @@ import es.santirivera.surveilfall.domain.usecases.base.UseCasePartialCallback
 
 class SetListFragment : BasePresenter<SetListListener>(), SetListListener {
 
+    override val titleForActivity: String? get() = getString(R.string.sets)
 
     private var view: SetListView? = null
     private val setCallback: SetCallback = SetCallback()
@@ -21,15 +22,11 @@ class SetListFragment : BasePresenter<SetListListener>(), SetListListener {
     }
 
     override fun loadViewData() {
-        useCaseHandler.execute<GetSetsUseCase.OkOutput, GetSetsUseCase.ErrorOutput>(useCaseProvider.getSetsUseCase, setCallback)
+        useCaseHandler?.execute<GetSetsUseCase.OkOutput, GetSetsUseCase.ErrorOutput>(useCaseProvider?.getSetsUseCase, setCallback)
     }
 
     override fun onSetClicked(set: Set) {
         (activity as MainActivity).onSetClicked(set)
-    }
-
-    override fun getTitleForActivity(): String {
-        return getString(R.string.sets)
     }
 
     override fun shouldShowMenu(): Boolean {

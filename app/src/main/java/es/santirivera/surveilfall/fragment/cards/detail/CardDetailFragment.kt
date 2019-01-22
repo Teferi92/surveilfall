@@ -10,7 +10,7 @@ import es.santirivera.surveilfall.domain.usecases.base.UseCasePartialCallback
 
 class CardDetailFragment : BasePresenter<CardDetailListener>(), CardDetailListener {
 
-
+    override val titleForActivity: String? get() = card!!.name
     private var view: CardDetailView? = null
 
     var card: Card? = null
@@ -24,11 +24,6 @@ class CardDetailFragment : BasePresenter<CardDetailListener>(), CardDetailListen
     override fun loadViewData() {
         activity!!.title = card!!.name
         view?.onCardLoaded(card!!)
-    }
-
-
-    override fun getTitleForActivity(): String {
-        return card!!.name
     }
 
     override fun onDownloadRequested() {

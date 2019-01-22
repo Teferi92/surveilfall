@@ -10,6 +10,8 @@ import es.santirivera.surveilfall.domain.usecases.base.UseCasePartialCallback
 
 class SearchFragment : BasePresenter<SearchListener>(), SearchListener {
 
+    override val titleForActivity: String? get() = getString(R.string.search)
+
     private var view: SearchView? = null
 
     override fun instanceView(): BaseView<*> {
@@ -21,18 +23,15 @@ class SearchFragment : BasePresenter<SearchListener>(), SearchListener {
         // There's no data to load
     }
 
-    override fun getTitleForActivity(): String {
-        return getString(R.string.search)
-    }
 
     override fun onSearchClicked(query: String, listener: SearchListener) {
         (activity as MainActivity).onSearchClicked(query, listener)
     }
 
     override fun onRandomClicked(query: String) {
-        val useCase = useCaseProvider.getRandomCardUseCase
+        val useCase = useCaseProvider?.getRandomCardUseCase
         val input = GetRandomCardUseCase.Input(query)
-        useCaseHandler.execute(useCase, input, RandomCaseCallback())
+        useCaseHandler?.execute(useCase, input, RandomCaseCallback())
     }
 
     override fun shouldShowMenu(): Boolean {

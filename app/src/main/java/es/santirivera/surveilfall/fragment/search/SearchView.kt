@@ -11,6 +11,7 @@ import android.widget.Toast
 
 class SearchView(baseActivity: BaseActivity, presenter: SearchListener) : BaseView<SearchListener>(baseActivity, presenter), TextView.OnEditorActionListener {
 
+    override val contentView: Int get() = R.layout.fragment_search
 
     private var searchEditText: EditText? = null
 
@@ -24,13 +25,10 @@ class SearchView(baseActivity: BaseActivity, presenter: SearchListener) : BaseVi
 
     private var newQuery = ""
 
-    override fun getContentView(): Int {
-        return R.layout.fragment_search
-    }
 
     override fun prepareView() {
-        searchEditText = mainView.findViewById(R.id.editTextSearch)
-        searchEditText!!.setOnEditorActionListener(this)
+        searchEditText = mainView?.findViewById(R.id.editTextSearch)
+        searchEditText?.setOnEditorActionListener(this)
     }
 
     private fun performSearch() {

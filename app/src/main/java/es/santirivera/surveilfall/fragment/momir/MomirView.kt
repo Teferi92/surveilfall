@@ -18,6 +18,7 @@ import es.santirivera.surveilfall.data.model.Card
 
 class MomirView(activity: BaseActivity, presenter: MomirListener) : BaseView<MomirListener>(activity, presenter), CardViewHolder.OnCardClickedListener, StringViewHolder.OnStringClickedListener {
 
+    override val contentView: Int get() = R.layout.fragment_momir
 
     var recyclerView: RecyclerView? = null
     var fab: FloatingActionButton? = null
@@ -44,18 +45,15 @@ class MomirView(activity: BaseActivity, presenter: MomirListener) : BaseView<Mom
             .setView(cmcRecyclerView)
             .create()
 
-    override fun getContentView(): Int {
-        return R.layout.fragment_momir
-    }
 
     override fun prepareView() {
-        fab = mainView.findViewById(R.id.fabAddCard)
+        fab = mainView?.findViewById(R.id.fabAddCard)
         fab!!.setOnClickListener {
             cmcDialog.show()
         }
-        recyclerView = mainView.findViewById(R.id.recyclerViewCards)
-        recyclerView!!.layoutManager = GridLayoutManager(baseActivity, 2)
-        recyclerView!!.adapter = cardAdapter
+        recyclerView = mainView?.findViewById(R.id.recyclerViewCards)
+        recyclerView?.layoutManager = GridLayoutManager(baseActivity, 2)
+        recyclerView?.adapter = cardAdapter
     }
 
     fun onCardReceived(card: Card) {

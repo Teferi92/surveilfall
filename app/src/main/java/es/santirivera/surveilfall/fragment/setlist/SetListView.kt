@@ -1,7 +1,5 @@
 package es.santirivera.surveilfall.fragment.setlist
 
-import java.util.ArrayList
-
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import es.santirivera.surveilfall.R
@@ -13,14 +11,12 @@ import es.santirivera.surveilfall.data.model.Set
 
 class SetListView(baseActivity: BaseActivity, presenter: SetListListener) : BaseView<SetListListener>(baseActivity, presenter), SetViewHolder.OnSetClickedListener {
 
+    override val contentView: Int get() = R.layout.fragment_simple_list
+
     private var recyclerView: RecyclerView? = null
 
-    override fun getContentView(): Int {
-        return R.layout.fragment_simple_list
-    }
-
     override fun prepareView() {
-        recyclerView = mainView.findViewById(R.id.recyclerView)
+        recyclerView = mainView?.findViewById(R.id.recyclerView)
         recyclerView!!.layoutManager = GridLayoutManager(baseActivity, 4)
     }
 

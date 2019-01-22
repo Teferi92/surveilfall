@@ -38,6 +38,8 @@ class MainActivity : BaseActivity(),
         SearchListener,
         DrawerViewHolder.OnDrawerItemClickedListener {
 
+    override val contentView: Int
+        get() = R.layout.activity_main
 
 
     override fun onDrawerItemClicked(item: DrawerItem) {
@@ -55,13 +57,9 @@ class MainActivity : BaseActivity(),
     private var drawerToggle: ActionBarDrawerToggle? = null
     private var toolbar: Toolbar? = null
 
-    override fun getContentView(): Int {
-        return R.layout.activity_main
-    }
 
     override fun prepareInterface() {
         setupToolbar()
-
 
         drawerList = findViewById(R.id.leftDrawer)
         drawerLayout = findViewById(R.id.drawerLayout)
@@ -226,13 +224,13 @@ class MainActivity : BaseActivity(),
         transaction.commit()
     }
 
-    override fun setDrawerEnabled(enable: Boolean) {
-        val lockMode = if (enable)
+    override fun setDrawerEnabled(show: Boolean) {
+        val lockMode = if (show)
             DrawerLayout.LOCK_MODE_UNLOCKED
         else
             DrawerLayout.LOCK_MODE_LOCKED_CLOSED
         drawerLayout!!.setDrawerLockMode(lockMode)
-        drawerToggle!!.isDrawerIndicatorEnabled = enable
+        drawerToggle!!.isDrawerIndicatorEnabled = show
         drawerToggle!!.syncState()
     }
 

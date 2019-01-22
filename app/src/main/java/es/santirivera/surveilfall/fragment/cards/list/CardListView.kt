@@ -13,17 +13,15 @@ import es.santirivera.surveilfall.fragment.cards.list.CardListListener
 
 class CardListView(baseActivity: BaseActivity, presenter: CardListListener) : BaseView<CardListListener>(baseActivity, presenter), CardViewHolder.OnCardClickedListener {
 
+    override val contentView: Int get() = R.layout.fragment_simple_list
     private var recyclerView: RecyclerView? = null
     private val cardAdapter = CardAdapter(this, true)
 
     private var currentPage: Int = 0;
 
-    override fun getContentView(): Int {
-        return R.layout.fragment_simple_list
-    }
 
     override fun prepareView() {
-        recyclerView = mainView.findViewById(R.id.recyclerView)
+        recyclerView = mainView?.findViewById(R.id.recyclerView)
         val layoutManager = GridLayoutManager(baseActivity, 2)
         recyclerView!!.layoutManager = layoutManager
         recyclerView!!.adapter = cardAdapter

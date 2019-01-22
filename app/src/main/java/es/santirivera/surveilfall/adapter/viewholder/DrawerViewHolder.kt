@@ -16,6 +16,7 @@ class DrawerViewHolder(itemView: View, private val listener: OnDrawerItemClicked
 
     fun bind(item: DrawerItem) {
         textViewSetName.text = textViewSetName.resources.getString(item.nameId)
+
         itemView.setOnClickListener {
             listener.onDrawerItemClicked(item)
         }

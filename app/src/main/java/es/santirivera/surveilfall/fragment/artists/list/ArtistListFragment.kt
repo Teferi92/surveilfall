@@ -11,6 +11,8 @@ import es.santirivera.surveilfall.domain.usecases.base.UseCasePartialCallback
 
 class ArtistListFragment : BasePresenter<ArtistListListener>(), ArtistListListener {
 
+    override val titleForActivity: String? get() = getString(R.string.artists)
+
     private var view: ArtistListView? = null
 
     override fun instanceView(): BaseView<*> {
@@ -19,16 +21,13 @@ class ArtistListFragment : BasePresenter<ArtistListListener>(), ArtistListListen
     }
 
     override fun loadViewData() {
-        useCaseHandler.execute(useCaseProvider.getArtistNamesUseCase, ArtistCallback())
+        useCaseHandler?.execute(useCaseProvider?.getArtistNamesUseCase, ArtistCallback())
     }
 
     override fun onArtistClicked(artist: String) {
         (activity as MainActivity).onArtistClicked(artist)
     }
 
-    override fun getTitleForActivity(): String {
-        return getString(R.string.artists)
-    }
 
     override fun shouldShowMenu(): Boolean {
         return true
