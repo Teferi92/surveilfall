@@ -10,7 +10,6 @@ import es.santirivera.surveilfall.domain.usecases.base.UseCasePartialCallback
 
 class SearchFragment : BasePresenter<SearchListener>(), SearchListener {
 
-
     private var view: SearchView? = null
 
     override fun instanceView(): BaseView<*> {
@@ -26,8 +25,8 @@ class SearchFragment : BasePresenter<SearchListener>(), SearchListener {
         return getString(R.string.search)
     }
 
-    override fun onSearchClicked(query: String) {
-        (activity as MainActivity).onSearchClicked(query)
+    override fun onSearchClicked(query: String, listener: SearchListener) {
+        (activity as MainActivity).onSearchClicked(query, listener)
     }
 
     override fun onRandomClicked(query: String) {
@@ -40,6 +39,14 @@ class SearchFragment : BasePresenter<SearchListener>(), SearchListener {
         return true
     }
 
+    override fun onNewQuery(query: String) {
+        view!!.onNewQuery(query)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        view!!.setQueryValue()
+    }
 
     inner class RandomCaseCallback : UseCasePartialCallback<GetRandomCardUseCase.OkOutput, GetRandomCardUseCase.ErrorOutput>() {
         override fun isReady(): Boolean {

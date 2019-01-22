@@ -27,7 +27,7 @@ class ArtistListView(baseActivity: BaseActivity, presenter: ArtistListListener) 
     }
 
     fun onArtistsReceived(artists: List<String>) {
-        val adapter = SimpleStringAdapter(artists, this)
+        val adapter = SimpleStringAdapter(artists, this, false)
         recyclerView!!.adapter = adapter
     }
 

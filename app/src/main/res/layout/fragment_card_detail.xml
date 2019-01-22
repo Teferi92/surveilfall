@@ -27,7 +27,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="24dp"
-            android:src="@drawable/back_side"
+            android:src="@drawable/ic_back_side"
             app:fabSize="normal"
             app:rippleColor="@color/primaryColor"
             app:layout_constraintBottom_toBottomOf="@id/imageViewCardImage"

@@ -51,10 +51,10 @@ class CardDetailView(baseActivity: BaseActivity, presenter: CardDetailListener) 
             fab!!.show()
             fab!!.setOnClickListener {
                 currentFace = if (currentFace == 1){
-                    fab!!.setImageResource(R.drawable.back_side)
+                    fab!!.setImageResource(R.drawable.ic_back_side)
                     0
                 } else {
-                    fab!!.setImageResource(R.drawable.front_side)
+                    fab!!.setImageResource(R.drawable.ic_front_side)
                     1
                 }
                 Glide.with(imageViewCard as ImageView).load(cardDataList!![currentFace].imageUris!!.png).apply(requestOptions).into(imageViewCard as ImageView)

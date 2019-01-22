@@ -5,6 +5,7 @@ import android.content.Context
 import android.view.MenuItem
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,13 +20,13 @@ import es.santirivera.surveilfall.data.model.Set
 import es.santirivera.surveilfall.domain.usecases.GetCardsForQueryUseCase
 import es.santirivera.surveilfall.fragment.artists.list.ArtistListFragment
 import es.santirivera.surveilfall.fragment.artists.list.ArtistListListener
-import es.santirivera.surveilfall.fragment.cards.CardListFragment
+import es.santirivera.surveilfall.fragment.cards.list.CardListFragment
 import es.santirivera.surveilfall.fragment.cards.detail.CardDetailFragment
 import es.santirivera.surveilfall.fragment.cards.detail.CardDetailListener
 import es.santirivera.surveilfall.fragment.momir.MomirFragment
 import es.santirivera.surveilfall.fragment.search.SearchFragment
 import es.santirivera.surveilfall.fragment.search.SearchListener
-import es.santirivera.surveilfall.fragment.setlist.CardListListener
+import es.santirivera.surveilfall.fragment.cards.list.CardListListener
 import es.santirivera.surveilfall.fragment.setlist.SetListFragment
 import es.santirivera.surveilfall.fragment.setlist.SetListListener
 
@@ -36,6 +37,7 @@ class MainActivity : BaseActivity(),
         CardDetailListener,
         SearchListener,
         DrawerViewHolder.OnDrawerItemClickedListener {
+
 
 
     override fun onDrawerItemClicked(item: DrawerItem) {
@@ -51,14 +53,15 @@ class MainActivity : BaseActivity(),
     private var drawerList: RecyclerView? = null
     private var drawerLayout: DrawerLayout? = null
     private var drawerToggle: ActionBarDrawerToggle? = null
+    private var toolbar: Toolbar? = null
 
     override fun getContentView(): Int {
         return R.layout.activity_main
     }
 
     override fun prepareInterface() {
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setHomeButtonEnabled(true)
+        setupToolbar()
+
 
         drawerList = findViewById(R.id.leftDrawer)
         drawerLayout = findViewById(R.id.drawerLayout)
@@ -75,10 +78,17 @@ class MainActivity : BaseActivity(),
         openSearch()
     }
 
+    private fun setupToolbar() {
+        toolbar = findViewById(R.id.toolbar)
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setHomeButtonEnabled(true)
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return if (drawerToggle!!.onOptionsItemSelected(item)) {
             true
-        } else if (item.itemId == android.R.id.home){
+        } else if (item.itemId == android.R.id.home) {
             onBackPressed()
             true
         } else {
@@ -88,11 +98,11 @@ class MainActivity : BaseActivity(),
 
 
     override fun onSetClicked(set: Set) {
-        executeQuery("e:${set.code}", set.name, true, GetCardsForQueryUseCase.PrintsToInclude.CARDS)
+        executeQuery("e:${set.code}", set.name, true, GetCardsForQueryUseCase.PrintsToInclude.CARDS, false)
     }
 
     override fun onArtistClicked(artist: String) {
-        executeQuery("a:\"$artist\"", artist, true, GetCardsForQueryUseCase.PrintsToInclude.PRINTS)
+        executeQuery("a:\"$artist\"", artist, true, GetCardsForQueryUseCase.PrintsToInclude.PRINTS, false)
     }
 
     override fun onCardClicked(card: Card) {
@@ -123,10 +133,14 @@ class MainActivity : BaseActivity(),
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun onSearchClicked(query: String) {
+    override fun onNewQuery(query: String) {
+        // Do nothing
+    }
+
+    override fun onSearchClicked(query: String, listener: SearchListener) {
         hideKeyboard()
         if (query != "") {
-            executeQuery(query, getString(R.string.search), true, GetCardsForQueryUseCase.PrintsToInclude.CARDS)
+            executeQuery(query, getString(R.string.search), true, GetCardsForQueryUseCase.PrintsToInclude.CARDS, true, listener)
         }
     }
 
@@ -172,7 +186,7 @@ class MainActivity : BaseActivity(),
                 .commit()
     }
 
-    private fun openMomir(){
+    private fun openMomir() {
         supportFragmentManager.popBackStack()
         val fragment = MomirFragment()
         supportFragmentManager
@@ -182,11 +196,13 @@ class MainActivity : BaseActivity(),
                 .commit()
     }
 
-    private fun executeQuery(query: String, title: String, addToBackStack: Boolean, prints: GetCardsForQueryUseCase.PrintsToInclude) {
+    private fun executeQuery(query: String, title: String, addToBackStack: Boolean, prints: GetCardsForQueryUseCase.PrintsToInclude, isQueryEditable: Boolean, listener: SearchListener? = null) {
         val fragment = CardListFragment()
         fragment.query = query
         fragment.fragmentTitle = title
         fragment.prints = prints
+        fragment.isQueryEditable = isQueryEditable
+        fragment.searchListener = listener
         var transaction = supportFragmentManager.beginTransaction()
         if (addToBackStack) {
             transaction = transaction.addToBackStack("cardListQuery")

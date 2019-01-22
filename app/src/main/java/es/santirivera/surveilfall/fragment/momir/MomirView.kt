@@ -32,7 +32,7 @@ class MomirView(activity: BaseActivity, presenter: MomirListener) : BaseView<Mom
             .create()
 
     private val cmcRecyclerView: RecyclerView = View.inflate(activity, R.layout.fragment_simple_list, null) as RecyclerView
-    private val cmcAdapter: SimpleStringAdapter = SimpleStringAdapter(cmcs, this)
+    private val cmcAdapter: SimpleStringAdapter = SimpleStringAdapter(cmcs, this, true)
 
     init {
         cmcRecyclerView.layoutManager = GridLayoutManager(activity, 4)

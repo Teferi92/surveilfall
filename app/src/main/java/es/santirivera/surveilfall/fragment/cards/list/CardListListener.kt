@@ -1,4 +1,4 @@
-package es.santirivera.surveilfall.fragment.setlist
+package es.santirivera.surveilfall.fragment.cards.list
 
 import es.santirivera.surveilfall.base.interfaces.BaseNavigation
 import es.santirivera.surveilfall.data.model.Card

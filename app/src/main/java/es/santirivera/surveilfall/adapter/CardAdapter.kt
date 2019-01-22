@@ -12,7 +12,7 @@ class CardAdapter(val listener: CardViewHolder.OnCardClickedListener, val filter
     private val cards: ArrayList<Card> = ArrayList()
 
     fun addCard(card: Card) {
-        if (!filterRepeats || (filterRepeats && !cards.contains(card))){
+        if (!filterRepeats || (filterRepeats && !cards.contains(card))) {
             cards.add(card)
         }
     }
@@ -28,6 +28,10 @@ class CardAdapter(val listener: CardViewHolder.OnCardClickedListener, val filter
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardViewHolder {
         val view = View.inflate(parent.context, R.layout.item_card, null)
         return CardViewHolder(view, listener)
+    }
+
+    fun removeAll() {
+        cards.clear()
     }
 
 }

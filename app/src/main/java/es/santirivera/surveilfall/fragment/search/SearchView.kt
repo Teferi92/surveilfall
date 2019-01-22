@@ -22,6 +22,8 @@ class SearchView(baseActivity: BaseActivity, presenter: SearchListener) : BaseVi
             KeyEvent.KEYCODE_SEARCH
     )
 
+    private var newQuery = ""
+
     override fun getContentView(): Int {
         return R.layout.fragment_search
     }
@@ -32,7 +34,7 @@ class SearchView(baseActivity: BaseActivity, presenter: SearchListener) : BaseVi
     }
 
     private fun performSearch() {
-        presenter.onSearchClicked(searchEditText!!.text.toString())
+        presenter.onSearchClicked(searchEditText!!.text.toString(), presenter)
     }
 
     override fun onEditorAction(v: TextView?, actionId: Int, event: KeyEvent?): Boolean {
@@ -43,5 +45,13 @@ class SearchView(baseActivity: BaseActivity, presenter: SearchListener) : BaseVi
             }
         }
         return false
+    }
+
+    fun onNewQuery(query: String) {
+        newQuery = query
+    }
+
+    fun setQueryValue() {
+        searchEditText!!.setText(newQuery)
     }
 }

@@ -75,6 +75,14 @@ public abstract class BasePresenter<ListenerType extends BaseNavigation> extends
         activity.setDrawerEnabled(showMenu);
     }
 
+    public void updateTitle(){
+        String title = getTitleForActivity();
+        BaseActivity activity = (BaseActivity) getActivity();
+        if (title != null && title.length() > 0 && activity != null) {
+            activity.setTitle(title);
+        }
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

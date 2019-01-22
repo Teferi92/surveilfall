@@ -1,4 +1,4 @@
-package es.santirivera.surveilfall.fragment.setlist
+package es.santirivera.surveilfall.fragment.cards.list
 
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -9,7 +9,7 @@ import es.santirivera.surveilfall.base.activity.BaseActivity
 import es.santirivera.surveilfall.base.view.BaseView
 import es.santirivera.surveilfall.data.model.Card
 import es.santirivera.surveilfall.data.model.CardList
-import java.util.*
+import es.santirivera.surveilfall.fragment.cards.list.CardListListener
 
 class CardListView(baseActivity: BaseActivity, presenter: CardListListener) : BaseView<CardListListener>(baseActivity, presenter), CardViewHolder.OnCardClickedListener {
 
@@ -48,5 +48,11 @@ class CardListView(baseActivity: BaseActivity, presenter: CardListListener) : Ba
 
     override fun onCardClicked(card: Card) {
         presenter.onCardClicked(card);
+    }
+
+
+    fun resetAdapter() {
+        cardAdapter.removeAll()
+        cardAdapter.notifyDataSetChanged()
     }
 }
