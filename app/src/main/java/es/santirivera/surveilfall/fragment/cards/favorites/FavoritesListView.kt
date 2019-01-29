@@ -1,4 +1,4 @@
-package es.santirivera.surveilfall.fragment.cards.list
+package es.santirivera.surveilfall.fragment.cards.favorites
 
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -9,36 +9,26 @@ import es.santirivera.surveilfall.base.activity.BaseActivity
 import es.santirivera.surveilfall.base.view.BaseView
 import es.santirivera.surveilfall.data.model.Card
 import es.santirivera.surveilfall.data.model.CardList
+import es.santirivera.surveilfall.data.model.Favorite
+import io.realm.RealmResults
 
-class CardListView(baseActivity: BaseActivity, presenter: CardListListener) : BaseView<CardListListener>(baseActivity, presenter), CardViewHolder.OnCardClickedListener {
+class FavoritesListView(baseActivity: BaseActivity, presenter: FavoritesListListener) : BaseView<FavoritesListListener>(baseActivity, presenter), CardViewHolder.OnCardClickedListener {
 
     override val contentView: Int get() = R.layout.fragment_simple_list
     private var recyclerView: RecyclerView? = null
     private val cardAdapter = CardAdapter(this, true)
-
-    private var currentPage: Int = 0;
-
 
     override fun prepareView() {
         recyclerView = mainView?.findViewById(R.id.recyclerView)
         val layoutManager = GridLayoutManager(baseActivity, 2)
         recyclerView!!.layoutManager = layoutManager
         recyclerView!!.adapter = cardAdapter
-        recyclerView!!.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                if (layoutManager.findLastVisibleItemPosition() == layoutManager.itemCount - 1) {
-                    presenter.onBottomReached(currentPage)
-                }
-                super.onScrolled(recyclerView, dx, dy)
-            }
-        })
     }
 
-    fun onCardListReceived(cards: CardList, currentPage: Int) {
-        this.currentPage = currentPage
-        for (card in cards.data!!) {
-            cardAdapter.addCard(card)
+    fun onFavoritesReceived(favorites: RealmResults<Favorite>) {
+        cardAdapter.removeAll()
+        for (favorite in favorites) {
+            cardAdapter.addCard(favorite.card!!)
         }
         cardAdapter.notifyDataSetChanged()
     }

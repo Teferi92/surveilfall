@@ -19,4 +19,5 @@ class UseCaseProvider(private val appRepository: AppRepository) {
 
     val getRandomCardUseCase: GetRandomCardUseCase
         get() = GetRandomCardUseCase(appRepository)
+
 }

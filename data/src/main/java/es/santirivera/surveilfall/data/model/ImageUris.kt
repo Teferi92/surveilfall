@@ -1,17 +1,18 @@
 package es.santirivera.surveilfall.data.model
 
 import com.google.gson.annotations.SerializedName
+import io.realm.RealmObject
 
-data class ImageUris(
+open class ImageUris(
         @SerializedName("small")
-        val small: String = "",
+        var small: String = "",
         @SerializedName("normal")
-        val normal: String = "",
+        var normal: String = "",
         @SerializedName("large")
-        val large: String = "",
+        var large: String = "",
         @SerializedName("png")
-        val png: String = "",
+        var png: String = "",
         @SerializedName("border_crop")
-        val borderCrop: String = "",
+        var borderCrop: String = "",
         @SerializedName("art_crop")
-        val artCrop: String = "")
+        var artCrop: String = "") : RealmObject()

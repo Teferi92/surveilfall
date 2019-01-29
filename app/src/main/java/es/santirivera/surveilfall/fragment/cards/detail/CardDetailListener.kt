@@ -4,11 +4,8 @@ import es.santirivera.surveilfall.base.interfaces.BaseNavigation
 
 interface CardDetailListener : BaseNavigation {
 
-    fun onDownloadRequested()
-    fun onResolutionSelected()
-    fun onRulingsRequested()
-    fun onShareRequested()
-    fun onAddToFavoritesRequested()
+    fun isFavorite()
     fun onArtistClicked(artist: String)
+    fun toggleFavoriteAction(favorite: Boolean)
 
 }

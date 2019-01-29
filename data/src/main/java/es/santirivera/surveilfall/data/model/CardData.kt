@@ -1,12 +1,14 @@
 package es.santirivera.surveilfall.data.model
 
-class CardData(val name: String?,
-               val typeLine: String?,
-               val oracleText: String?,
-               val loyalty: String?,
-               val power: String?,
-               val toughness: String?,
-               val manaCost: String?,
-               val flavorText: String?,
-               val artist: String?,
-               val imageUris : ImageUris?)
+import io.realm.RealmObject
+
+open class CardData(var name: String? = null,
+               var typeLine: String? = null,
+               var oracleText: String? = null,
+               var loyalty: String? = null,
+               var power: String? = null,
+               var toughness: String? = null,
+               var manaCost: String? = null,
+               var flavorText: String? = null,
+               var artist: String? = null,
+               var imageUris: ImageUris? = null) : RealmObject()

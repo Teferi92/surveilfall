@@ -5,6 +5,7 @@ import android.content.Context;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -12,12 +13,17 @@ import es.santirivera.surveilfall.data.exceptions.WSNetworkException;
 import es.santirivera.surveilfall.data.model.Card;
 import es.santirivera.surveilfall.data.model.CardList;
 import es.santirivera.surveilfall.data.model.Catalog;
+import es.santirivera.surveilfall.data.model.Favorite;
 import es.santirivera.surveilfall.data.model.SetList;
 import es.santirivera.surveilfall.data.net.NetworkManager;
 import es.santirivera.surveilfall.data.net.WServices;
 import es.santirivera.surveilfall.data.repository.responses.NetErrorResponse;
 import es.santirivera.surveilfall.data.repository.responses.NetRepositoryResponse;
 import es.santirivera.surveilfall.data.repository.responses.RepositoryResponse;
+import io.realm.Realm;
+import io.realm.RealmList;
+import io.realm.RealmQuery;
+import io.realm.RealmResults;
 import retrofit2.Call;
 import retrofit2.Response;
 
@@ -33,6 +39,7 @@ public class AppRepositoryImpl implements AppRepository {
         this.networkManager = networkManager;
     }
 
+    @NotNull
     @Override
     public String getTag() {
         return getClass().getSimpleName();
@@ -77,7 +84,7 @@ public class AppRepositoryImpl implements AppRepository {
 
     @NotNull
     @Override
-    public RepositoryResponse<CardList> cardsForQuery(@NotNull String artist, int page, String printsToInclude) {
+    public RepositoryResponse<CardList> cardsForQuery(@NotNull String artist, int page, @NotNull String printsToInclude) {
         Call<CardList> call = wServices.cardsForQuery(artist, page, printsToInclude);
         try {
             Response<CardList> response = call.execute();
@@ -91,6 +98,7 @@ public class AppRepositoryImpl implements AppRepository {
         }
     }
 
+    @NotNull
     @Override
     public RepositoryResponse<Card> cardInSet(@NotNull String setCode, int cardInSet) {
         Call<Card> call = wServices.cardInSet(setCode, cardInSet);
@@ -106,8 +114,9 @@ public class AppRepositoryImpl implements AppRepository {
         }
     }
 
+    @NotNull
     @Override
-    public RepositoryResponse<Card> randomCard(String query) {
+    public RepositoryResponse<Card> randomCard(@NotNull String query) {
         Call<Card> call = wServices.randomCard(query);
         try {
             Response<Card> response = call.execute();
@@ -120,4 +129,7 @@ public class AppRepositoryImpl implements AppRepository {
             throw new WSNetworkException(e);
         }
     }
+
+
+
 }

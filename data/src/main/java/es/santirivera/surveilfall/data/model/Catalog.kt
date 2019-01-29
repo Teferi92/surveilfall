@@ -1,5 +1,5 @@
 package es.santirivera.surveilfall.data.model
 
-data class Catalog(
-        val data: List<String>?
+open class Catalog(
+        var data: List<String>? = null
 )

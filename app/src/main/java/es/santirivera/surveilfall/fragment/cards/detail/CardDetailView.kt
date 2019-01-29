@@ -65,11 +65,17 @@ class CardDetailView(baseActivity: BaseActivity, presenter: CardDetailListener) 
         recyclerViewCardData!!.adapter = CardDetailsAdapter(cardDataList!!, this)
 
         recyclerViewLegality!!.layoutManager = GridLayoutManager(baseActivity, 2)
-        recyclerViewLegality!!.adapter = LegalityAdapter(card.legalities.toLegalityList())
+        recyclerViewLegality!!.adapter = LegalityAdapter(card.legalities!!.toLegalityList())
     }
 
     override fun onArtistClicked(artist: String) {
         presenter.onArtistClicked(artist)
     }
+
+    fun setIsFavorite(favorite: Boolean) {
+        presenter.toggleFavoriteAction(favorite)
+    }
+
+
 
 }

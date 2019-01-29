@@ -2,22 +2,23 @@ package es.santirivera.surveilfall.data.model
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import io.realm.RealmObject
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class Set(
+open class Set(
         @SerializedName("code")
-        val code: String = "",
+        var code: String = "",
         @SerializedName("uri")
-        val uri: String = "",
+        var uri: String = "",
         @SerializedName("card_count")
-        val cardCount: Int = 0,
+        var cardCount: Int = 0,
         @SerializedName("name")
-        val name: String = "",
+        var name: String = "",
         @SerializedName("id")
-        val id: String = "",
+        var id: String = "",
         @SerializedName("parent_set_code")
-        val parentSetCode: String = "",
+        var parentSetCode: String = "",
         @SerializedName("icon_svg_uri")
-        val iconUri: String = ""
-) : Parcelable
+        var iconUri: String = ""
+) : Parcelable, RealmObject()

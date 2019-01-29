@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_add_favorite"
+        android:icon="@drawable/ic_favorite_off"
+        android:title="@string/action_add_favorites"
+        app:showAsAction="always|collapseActionView"/>
+    <item
+        android:id="@+id/action_remove_favorite"
+        android:icon="@drawable/ic_favorite_on"
+        android:title="@string/action_remove_favorites"
+        app:showAsAction="always|collapseActionView"/>
+</menu>

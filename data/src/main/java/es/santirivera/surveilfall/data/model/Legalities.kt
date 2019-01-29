@@ -1,36 +1,37 @@
 package es.santirivera.surveilfall.data.model
 
 import com.google.gson.annotations.SerializedName
+import io.realm.RealmObject
 
-data class Legalities(
+open class Legalities(
         @SerializedName("standard")
-        val standard: String = "",
+        var standard: String = "",
         @SerializedName("frontier")
-        val frontier: String = "",
+        var frontier: String = "",
         @SerializedName("legacy")
-        val legacy: String = "",
+        var legacy: String = "",
         @SerializedName("commander")
-        val commander: String = "",
+        var commander: String = "",
         @SerializedName("modern")
-        val modern: String = "",
+        var modern: String = "",
         @SerializedName("pauper")
-        val pauper: String = "",
+        var pauper: String = "",
         @SerializedName("future")
-        val future: String = "",
+        var future: String = "",
         @SerializedName("vintage")
-        val vintage: String = "",
+        var vintage: String = "",
         @SerializedName("duel")
-        val duelCommander: String = "",
+        var duelCommander: String = "",
         @SerializedName("1v1")
-        val oneVsOneCommander: String = "",
+        var oneVsOneCommander: String = "",
         @SerializedName("brawl")
-        val brawl: String = "",
+        var brawl: String = "",
         @SerializedName("penny")
-        val penny: String = "") {
+        var penny: String = "") : RealmObject(){
 
 
     fun toLegalityList(): ArrayList<Legality> {
-        val list = ArrayList<Legality>()
+        var list = ArrayList<Legality>()
         list.add(toLegality("Standard", standard))
         list.add(toLegality("Future Standard", future))
         list.add(toLegality("Modern", modern))

@@ -1,5 +1,6 @@
 package es.santirivera.surveilfall.data.model
 
 import com.google.gson.annotations.SerializedName
+import io.realm.RealmObject
 
-data class SetList(@SerializedName("data") val data: List<Set>?)
+open class SetList(@SerializedName("data") var data: List<Set>? = null)

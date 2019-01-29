@@ -20,23 +20,25 @@ import es.santirivera.surveilfall.data.model.Set
 import es.santirivera.surveilfall.domain.usecases.GetCardsForQueryUseCase
 import es.santirivera.surveilfall.fragment.artists.list.ArtistListFragment
 import es.santirivera.surveilfall.fragment.artists.list.ArtistListListener
-import es.santirivera.surveilfall.fragment.cards.list.CardListFragment
+import es.santirivera.surveilfall.fragment.cards.favorites.FavoritesListFragment
 import es.santirivera.surveilfall.fragment.cards.detail.CardDetailFragment
 import es.santirivera.surveilfall.fragment.cards.detail.CardDetailListener
 import es.santirivera.surveilfall.fragment.momir.MomirFragment
 import es.santirivera.surveilfall.fragment.search.SearchFragment
 import es.santirivera.surveilfall.fragment.search.SearchListener
-import es.santirivera.surveilfall.fragment.cards.list.CardListListener
+import es.santirivera.surveilfall.fragment.cards.favorites.FavoritesListListener
+import es.santirivera.surveilfall.fragment.cards.list.CardListFragment
 import es.santirivera.surveilfall.fragment.setlist.SetListFragment
 import es.santirivera.surveilfall.fragment.setlist.SetListListener
 
 class MainActivity : BaseActivity(),
         SetListListener,
         ArtistListListener,
-        CardListListener,
+        FavoritesListListener,
         CardDetailListener,
         SearchListener,
         DrawerViewHolder.OnDrawerItemClickedListener {
+
 
     override val contentView: Int
         get() = R.layout.activity_main
@@ -48,9 +50,11 @@ class MainActivity : BaseActivity(),
             DrawerItem.SETS -> openSets()
             DrawerItem.ARTISTS -> openArtists()
             DrawerItem.MOMIR -> openMomir()
+            DrawerItem.FAVORITES -> openFavorites()
         }
         drawerLayout?.closeDrawer(GravityCompat.START)
     }
+
 
     private var drawerList: RecyclerView? = null
     private var drawerLayout: DrawerLayout? = null
@@ -107,32 +111,16 @@ class MainActivity : BaseActivity(),
         openCard(card, true)
     }
 
-    override fun onBottomReached(currentPage: Int) {
+    override fun onNewQuery(query: String) {
+        // Do nothing
+    }
+
+    override fun isFavorite() {
         // Never called
     }
 
-    override fun onDownloadRequested() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun onResolutionSelected() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun onRulingsRequested() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun onShareRequested() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun onAddToFavoritesRequested() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun onNewQuery(query: String) {
-        // Do nothing
+    override fun toggleFavoriteAction(favorite: Boolean) {
+        // Never called
     }
 
     override fun onSearchClicked(query: String, listener: SearchListener) {
@@ -187,6 +175,16 @@ class MainActivity : BaseActivity(),
     private fun openMomir() {
         supportFragmentManager.popBackStack()
         val fragment = MomirFragment()
+        supportFragmentManager
+                .beginTransaction()
+                .disallowAddToBackStack()
+                .replace(R.id.content, fragment)
+                .commit()
+    }
+
+    private fun openFavorites() {
+        supportFragmentManager.popBackStack()
+        val fragment = FavoritesListFragment()
         supportFragmentManager
                 .beginTransaction()
                 .disallowAddToBackStack()

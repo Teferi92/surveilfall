@@ -1,105 +1,110 @@
 package es.santirivera.surveilfall.data.model
 
 import com.google.gson.annotations.SerializedName
+import io.realm.RealmList
+import io.realm.RealmObject
+import io.realm.annotations.PrimaryKey
 
-data class Card(
+open class Card(
         @SerializedName("oracle_text")
-        val oracleText: String = "",
+        var oracleText: String = "",
         @SerializedName("prints_search_uri")
-        val printsSearchUri: String = "",
+        var printsSearchUri: String = "",
         @SerializedName("set_search_uri")
-        val setSearchUri: String = "",
+        var setSearchUri: String = "",
         @SerializedName("set_name")
-        val setName: String = "",
+        var setName: String = "",
         @SerializedName("scryfall_uri")
-        val scryfallUri: String = "",
+        var scryfallUri: String = "",
         @SerializedName("mana_cost")
-        val manaCost: String? = "",
+        var manaCost: String? = "",
         @SerializedName("id")
-        val id: String = "",
+        @PrimaryKey
+        var id: String = "",
         @SerializedName("scryfall_set_uri")
-        val scryfallSetUri: String = "",
+        var scryfallSetUri: String = "",
         @SerializedName("loyalty")
-        val loyalty: String? = "",
+        var loyalty: String? = "",
         @SerializedName("power")
-        val power: String? = "",
+        var power: String? = "",
         @SerializedName("toughness")
-        val toughness: String? = "",
+        var toughness: String? = "",
         @SerializedName("frame_effect")
-        val frameEffect: String = "",
+        var frameEffect: String = "",
         @SerializedName("type_line")
-        val typeLine: String = "",
+        var typeLine: String = "",
         @SerializedName("color_identity")
-        val colorIdentity: List<String>?,
+        var colorIdentity: RealmList<String>? = null,
         @SerializedName("legalities")
-        val legalities: Legalities,
+        var legalities: Legalities? = null,
         @SerializedName("border_color")
-        val borderColor: String = "",
+        var borderColor: String = "",
         @SerializedName("reserved")
-        val reserved: Boolean = false,
+        var reserved: Boolean = false,
         @SerializedName("name")
-        val name: String = "",
+        var name: String = "",
         @SerializedName("cmc")
-        val cmc: Int = 0,
+        var cmc: Int = 0,
         @SerializedName("arena_id")
-        val arenaId: Int = 0,
+        var arenaId: Int = 0,
         @SerializedName("rarity")
-        val rarity: String = "",
+        var rarity: String = "",
         @SerializedName("frame")
-        val frame: String = "",
+        var frame: String = "",
         @SerializedName("oracle_id")
-        val oracleId: String = "",
+        var oracleId: String = "",
         @SerializedName("artist")
-        val artist: String = "",
+        var artist: String = "",
         @SerializedName("released_at")
-        val releasedAt: String = "",
+        var releasedAt: String = "",
         @SerializedName("colors")
-        val colors: List<String>?,
+        var colors: RealmList<String>? = null,
         @SerializedName("illustration_id")
-        val illustrationId: String = "",
+        var illustrationId: String = "",
         @SerializedName("promo")
-        val promo: Boolean = false,
+        var promo: Boolean = false,
         @SerializedName("mtgo_id")
-        val mtgoId: Int = 0,
+        var mtgoId: Int = 0,
         @SerializedName("rulings_uri")
-        val rulingsUri: String = "",
+        var rulingsUri: String = "",
         @SerializedName("collector_number")
-        val collectorNumber: String = "",
+        var collectorNumber: String = "",
         @SerializedName("set_uri")
-        val setUri: String = "",
+        var setUri: String = "",
         @SerializedName("lang")
-        val lang: String = "",
+        var lang: String = "",
         @SerializedName("highres_image")
-        val highresImage: Boolean = false,
+        var highresImage: Boolean = false,
         @SerializedName("digital")
-        val digital: Boolean = false,
+        var digital: Boolean = false,
         @SerializedName("set")
-        val set: String = "",
+        var set: String = "",
         @SerializedName("reprint")
-        val reprint: Boolean = false,
+        var reprint: Boolean = false,
         @SerializedName("full_art")
-        val fullArt: Boolean = false,
+        var fullArt: Boolean = false,
         @SerializedName("image_uris")
-        val imageUris: ImageUris?,
+        var imageUris: ImageUris? = null,
         @SerializedName("uri")
-        val uri: String = "",
+        var uri: String = "",
         @SerializedName("layout")
-        val layout: String = "",
+        var layout: String = "",
         @SerializedName("multiverse_ids")
-        val multiverseIds: List<Int>?,
+        var multiverseIds: RealmList<Int>? = null,
         @SerializedName("oversized")
-        val oversized: Boolean = false,
+        var oversized: Boolean = false,
         @SerializedName("story_spotlight")
-        val storySpotlight: Boolean = false,
+        var storySpotlight: Boolean = false,
         @SerializedName("card_faces")
-        val cardFaces: List<CardFace>?,
+        var cardFaces: RealmList<CardFace>? = null,
         @SerializedName("flavor_text")
-        val flavorText: String? = "") {
+        var flavorText: String? = "") : RealmObject() {
 
     fun toCardDataList(): ArrayList<CardData> {
         val list = ArrayList<CardData>()
-        if (cardFaces != null && cardFaces.isNotEmpty()) {
-            for (face in cardFaces) {
+        val faces = cardFaces
+        if (cardFaces != null && faces!!.isNotEmpty()) {
+            for (face in faces) {
                 if (face.artist == null || face.artist == "") {
                     face.artist = artist
                 }
