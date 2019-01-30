@@ -43,10 +43,18 @@ class CardDetailView(baseActivity: BaseActivity, presenter: CardDetailListener) 
         if (card.imageUris != null) {
             // Only one face
             Glide.with(imageViewCard as ImageView).load(card.imageUris!!.png).apply(requestOptions).into(imageViewCard as ImageView)
+            imageViewCard!!.setOnLongClickListener {
+                presenter.onSaveCardArtRequested(card.imageUris!!, card.name)
+                true
+            }
             fab!!.hide()
         } else {
             // Two faces
             Glide.with(imageViewCard as ImageView).load(cardDataList!![0].imageUris!!.png).apply(requestOptions).into(imageViewCard as ImageView)
+            imageViewCard!!.setOnLongClickListener {
+                presenter.onSaveCardArtRequested(cardDataList!![currentFace].imageUris!!, cardDataList!![currentFace].name!!)
+                true
+            }
             fab!!.show()
             fab!!.setOnClickListener {
                 currentFace = if (currentFace == 1) {
@@ -75,7 +83,6 @@ class CardDetailView(baseActivity: BaseActivity, presenter: CardDetailListener) 
     fun setIsFavorite(favorite: Boolean) {
         presenter.toggleFavoriteAction(favorite)
     }
-
 
 
 }

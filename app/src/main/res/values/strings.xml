@@ -19,4 +19,8 @@
     <string name="favorites">Favorites</string>
     <string name="action_add_favorites">Add to favorites</string>
     <string name="action_remove_favorites">Remove from favorites</string>
+
+    <string name="request_permission_storage">Surveilfall needs your permission to write to your external storage. This is used to save card images and art crops to your gallery when you long press a card.</string>
+    <string name="downloard_card">Download card art</string>
+    <string name="choose_card_quality">Choose a quality for your download</string>
 </resources>

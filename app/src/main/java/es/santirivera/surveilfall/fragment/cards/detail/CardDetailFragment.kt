@@ -10,8 +10,7 @@ import es.santirivera.surveilfall.base.presenter.BasePresenter
 import es.santirivera.surveilfall.base.view.BaseView
 import es.santirivera.surveilfall.data.model.Card
 import es.santirivera.surveilfall.data.model.Favorite
-import es.santirivera.surveilfall.domain.usecases.EditFavoriteUseCase
-import es.santirivera.surveilfall.domain.usecases.base.UseCasePartialCallback
+import es.santirivera.surveilfall.data.model.ImageUris
 import io.realm.Realm
 
 class CardDetailFragment : BasePresenter<CardDetailListener>(), CardDetailListener {
@@ -71,6 +70,10 @@ class CardDetailFragment : BasePresenter<CardDetailListener>(), CardDetailListen
 
     override fun toggleFavoriteAction(favorite: Boolean) {
         activity!!.invalidateOptionsMenu()
+    }
+
+    override fun onSaveCardArtRequested(uris: ImageUris, cardName:String) {
+        (activity as MainActivity).onSaveCardArtRequested(uris, cardName)
     }
 
     override fun isFavorite() {
