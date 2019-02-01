@@ -84,22 +84,6 @@ public class AppRepositoryImpl implements AppRepository {
 
     @NotNull
     @Override
-    public RepositoryResponse<CardList> cardsForQuery(@NotNull String artist, int page, @NotNull String printsToInclude) {
-        Call<CardList> call = wServices.cardsForQuery(artist, page, printsToInclude);
-        try {
-            Response<CardList> response = call.execute();
-            if (response.isSuccessful()) {
-                return new NetRepositoryResponse<>(response.body());
-            } else {
-                return new NetErrorResponse<>();
-            }
-        } catch (IOException e) {
-            throw new WSNetworkException(e);
-        }
-    }
-
-    @NotNull
-    @Override
     public RepositoryResponse<Card> cardInSet(@NotNull String setCode, int cardInSet) {
         Call<Card> call = wServices.cardInSet(setCode, cardInSet);
         try {
@@ -131,5 +115,19 @@ public class AppRepositoryImpl implements AppRepository {
     }
 
 
-
+    @NotNull
+    @Override
+    public RepositoryResponse<CardList> cardsForQuery(@NotNull String query, int page, @NotNull String prints, @NotNull String sortMethod, @NotNull String sortOrder) {
+        Call<CardList> call = wServices.cardsForQuery(query, page, prints, sortMethod, sortOrder);
+        try {
+            Response<CardList> response = call.execute();
+            if (response.isSuccessful()) {
+                return new NetRepositoryResponse<>(response.body());
+            } else {
+                return new NetErrorResponse<>();
+            }
+        } catch (IOException e) {
+            throw new WSNetworkException(e);
+        }
+    }
 }

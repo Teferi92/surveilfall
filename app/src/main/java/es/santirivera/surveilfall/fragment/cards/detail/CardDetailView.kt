@@ -1,5 +1,6 @@
 package es.santirivera.surveilfall.fragment.cards.detail
 
+import android.widget.Button
 import android.widget.ImageView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,11 +19,11 @@ import es.santirivera.surveilfall.data.model.CardData
 
 class CardDetailView(baseActivity: BaseActivity, presenter: CardDetailListener) : BaseView<CardDetailListener>(baseActivity, presenter), CardDataViewHolder.OnArtistClickedListener {
 
-
     private var imageViewCard: ImageView? = null
     private var recyclerViewCardData: RecyclerView? = null
     private var recyclerViewLegality: RecyclerView? = null
     private var fab: FloatingActionButton? = null
+    private var showReprintsButton: Button? = null
 
     private var currentFace = 0
     private var cardDataList: ArrayList<CardData>? = null
@@ -34,6 +35,7 @@ class CardDetailView(baseActivity: BaseActivity, presenter: CardDetailListener) 
         recyclerViewCardData = mainView?.findViewById(R.id.recyclerViewCardData)
         recyclerViewLegality = mainView?.findViewById(R.id.recyclerViewLegality)
         fab = mainView?.findViewById(R.id.fabFlipCard)
+        showReprintsButton = mainView?.findViewById(R.id.buttonShowReprints)
     }
 
     fun onCardLoaded(card: Card) {
@@ -67,6 +69,10 @@ class CardDetailView(baseActivity: BaseActivity, presenter: CardDetailListener) 
                 Glide.with(imageViewCard as ImageView).load(cardDataList!![currentFace].imageUris!!.png).apply(requestOptions).into(imageViewCard as ImageView)
 
             }
+        }
+
+        showReprintsButton!!.setOnClickListener {
+            presenter.onShowReprintsClicked(null)
         }
 
         recyclerViewCardData!!.layoutManager = LinearLayoutManager(baseActivity)

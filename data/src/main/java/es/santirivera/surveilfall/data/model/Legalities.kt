@@ -27,11 +27,13 @@ open class Legalities(
         @SerializedName("brawl")
         var brawl: String = "",
         @SerializedName("penny")
-        var penny: String = "") : RealmObject(){
+        var penny: String = "",
+        @SerializedName("oldschool")
+        var oldSchool: String = "") : RealmObject() {
 
 
     fun toLegalityList(): ArrayList<Legality> {
-        var list = ArrayList<Legality>()
+        val list = ArrayList<Legality>()
         list.add(toLegality("Standard", standard))
         list.add(toLegality("Future Standard", future))
         list.add(toLegality("Modern", modern))
@@ -44,6 +46,7 @@ open class Legalities(
         list.add(toLegality("1v1 Commander.", oneVsOneCommander))
         list.add(toLegality("Penny", penny))
         list.add(toLegality("Brawl", brawl))
+        list.add(toLegality("Old School", oldSchool))
         return list
     }
 

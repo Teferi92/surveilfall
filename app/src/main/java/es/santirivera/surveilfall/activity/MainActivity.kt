@@ -124,11 +124,31 @@ class MainActivity : BaseActivity(),
 
 
     override fun onSetClicked(set: Set) {
-        executeQuery("e:${set.code}", set.name, true, GetCardsForQueryUseCase.PrintsToInclude.CARDS, false)
+        executeQuery(
+                query = "e:${set.code}",
+                title = set.name,
+                addToBackStack = true,
+                isQueryEditable = false)
     }
 
     override fun onArtistClicked(artist: String) {
-        executeQuery("a:\"$artist\"", artist, true, GetCardsForQueryUseCase.PrintsToInclude.PRINTS, false)
+        executeQuery(
+                query = "a:\"$artist\"",
+                title = artist,
+                addToBackStack = true,
+                isQueryEditable = true,
+                prints = GetCardsForQueryUseCase.PrintsToInclude.PRINTS)
+    }
+
+    override fun onShowReprintsClicked(card: Card?) {
+        executeQuery(
+                query = "oracleId:${card!!.oracleId}",
+                title = card.name,
+                addToBackStack = true,
+                isQueryEditable = false,
+                prints = GetCardsForQueryUseCase.PrintsToInclude.PRINTS,
+                sortMethod = GetCardsForQueryUseCase.SortMethod.RELEASED
+        )
     }
 
     override fun onCardClicked(card: Card) {
@@ -238,7 +258,16 @@ class MainActivity : BaseActivity(),
     override fun onSearchClicked(query: String, listener: SearchListener) {
         hideKeyboard()
         if (query != "") {
-            executeQuery(query, getString(R.string.search), true, GetCardsForQueryUseCase.PrintsToInclude.CARDS, true, listener)
+            executeQuery(
+                    query = query,
+                    title = getString(R.string.search),
+                    addToBackStack = true,
+                    isQueryEditable = true,
+                    prints = GetCardsForQueryUseCase.PrintsToInclude.CARDS,
+                    sortMethod = GetCardsForQueryUseCase.SortMethod.NAME,
+                    sortOrder = GetCardsForQueryUseCase.SortOrder.AUTO,
+                    listener = listener)
+
         }
     }
 
@@ -308,12 +337,22 @@ class MainActivity : BaseActivity(),
                 .commit()
     }
 
-    private fun executeQuery(query: String, title: String, addToBackStack: Boolean, prints: GetCardsForQueryUseCase.PrintsToInclude, isQueryEditable: Boolean, listener: SearchListener? = null) {
+    private fun executeQuery(
+            query: String,
+            title: String,
+            addToBackStack: Boolean,
+            isQueryEditable: Boolean,
+            prints: GetCardsForQueryUseCase.PrintsToInclude = GetCardsForQueryUseCase.PrintsToInclude.CARDS,
+            sortMethod: GetCardsForQueryUseCase.SortMethod = GetCardsForQueryUseCase.SortMethod.NAME,
+            sortOrder: GetCardsForQueryUseCase.SortOrder = GetCardsForQueryUseCase.SortOrder.AUTO,
+            listener: SearchListener? = null) {
         val fragment = CardListFragment()
         currentFragment = fragment
         fragment.query = query
         fragment.fragmentTitle = title
         fragment.prints = prints
+        fragment.sortMethod = sortMethod
+        fragment.sortOrder = sortOrder
         fragment.isQueryEditable = isQueryEditable
         fragment.searchListener = listener
         var transaction = supportFragmentManager.beginTransaction()

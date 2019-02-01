@@ -22,4 +22,7 @@ class UseCaseProvider(private val appRepository: AppRepository) {
 
     val getBitmapFromURLUseCase: GetBitmapFromURLUseCase
         get() = GetBitmapFromURLUseCase()
+
+    val getReprintsForCardUseCase: GetReprintsForCardUseCase
+        get() = GetReprintsForCardUseCase(appRepository)
 }

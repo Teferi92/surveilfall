@@ -15,6 +15,7 @@ import io.realm.Realm
 
 class CardDetailFragment : BasePresenter<CardDetailListener>(), CardDetailListener {
 
+
     override val titleForActivity: String? get() = card!!.name
     private var view: CardDetailView? = null
 
@@ -72,7 +73,7 @@ class CardDetailFragment : BasePresenter<CardDetailListener>(), CardDetailListen
         activity!!.invalidateOptionsMenu()
     }
 
-    override fun onSaveCardArtRequested(uris: ImageUris, cardName:String) {
+    override fun onSaveCardArtRequested(uris: ImageUris, cardName: String) {
         (activity as MainActivity).onSaveCardArtRequested(uris, cardName)
     }
 
@@ -107,6 +108,9 @@ class CardDetailFragment : BasePresenter<CardDetailListener>(), CardDetailListen
         val favorite = Favorite(card.id, card, false)
         realm.insertOrUpdate(favorite)
         realm.commitTransaction()
+    }
 
+    override fun onShowReprintsClicked(card: Card?) {
+        (activity as MainActivity).onShowReprintsClicked(this.card)
     }
 }

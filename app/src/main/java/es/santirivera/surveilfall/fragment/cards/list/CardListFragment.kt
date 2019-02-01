@@ -3,6 +3,7 @@ package es.santirivera.surveilfall.fragment.cards.list
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView
 import es.santirivera.surveilfall.R
 import es.santirivera.surveilfall.activity.MainActivity
@@ -13,6 +14,8 @@ import es.santirivera.surveilfall.data.model.Card
 import es.santirivera.surveilfall.domain.usecases.GetCardsForQueryUseCase
 import es.santirivera.surveilfall.domain.usecases.base.UseCasePartialCallback
 import es.santirivera.surveilfall.fragment.search.SearchListener
+import es.santirivera.surveilfall.util.enumwrap.SortMethodDescriptor
+import es.santirivera.surveilfall.util.enumwrap.SortOrderDescriptor
 
 
 class CardListFragment : BasePresenter<CardListListener>(), CardListListener {
@@ -20,11 +23,14 @@ class CardListFragment : BasePresenter<CardListListener>(), CardListListener {
     override val titleForActivity: String? get() = if (isQueryEditable) query!! else fragmentTitle!!
     private var view: CardListView? = null
     private val cardCallback: CardListCallback = CardListCallback()
-    private var search: MenuItem? = null
+    private var menuItemSearch: MenuItem? = null
+    private var menuItemSort: MenuItem? = null
 
     var query: String? = ""
     var fragmentTitle: String? = ""
     var prints: GetCardsForQueryUseCase.PrintsToInclude = GetCardsForQueryUseCase.PrintsToInclude.PRINTS
+    var sortMethod: GetCardsForQueryUseCase.SortMethod = GetCardsForQueryUseCase.SortMethod.NAME
+    var sortOrder: GetCardsForQueryUseCase.SortOrder = GetCardsForQueryUseCase.SortOrder.AUTO
     var isQueryEditable: Boolean = false
     var searchListener: SearchListener? = null
 
@@ -39,13 +45,13 @@ class CardListFragment : BasePresenter<CardListListener>(), CardListListener {
     }
 
     override fun instanceView(): BaseView<*> {
-        setHasOptionsMenu(isQueryEditable)
+        setHasOptionsMenu(true)
         view = CardListView(activity as BaseActivity, this)
         return view as CardListView
     }
 
     override fun loadViewData() {
-        val input = GetCardsForQueryUseCase.Input(this.query!!, page, prints)
+        val input = GetCardsForQueryUseCase.Input(this.query!!, page, prints, sortMethod, sortOrder)
         val useCase = useCaseProvider?.getCardsForQueryUseCase
         useCaseHandler?.execute(useCase, input, cardCallback)
     }
@@ -79,42 +85,66 @@ class CardListFragment : BasePresenter<CardListListener>(), CardListListener {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
-        inflater.inflate(R.menu.menu_search, menu)
-        search = menu.findItem(R.id.action_search)
-        val searchView = search!!.actionView as SearchView
-        searchView.setQuery(query, false)
-        searchView.clearFocus()
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+        if (isQueryEditable) {
+            inflater.inflate(R.menu.menu_search, menu)
+            menuItemSearch = menu.findItem(R.id.action_search)
+            val searchView = menuItemSearch!!.actionView as SearchView
+            searchView.setQuery(query, false)
+            searchView.clearFocus()
+            searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
 
-            override fun onQueryTextSubmit(newQuery: String): Boolean {
-                performNewQuery(newQuery)
-                if (!searchView.isIconified) {
-                    searchView.isIconified = true
+                override fun onQueryTextSubmit(newQuery: String): Boolean {
+                    performNewQuery(newQuery)
+                    if (!searchView.isIconified) {
+                        searchView.isIconified = true
+                    }
+                    menuItemSearch!!.collapseActionView()
+                    return true
                 }
-                search!!.collapseActionView()
-                return true
-            }
 
-            override fun onQueryTextChange(s: String): Boolean {
-                if (s == "" && justOpened) {
-                    justOpened = false
-                    searchView.setQuery(query, false)
+                override fun onQueryTextChange(s: String): Boolean {
+                    if (s == "" && justOpened) {
+                        justOpened = false
+                        searchView.setQuery(query, false)
+                    }
+                    return false
                 }
-                return false
-            }
 
-        })
+            })
+        }
+        inflater.inflate(R.menu.menu_order, menu)
+        menuItemSort = menu.findItem(R.id.action_sort)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item == search) {
-            justOpened = true
-            val searchView = search!!.actionView as SearchView
-            searchView.setQuery(query, false)
-            searchView.clearFocus()
-            return true
+
+        return when (item) {
+            menuItemSearch -> {
+                justOpened = true
+                val searchView = menuItemSearch!!.actionView as SearchView
+                searchView.setQuery(query, false)
+                searchView.clearFocus()
+                true
+            }
+            menuItemSort -> {
+                val sortMethods = SortMethodDescriptor.getDescriptorsList(activity!!)
+                val sortOrders = SortOrderDescriptor.getDescriptorsList(activity!!)
+                AlertDialog.Builder(activity!!).setTitle(R.string.title_sort_method).setItems(sortMethods) { dialog, which ->
+                    val sortMethod: GetCardsForQueryUseCase.SortMethod = SortMethodDescriptor.forDescription(activity!!, sortMethods[which]).method
+                    dialog.dismiss()
+                    AlertDialog.Builder(activity!!).setTitle(R.string.title_sort_order).setItems(sortOrders) { dialog2, which2 ->
+                        val sortOrder: GetCardsForQueryUseCase.SortOrder = SortOrderDescriptor.forDescription(activity!!, sortOrders[which2]).sortOrder
+                        this.sortMethod = sortMethod
+                        this.sortOrder = sortOrder
+                        dialog2.dismiss()
+                        performNewQuery(query!!)
+                    }.show()
+                }.show()
+                true
+            }
+            else -> false
         }
-        return super.onOptionsItemSelected(item)
+
     }
 
 

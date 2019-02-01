@@ -18,12 +18,23 @@ interface WServices {
     val artistNames: Call<Catalog>
 
     @GET("/cards/search")
-    fun cardsForQuery(@Query("q") query: String, @Query("page") page: Int, @Query("unique") prints: String): Call<CardList>
+    fun cardsForQuery(
+            @Query("q") query: String,
+            @Query("page") page: Int,
+            @Query("unique") prints: String,
+            @Query("order") sortType: String,
+            @Query("dir") sortOrder: String
+    ): Call<CardList>
 
     @GET("/cards/{setCode}/{numberInSet}")
-    fun cardInSet(@Path("setCode") setCode: String, @Path("numberInSet") numberInSet: Int): Call<Card>
+    fun cardInSet(
+            @Path("setCode") setCode: String,
+            @Path("numberInSet") numberInSet: Int
+    ): Call<Card>
 
     @GET("/cards/random")
-    fun randomCard(@Query("q") query: String): Call<Card>
+    fun randomCard(
+            @Query("q") query: String
+    ): Call<Card>
 
 }

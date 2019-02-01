@@ -23,4 +23,21 @@
     <string name="request_permission_storage">Surveilfall needs your permission to write to your external storage. This is used to save card images and art crops to your gallery when you long press a card.</string>
     <string name="downloard_card">Download card art</string>
     <string name="choose_card_quality">Choose a quality for your download</string>
+    <string name="action_sort">Sort method</string>
+    <string name="order_ascending">Ascending</string>
+    <string name="order_descending">Descending</string>
+    <string name="order_automatic">Automatic</string>
+    <string name="sort_method_name">Sort by name</string>
+    <string name="sort_method_set">Sort by set code and number</string>
+    <string name="sort_method_release">Sort by release date</string>
+    <string name="sort_method_rarity">Sort by rarity</string>
+    <string name="sort_method_color">Sort by color</string>
+    <string name="sort_method_cmd">Sort by converted mana cost</string>
+    <string name="sort_method_power">Sort by Power</string>
+    <string name="sort_method_toughness">Sort by Toughness</string>
+    <string name="sort_method_edhrec">Sort by EDHREC rating</string>
+    <string name="sort_method_artist">Sort by artist</string>
+    <string name="title_sort_method">Choose a sorting method</string>
+    <string name="title_sort_order">How should the sorting be performed?</string>
+    <string name="show_reprints">Show Reprints</string>
 </resources>
