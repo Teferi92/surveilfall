@@ -2,6 +2,7 @@ package es.santirivera.surveilfall.fragment.cards.detail
 
 import android.widget.Button
 import android.widget.ImageView
+import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -44,7 +45,7 @@ class CardDetailView(baseActivity: BaseActivity, presenter: CardDetailListener) 
 
         if (card.imageUris != null) {
             // Only one face
-            Glide.with(imageViewCard as ImageView).load(card.imageUris!!.png).apply(requestOptions).into(imageViewCard as ImageView)
+            Glide.with(imageViewCard as ImageView).load(card.imageUris!!.large).apply(requestOptions).into(imageViewCard as ImageView)
             imageViewCard!!.setOnLongClickListener {
                 presenter.onSaveCardArtRequested(card.imageUris!!, card.name)
                 true
@@ -88,6 +89,10 @@ class CardDetailView(baseActivity: BaseActivity, presenter: CardDetailListener) 
 
     fun setIsFavorite(favorite: Boolean) {
         presenter.toggleFavoriteAction(favorite)
+    }
+
+    fun setTransitionName(id: String) {
+        ViewCompat.setTransitionName(imageViewCard!!, id)
     }
 
 

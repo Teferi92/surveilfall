@@ -61,8 +61,8 @@ class MomirView(activity: BaseActivity, presenter: MomirListener) : BaseView<Mom
         cardAdapter.notifyDataSetChanged()
     }
 
-    override fun onCardClicked(card: Card) {
-        presenter.onCardClicked(card)
+    override fun onCardClicked(card: Card, view:View) {
+        presenter.onCardClicked(card, view)
     }
 
     fun showHelp() {

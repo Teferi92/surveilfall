@@ -9,7 +9,7 @@
     <color name="secondaryDarkColor">#000a12</color>
     <color name="textColorDark">#000000</color>
     <color name="textColor">#ffffff</color>
-    <color name="hintColor">#999999</color>
+    <color name="hintColor">#222222</color>
 
     <!-- Legality -->
     <color name="banned">#CC7D83</color>

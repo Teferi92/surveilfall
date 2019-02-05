@@ -1,5 +1,6 @@
 package es.santirivera.surveilfall.fragment.cards.list
 
+import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import es.santirivera.surveilfall.R
@@ -43,8 +44,8 @@ class CardListView(baseActivity: BaseActivity, presenter: CardListListener) : Ba
         cardAdapter.notifyDataSetChanged()
     }
 
-    override fun onCardClicked(card: Card) {
-        presenter.onCardClicked(card);
+    override fun onCardClicked(card: Card, view: View) {
+        presenter.onCardClicked(card, view)
     }
 
 

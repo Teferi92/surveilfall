@@ -3,6 +3,7 @@ package es.santirivera.surveilfall.fragment.momir
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import android.view.View
 import es.santirivera.surveilfall.R
 import es.santirivera.surveilfall.activity.MainActivity
 import es.santirivera.surveilfall.base.activity.BaseActivity
@@ -49,8 +50,8 @@ class MomirFragment : BasePresenter<MomirListener>(), MomirListener {
         return true
     }
 
-    override fun onCardClicked(card: Card) {
-        (activity as MainActivity).onCardClicked(card)
+    override fun onCardClicked(card: Card, view: View) {
+        (activity as MainActivity).onCardClicked(card, view)
     }
 
     override fun onCardRequested(cmc: Int) {

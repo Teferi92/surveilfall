@@ -5,8 +5,12 @@ import es.santirivera.surveilfall.activity.MainActivity
 import es.santirivera.surveilfall.base.activity.BaseActivity
 import es.santirivera.surveilfall.base.presenter.BasePresenter
 import es.santirivera.surveilfall.base.view.BaseView
+import es.santirivera.surveilfall.data.model.WordBankItem
 import es.santirivera.surveilfall.domain.usecases.GetRandomCardUseCase
+import es.santirivera.surveilfall.domain.usecases.GetWordBankUseCase
 import es.santirivera.surveilfall.domain.usecases.base.UseCasePartialCallback
+import io.realm.Realm
+import io.realm.RealmChangeListener
 
 class SearchFragment : BasePresenter<SearchListener>(), SearchListener {
 
@@ -20,18 +24,38 @@ class SearchFragment : BasePresenter<SearchListener>(), SearchListener {
     }
 
     override fun loadViewData() {
+        val realm = Realm.getDefaultInstance()
+        val search = realm
+                .where(WordBankItem::class.java)
+                .findAllAsync()
+        view?.onWordBankReceived(search)
+        search.addChangeListener(RealmChangeListener {
+            view?.onWordBankReceived(it)
+        })
+
+        useCaseHandler!!.execute(
+                useCaseProvider!!.getWordBankUseCase,
+                object : UseCasePartialCallback<GetWordBankUseCase.OkOutput, GetWordBankUseCase.ErrorOutput>() {
+                    override fun isReady(): Boolean {
+                        return true
+                    }
+
+                    override fun onSuccess(tag: String?, response: GetWordBankUseCase.OkOutput) {
+                        realm.beginTransaction()
+                        for (word in response.words) {
+                            realm.insertOrUpdate(word)
+                        }
+                        realm.commitTransaction()
+                        view?.onWordBankReceived(response.words)
+                    }
+                }
+        )
+
         // There's no data to load
     }
 
-
     override fun onSearchClicked(query: String, listener: SearchListener) {
         (activity as MainActivity).onSearchClicked(query, listener)
-    }
-
-    override fun onRandomClicked(query: String) {
-        val useCase = useCaseProvider?.getRandomCardUseCase
-        val input = GetRandomCardUseCase.Input(query)
-        useCaseHandler?.execute(useCase, input, RandomCaseCallback())
     }
 
     override fun shouldShowMenu(): Boolean {
@@ -45,16 +69,5 @@ class SearchFragment : BasePresenter<SearchListener>(), SearchListener {
     override fun onResume() {
         super.onResume()
         view!!.setQueryValue()
-    }
-
-    inner class RandomCaseCallback : UseCasePartialCallback<GetRandomCardUseCase.OkOutput, GetRandomCardUseCase.ErrorOutput>() {
-        override fun isReady(): Boolean {
-            return true
-        }
-
-        override fun onSuccess(tag: String?, response: GetRandomCardUseCase.OkOutput?) {
-            (activity as MainActivity).onCardClicked(response!!.card)
-        }
-
     }
 }

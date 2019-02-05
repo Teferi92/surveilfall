@@ -1,5 +1,6 @@
 package es.santirivera.surveilfall.fragment.cards.favorites
 
+import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import es.santirivera.surveilfall.R
@@ -33,8 +34,8 @@ class FavoritesListView(baseActivity: BaseActivity, presenter: FavoritesListList
         cardAdapter.notifyDataSetChanged()
     }
 
-    override fun onCardClicked(card: Card) {
-        presenter.onCardClicked(card);
+    override fun onCardClicked(card: Card, view: View) {
+        presenter.onCardClicked(card, view)
     }
 
 

@@ -81,6 +81,22 @@ public class AppRepositoryImpl implements AppRepository {
         }
     }
 
+    @NotNull
+    @Override
+    public RepositoryResponse<List<String>> getWordBank() {
+        Call<Catalog> call = wServices.getWordBank();
+        try {
+            Response<Catalog> response = call.execute();
+            if (response.isSuccessful()) {
+                return new NetRepositoryResponse<>(response.body().getData());
+            } else {
+                return new NetErrorResponse<>();
+            }
+        } catch (IOException e) {
+            throw new WSNetworkException(e);
+        }
+    }
+
 
     @NotNull
     @Override

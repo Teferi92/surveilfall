@@ -3,6 +3,7 @@ package es.santirivera.surveilfall.fragment.cards.list
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView
 import es.santirivera.surveilfall.R
@@ -56,8 +57,8 @@ class CardListFragment : BasePresenter<CardListListener>(), CardListListener {
         useCaseHandler?.execute(useCase, input, cardCallback)
     }
 
-    override fun onCardClicked(card: Card) {
-        (activity as MainActivity).onCardClicked(card)
+    override fun onCardClicked(card: Card, view: View) {
+        (activity as MainActivity).onCardClicked(card, view)
     }
 
 

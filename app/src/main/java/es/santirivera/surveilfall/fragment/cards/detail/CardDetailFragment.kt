@@ -1,8 +1,11 @@
 package es.santirivera.surveilfall.fragment.cards.detail
 
+import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import android.view.View
+import androidx.core.view.ViewCompat
 import es.santirivera.surveilfall.R
 import es.santirivera.surveilfall.activity.MainActivity
 import es.santirivera.surveilfall.base.activity.BaseActivity
@@ -26,6 +29,7 @@ class CardDetailFragment : BasePresenter<CardDetailListener>(), CardDetailListen
 
     var favorite = false
 
+
     override fun instanceView(): BaseView<*> {
         setHasOptionsMenu(true)
         view = CardDetailView(activity as BaseActivity, this)
@@ -36,6 +40,12 @@ class CardDetailFragment : BasePresenter<CardDetailListener>(), CardDetailListen
         isFavorite()
         activity!!.title = card!!.name
         view?.onCardLoaded(card!!)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        this.view!!.setTransitionName(card!!.id)
+        startPostponedEnterTransition()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -113,4 +123,5 @@ class CardDetailFragment : BasePresenter<CardDetailListener>(), CardDetailListen
     override fun onShowReprintsClicked(card: Card?) {
         (activity as MainActivity).onShowReprintsClicked(this.card)
     }
+
 }

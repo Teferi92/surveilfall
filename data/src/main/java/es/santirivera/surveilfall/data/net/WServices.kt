@@ -17,6 +17,9 @@ interface WServices {
     @get:GET("/catalog/artist-names")
     val artistNames: Call<Catalog>
 
+    @get:GET("/catalog/word-bank")
+    val wordBank: Call<Catalog>
+
     @GET("/cards/search")
     fun cardsForQuery(
             @Query("q") query: String,

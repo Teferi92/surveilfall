@@ -14,15 +14,13 @@ class UseCaseProvider(private val appRepository: AppRepository) {
     val getCardsForQueryUseCase: GetCardsForQueryUseCase
         get() = GetCardsForQueryUseCase(appRepository)
 
-    val getCardInSetUseCase: GetCardInSetUseCase
-        get() = GetCardInSetUseCase(appRepository)
-
     val getRandomCardUseCase: GetRandomCardUseCase
         get() = GetRandomCardUseCase(appRepository)
 
     val getBitmapFromURLUseCase: GetBitmapFromURLUseCase
         get() = GetBitmapFromURLUseCase()
 
-    val getReprintsForCardUseCase: GetReprintsForCardUseCase
-        get() = GetReprintsForCardUseCase(appRepository)
+    val getWordBankUseCase: GetWordBankUseCase
+        get() = GetWordBankUseCase(appRepository)
+
 }

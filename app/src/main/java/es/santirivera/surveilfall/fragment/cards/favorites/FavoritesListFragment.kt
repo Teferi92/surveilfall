@@ -1,5 +1,6 @@
 package es.santirivera.surveilfall.fragment.cards.favorites
 
+import android.view.View
 import es.santirivera.surveilfall.R
 import es.santirivera.surveilfall.activity.MainActivity
 import es.santirivera.surveilfall.base.activity.BaseActivity
@@ -30,8 +31,8 @@ class FavoritesListFragment : BasePresenter<FavoritesListListener>(), FavoritesL
         })
     }
 
-    override fun onCardClicked(card: Card) {
-        (activity as MainActivity).onCardClicked(card)
+    override fun onCardClicked(card: Card, view: View) {
+        (activity as MainActivity).onCardClicked(card, view)
     }
 
     override fun shouldShowMenu(): Boolean {

@@ -14,10 +14,11 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginStart="42dp"
-            android:src="@drawable/placeholder"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="42dp"
             android:paddingBottom="16dp"
+            android:src="@drawable/placeholder"
+            android:transitionName="cardImage"
             app:layout_constraintDimensionRatio="H,672:936"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -30,9 +31,9 @@
             android:layout_marginEnd="24dp"
             android:src="@drawable/ic_back_side"
             app:fabSize="normal"
-            app:rippleColor="@color/primaryColor"
             app:layout_constraintBottom_toBottomOf="@id/imageViewCardImage"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:rippleColor="@color/primaryColor" />
 
         <Button
             android:id="@+id/buttonShowReprints"

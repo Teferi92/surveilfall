@@ -19,7 +19,6 @@ import javax.inject.Inject
 abstract class BasePresenter<ListenerType : BaseNavigation> : Fragment() {
 
     protected val LOG_TAG: String = javaClass.simpleName
-    protected var viewCreatedListener: ViewCreatedListener? = null
 
     protected var callback: ListenerType? = null
 
@@ -90,18 +89,10 @@ abstract class BasePresenter<ListenerType : BaseNavigation> : Fragment() {
 
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        if (viewCreatedListener != null) {
-            viewCreatedListener!!.onViewCreated(view)
-        }
-    }
-
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         loadViewData()
     }
-
 
 
     fun backPressed(): Boolean {

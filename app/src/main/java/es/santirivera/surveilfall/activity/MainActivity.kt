@@ -9,6 +9,7 @@ import android.media.MediaScannerConnection
 import android.net.Uri
 import android.os.Environment
 import android.view.MenuItem
+import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -17,10 +18,12 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
+import androidx.core.view.ViewCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.transition.TransitionInflater
 import es.santirivera.surveilfall.R
 import es.santirivera.surveilfall.adapter.LeftDrawerAdapter
 import es.santirivera.surveilfall.adapter.drawer.DrawerItem
@@ -112,13 +115,13 @@ class MainActivity : BaseActivity(),
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return if (drawerToggle!!.onOptionsItemSelected(item)) {
-            true
-        } else if (item.itemId == android.R.id.home) {
-            onBackPressed()
-            true
-        } else {
-            super.onOptionsItemSelected(item)
+        return when {
+            drawerToggle!!.onOptionsItemSelected(item) -> true
+            item.itemId == android.R.id.home -> {
+                onBackPressed()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
     }
 
@@ -151,8 +154,8 @@ class MainActivity : BaseActivity(),
         )
     }
 
-    override fun onCardClicked(card: Card) {
-        openCard(card, true)
+    override fun onCardClicked(card: Card, view: View) {
+        openCard(card, true, view)
     }
 
     override fun onNewQuery(query: String) {
@@ -279,8 +282,6 @@ class MainActivity : BaseActivity(),
         }
     }
 
-    override fun onRandomClicked(query: String) {
-    }
 
     private fun openSets() {
         supportFragmentManager.popBackStack()
@@ -288,6 +289,7 @@ class MainActivity : BaseActivity(),
         supportFragmentManager
                 .beginTransaction()
                 .disallowAddToBackStack()
+                .setCustomAnimations(R.anim.fade_in, R.anim.fade_out)
                 .replace(R.id.content, fragment)
                 .commit()
     }
@@ -299,6 +301,7 @@ class MainActivity : BaseActivity(),
         supportFragmentManager
                 .beginTransaction()
                 .disallowAddToBackStack()
+                .setCustomAnimations(R.anim.fade_in, R.anim.fade_out)
                 .replace(R.id.content, fragment)
                 .commit()
         setDrawerEnabled(true)
@@ -311,6 +314,7 @@ class MainActivity : BaseActivity(),
         supportFragmentManager
                 .beginTransaction()
                 .disallowAddToBackStack()
+                .setCustomAnimations(R.anim.fade_in, R.anim.fade_out)
                 .replace(R.id.content, fragment)
                 .commit()
     }
@@ -322,6 +326,7 @@ class MainActivity : BaseActivity(),
         supportFragmentManager
                 .beginTransaction()
                 .disallowAddToBackStack()
+                .setCustomAnimations(R.anim.fade_in, R.anim.fade_out)
                 .replace(R.id.content, fragment)
                 .commit()
     }
@@ -333,6 +338,7 @@ class MainActivity : BaseActivity(),
         supportFragmentManager
                 .beginTransaction()
                 .disallowAddToBackStack()
+                .setCustomAnimations(R.anim.fade_in, R.anim.fade_out)
                 .replace(R.id.content, fragment)
                 .commit()
     }
@@ -356,8 +362,9 @@ class MainActivity : BaseActivity(),
         fragment.isQueryEditable = isQueryEditable
         fragment.searchListener = listener
         var transaction = supportFragmentManager.beginTransaction()
-        if (addToBackStack) {
-            transaction = transaction.addToBackStack("cardListQuery")
+        transaction = transaction.setCustomAnimations(R.anim.fade_in, R.anim.fade_out)
+        transaction = if (addToBackStack) {
+            transaction.addToBackStack("cardListQuery")
         } else {
             transaction.disallowAddToBackStack()
         }
@@ -365,16 +372,21 @@ class MainActivity : BaseActivity(),
         transaction.commit()
     }
 
-    private fun openCard(card: Card, addToBackStack: Boolean) {
+    private fun openCard(card: Card, addToBackStack: Boolean, view: View) {
         val fragment = CardDetailFragment()
+        currentFragment.sharedElementReturnTransition = null
+        currentFragment.exitTransition = null
+        fragment.sharedElementEnterTransition = TransitionInflater.from(this).inflateTransition(R.transition.transition)
+        fragment.enterTransition = null
         currentFragment = fragment
         fragment.card = card
         var transaction = supportFragmentManager.beginTransaction()
-        if (addToBackStack) {
-            transaction = transaction.addToBackStack("cardDetail")
+        transaction = if (addToBackStack) {
+            transaction.addToBackStack("cardDetail")
         } else {
             transaction.disallowAddToBackStack()
         }
+        transaction = transaction.addSharedElement(view, card.id)
         transaction = transaction.replace(R.id.content, fragment)
         transaction.commit()
     }
@@ -396,5 +408,6 @@ class MainActivity : BaseActivity(),
             openSearch()
         }
     }
+
 
 }

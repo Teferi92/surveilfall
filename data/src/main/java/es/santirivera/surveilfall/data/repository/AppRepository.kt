@@ -14,6 +14,8 @@ interface AppRepository {
 
     val artistNames: RepositoryResponse<List<String>>
 
+    val wordBank: RepositoryResponse<List<String>>
+
     fun cardsForQuery(query: String, page: Int, prints: String, sortMethod: String, sortDirection: String): RepositoryResponse<CardList>
 
     fun cardInSet(setCode: String, cardInSet: Int): RepositoryResponse<Card>
