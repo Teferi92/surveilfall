@@ -31,22 +31,46 @@ open class Legalities(
         @SerializedName("oldschool")
         var oldSchool: String = "") : RealmObject() {
 
+    private val formatArray: Array<String>
+        get() = arrayOf(
+                "Standard",
+                "Future Standard",
+                "Modern",
+                "Legacy",
+                "Vintage",
+                "Pauper",
+                "Frontier",
+                "EDH",
+                "Duel Commander",
+                "Penny",
+                "Old School")
+
+    private val legalityArray: Array<String>
+        get() = arrayOf(
+                standard,
+                future,
+                modern,
+                legacy,
+                vintage,
+                pauper,
+                frontier,
+                commander,
+                duelCommander,
+                penny,
+                oldSchool
+        )
 
     fun toLegalityList(): ArrayList<Legality> {
         val list = ArrayList<Legality>()
-        list.add(toLegality("Standard", standard))
-        list.add(toLegality("Future Standard", future))
-        list.add(toLegality("Modern", modern))
-        list.add(toLegality("Legacy", legacy))
-        list.add(toLegality("Vintage", vintage))
-        list.add(toLegality("Pauper", pauper))
-        list.add(toLegality("Frontier", frontier))
-        list.add(toLegality("EDH", commander))
-        list.add(toLegality("Duel Commander", duelCommander))
-        list.add(toLegality("1v1 Commander.", oneVsOneCommander))
-        list.add(toLegality("Penny", penny))
-        list.add(toLegality("Brawl", brawl))
-        list.add(toLegality("Old School", oldSchool))
+        val formatArray = this.formatArray
+        val legalityArray = this.legalityArray
+
+        for ((i, name) in formatArray.withIndex()) {
+            val value = legalityArray[i]
+            if (value.isValid()) {
+                list.add(toLegality(name, value))
+            }
+        }
         return list
     }
 
@@ -56,8 +80,12 @@ open class Legalities(
             "not_legal" -> Legality(name, Legality.Status.NOT_LEGAL)
             "banned" -> Legality(name, Legality.Status.BANNED)
             "restricted" -> Legality(name, Legality.Status.RESTRICTED)
-            else -> throw RuntimeException("Illegal argument")
+            else -> throw RuntimeException("Illegal argument (Name: $name, Status: $status)")
         }
     }
 
+}
+
+private fun String.isValid(): Boolean {
+    return equals("legal") || equals("not_legal") || equals("banned") || equals("restricted")
 }
