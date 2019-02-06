@@ -1,6 +1,5 @@
-package es.santirivera.surveilfall.domain.usecases
+package es.santirivera.surveilfall.domain.usecases.implementation.bitmap
 
-import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import es.santirivera.surveilfall.domain.usecases.base.StringErrorOutput

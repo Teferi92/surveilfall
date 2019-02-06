@@ -1,10 +1,19 @@
 package es.santirivera.surveilfall.data.model
 
-import io.realm.RealmObject
-import io.realm.annotations.PrimaryKey
+import androidx.annotation.NonNull
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import androidx.room.TypeConverters
+import es.santirivera.surveilfall.data.db.converter.CardConverter
 
-open class Favorite(
+@Entity
+data class Favorite(
         @PrimaryKey
-        var cardId: String? = null,
-        var card: Card? = null,
-        var isFavorite: Boolean = false) : RealmObject()
+        @NonNull
+        @ColumnInfo(name = "card_id")
+        val cardId: String = "",
+        @ColumnInfo(name = "card")
+        val card: Card,
+        @ColumnInfo(name = "is_favorite")
+        val isFavorite: Boolean = false)

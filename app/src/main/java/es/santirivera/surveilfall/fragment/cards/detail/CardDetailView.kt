@@ -43,11 +43,11 @@ class CardDetailView(baseActivity: BaseActivity, presenter: CardDetailListener) 
         cardDataList = card.toCardDataList()
         val requestOptions = RequestOptions().placeholder(R.drawable.placeholder)
 
-        if (card.imageUris != null) {
+        if (card.imageUris.small.isNotEmpty()) {
             // Only one face
-            Glide.with(imageViewCard as ImageView).load(card.imageUris!!.large).apply(requestOptions).into(imageViewCard as ImageView)
+            Glide.with(imageViewCard as ImageView).load(card.imageUris.large).apply(requestOptions).into(imageViewCard as ImageView)
             imageViewCard!!.setOnLongClickListener {
-                presenter.onSaveCardArtRequested(card.imageUris!!, card.name)
+                presenter.onSaveCardArtRequested(card.imageUris, card.name)
                 true
             }
             fab!!.hide()
@@ -80,7 +80,7 @@ class CardDetailView(baseActivity: BaseActivity, presenter: CardDetailListener) 
         recyclerViewCardData!!.adapter = CardDetailsAdapter(cardDataList!!, this)
 
         recyclerViewLegality!!.layoutManager = GridLayoutManager(baseActivity, 2)
-        recyclerViewLegality!!.adapter = LegalityAdapter(card.legalities!!.toLegalityList())
+        recyclerViewLegality!!.adapter = LegalityAdapter(card.legalities.toLegalityList())
     }
 
     override fun onArtistClicked(artist: String) {

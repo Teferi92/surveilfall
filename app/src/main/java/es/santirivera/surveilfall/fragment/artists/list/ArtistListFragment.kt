@@ -5,7 +5,7 @@ import es.santirivera.surveilfall.activity.MainActivity
 import es.santirivera.surveilfall.base.activity.BaseActivity
 import es.santirivera.surveilfall.base.presenter.BasePresenter
 import es.santirivera.surveilfall.base.view.BaseView
-import es.santirivera.surveilfall.domain.usecases.GetArtistNamesUseCase
+import es.santirivera.surveilfall.domain.usecases.implementation.artist.GetArtistNamesUseCase
 import es.santirivera.surveilfall.domain.usecases.base.UseCasePartialCallback
 
 

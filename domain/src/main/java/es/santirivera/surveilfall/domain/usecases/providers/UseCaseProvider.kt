@@ -1,9 +1,20 @@
 package es.santirivera.surveilfall.domain.usecases.providers
 
 import es.santirivera.surveilfall.data.repository.AppRepository
-import es.santirivera.surveilfall.domain.usecases.*
+import es.santirivera.surveilfall.data.repository.DBRepository
+import es.santirivera.surveilfall.domain.usecases.implementation.artist.GetArtistNamesUseCase
+import es.santirivera.surveilfall.domain.usecases.implementation.bitmap.GetBitmapFromURLUseCase
+import es.santirivera.surveilfall.domain.usecases.implementation.cards.GetCardsForQueryUseCase
+import es.santirivera.surveilfall.domain.usecases.implementation.cards.GetRandomCardUseCase
+import es.santirivera.surveilfall.domain.usecases.implementation.favorite.AddFavoriteUseCase
+import es.santirivera.surveilfall.domain.usecases.implementation.favorite.GetFavoritesUseCase
+import es.santirivera.surveilfall.domain.usecases.implementation.favorite.IsFavoriteUseCase
+import es.santirivera.surveilfall.domain.usecases.implementation.favorite.RemoveFavoriteUseCase
+import es.santirivera.surveilfall.domain.usecases.implementation.sets.GetSetsUseCase
+import es.santirivera.surveilfall.domain.usecases.implementation.wordbank.GetWordBankUseCase
+import es.santirivera.surveilfall.domain.usecases.implementation.wordbank.UpdateWordBankUseCase
 
-class UseCaseProvider(private val appRepository: AppRepository) {
+class UseCaseProvider(private val appRepository: AppRepository, private val dbRepository: DBRepository) {
 
     val getSetsUseCase: GetSetsUseCase
         get() = GetSetsUseCase(appRepository)
@@ -21,6 +32,21 @@ class UseCaseProvider(private val appRepository: AppRepository) {
         get() = GetBitmapFromURLUseCase()
 
     val getWordBankUseCase: GetWordBankUseCase
-        get() = GetWordBankUseCase(appRepository)
+        get() = GetWordBankUseCase(dbRepository)
+
+    val updateWordBankUseCase: UpdateWordBankUseCase
+        get() = UpdateWordBankUseCase(appRepository, dbRepository)
+
+    val addFavoriteUseCase: AddFavoriteUseCase
+        get() = AddFavoriteUseCase(dbRepository)
+
+    val removeFavoriteUseCase: RemoveFavoriteUseCase
+        get() = RemoveFavoriteUseCase(dbRepository)
+
+    val isFavoriteUseCase: IsFavoriteUseCase
+        get() = IsFavoriteUseCase(dbRepository)
+
+    val getFavoritesUseCase: GetFavoritesUseCase
+        get() = GetFavoritesUseCase(dbRepository)
 
 }

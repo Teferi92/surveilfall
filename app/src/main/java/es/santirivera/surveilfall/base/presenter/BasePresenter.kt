@@ -79,14 +79,9 @@ abstract class BasePresenter<ListenerType : BaseNavigation> : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val mainView = inflater.inflate(baseView!!.contentView, container, false)
-        setupPresenterLayout(mainView)
         ButterKnife.bind(this, mainView)
         baseView!!.setupLayout(mainView)
         return mainView
-    }
-
-    private fun setupPresenterLayout(mainView: View) {
-
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

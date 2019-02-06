@@ -1,4 +1,4 @@
-package es.santirivera.surveilfall.domain.usecases
+package es.santirivera.surveilfall.domain.usecases.implementation.cards
 
 import es.santirivera.surveilfall.data.model.CardList
 import es.santirivera.surveilfall.data.repository.AppRepository

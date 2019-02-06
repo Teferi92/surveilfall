@@ -7,10 +7,8 @@ import es.santirivera.surveilfall.base.activity.BaseActivity
 import es.santirivera.surveilfall.base.presenter.BasePresenter
 import es.santirivera.surveilfall.base.view.BaseView
 import es.santirivera.surveilfall.data.model.Card
-import es.santirivera.surveilfall.data.model.Favorite
-import io.realm.Realm
-import io.realm.RealmChangeListener
-
+import es.santirivera.surveilfall.domain.usecases.base.UseCasePartialCallback
+import es.santirivera.surveilfall.domain.usecases.implementation.favorite.GetFavoritesUseCase
 
 class FavoritesListFragment : BasePresenter<FavoritesListListener>(), FavoritesListListener {
 
@@ -22,13 +20,25 @@ class FavoritesListFragment : BasePresenter<FavoritesListListener>(), FavoritesL
         return view as FavoritesListView
     }
 
+    override fun onResume() {
+        super.onResume()
+        view!!.resetAdapter()
+        loadViewData()
+    }
+
     override fun loadViewData() {
-        val realm = Realm.getDefaultInstance()
-        val search = realm.where(Favorite::class.java).equalTo("isFavorite", true).findAllAsync()
-        view?.onFavoritesReceived(search)
-        search.addChangeListener(RealmChangeListener {
-            view?.onFavoritesReceived(it)
-        })
+        useCaseHandler!!.execute(
+                useCaseProvider!!.getFavoritesUseCase,
+                object : UseCasePartialCallback<GetFavoritesUseCase.OkOutput, GetFavoritesUseCase.ErrorOutput>() {
+                    override fun onSuccess(tag: String?, response: GetFavoritesUseCase.OkOutput) {
+                        view!!.onFavoritesReceived(response.favorites)
+                    }
+
+                    override fun isReady(): Boolean {
+                        return true
+                    }
+                }
+        )
     }
 
     override fun onCardClicked(card: Card, view: View) {

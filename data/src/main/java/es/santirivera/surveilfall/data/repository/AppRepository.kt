@@ -8,13 +8,11 @@ import es.santirivera.surveilfall.data.repository.responses.RepositoryResponse
 
 interface AppRepository {
 
-    val tag: String
+    fun getSetList(): RepositoryResponse<SetList>
 
-    val setList: RepositoryResponse<SetList>
+    fun getArtistNames(): RepositoryResponse<List<String>>
 
-    val artistNames: RepositoryResponse<List<String>>
-
-    val wordBank: RepositoryResponse<List<String>>
+    fun getWordBank(): RepositoryResponse<List<String>>
 
     fun cardsForQuery(query: String, page: Int, prints: String, sortMethod: String, sortDirection: String): RepositoryResponse<CardList>
 

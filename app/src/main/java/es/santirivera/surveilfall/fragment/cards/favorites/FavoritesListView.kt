@@ -9,9 +9,7 @@ import es.santirivera.surveilfall.adapter.viewholder.CardViewHolder
 import es.santirivera.surveilfall.base.activity.BaseActivity
 import es.santirivera.surveilfall.base.view.BaseView
 import es.santirivera.surveilfall.data.model.Card
-import es.santirivera.surveilfall.data.model.CardList
 import es.santirivera.surveilfall.data.model.Favorite
-import io.realm.RealmResults
 
 class FavoritesListView(baseActivity: BaseActivity, presenter: FavoritesListListener) : BaseView<FavoritesListListener>(baseActivity, presenter), CardViewHolder.OnCardClickedListener {
 
@@ -26,10 +24,10 @@ class FavoritesListView(baseActivity: BaseActivity, presenter: FavoritesListList
         recyclerView!!.adapter = cardAdapter
     }
 
-    fun onFavoritesReceived(favorites: RealmResults<Favorite>) {
+    fun onFavoritesReceived(favorites: List<Favorite>) {
         cardAdapter.removeAll()
         for (favorite in favorites) {
-            cardAdapter.addCard(favorite.card!!)
+            cardAdapter.addCard(favorite.card)
         }
         cardAdapter.notifyDataSetChanged()
     }

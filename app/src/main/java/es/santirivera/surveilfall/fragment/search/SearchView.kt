@@ -58,6 +58,10 @@ class SearchView(baseActivity: BaseActivity, presenter: SearchListener) : BaseVi
     }
 
     fun onWordBankReceived(search: List<WordBankItem>) {
-        wordBankAdapter.update(search)
+        val list = ArrayList<String>()
+        for (item in search) {
+            list.add(item.name)
+        }
+        wordBankAdapter.update(list)
     }
 }

@@ -5,19 +5,19 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
-import androidx.core.view.ViewCompat
 import es.santirivera.surveilfall.R
 import es.santirivera.surveilfall.activity.MainActivity
 import es.santirivera.surveilfall.base.activity.BaseActivity
 import es.santirivera.surveilfall.base.presenter.BasePresenter
 import es.santirivera.surveilfall.base.view.BaseView
 import es.santirivera.surveilfall.data.model.Card
-import es.santirivera.surveilfall.data.model.Favorite
 import es.santirivera.surveilfall.data.model.ImageUris
-import io.realm.Realm
+import es.santirivera.surveilfall.domain.usecases.base.UseCasePartialCallback
+import es.santirivera.surveilfall.domain.usecases.implementation.favorite.AddFavoriteUseCase
+import es.santirivera.surveilfall.domain.usecases.implementation.favorite.IsFavoriteUseCase
+import es.santirivera.surveilfall.domain.usecases.implementation.favorite.RemoveFavoriteUseCase
 
 class CardDetailFragment : BasePresenter<CardDetailListener>(), CardDetailListener {
-
 
     override val titleForActivity: String? get() = card!!.name
     private var view: CardDetailView? = null
@@ -88,36 +88,55 @@ class CardDetailFragment : BasePresenter<CardDetailListener>(), CardDetailListen
     }
 
     override fun isFavorite() {
-        val realm = Realm.getDefaultInstance()
-        val favorites = realm.where(Favorite::class.java).equalTo("cardId", card!!.id).findAll()
-        favorite = if (favorites.size == 0) {
-            false
-        } else {
-            val fave = favorites[0]
-            fave?.isFavorite ?: false
-        }
-        view!!.setIsFavorite(favorite)
+        useCaseHandler!!.execute(
+                useCaseProvider!!.isFavoriteUseCase,
+                IsFavoriteUseCase.Input(card!!.id),
+                object : UseCasePartialCallback<IsFavoriteUseCase.OkOutput, IsFavoriteUseCase.ErrorOutput>() {
+                    override fun isReady(): Boolean {
+                        return true
+                    }
+
+                    override fun onSuccess(tag: String?, response: IsFavoriteUseCase.OkOutput) {
+                        favorite = response.isFavorite
+                        view!!.setIsFavorite(response.isFavorite)
+                    }
+
+                }
+        )
     }
 
-    fun addFavorite(card: Card) {
-        favorite = true
-        view!!.setIsFavorite(favorite)
-        val realm = Realm.getDefaultInstance()
-        realm.beginTransaction()
-        val favorite = Favorite(card.id, card, true)
-        realm.insertOrUpdate(favorite)
-        realm.commitTransaction()
+    private fun addFavorite(card: Card) {
+        useCaseHandler!!.execute(
+                useCaseProvider!!.addFavoriteUseCase,
+                AddFavoriteUseCase.Input(card),
+                object : UseCasePartialCallback<AddFavoriteUseCase.OkOutput, AddFavoriteUseCase.ErrorOutput>() {
+                    override fun isReady(): Boolean {
+                        return true
+                    }
 
+                    override fun onSuccess(tag: String?, response: AddFavoriteUseCase.OkOutput?) {
+                        favorite = true
+                        view!!.setIsFavorite(true)
+                    }
+                }
+        )
     }
 
-    fun removeFavorite(card: Card) {
-        favorite = false
-        view!!.setIsFavorite(favorite)
-        val realm = Realm.getDefaultInstance()
-        realm.beginTransaction()
-        val favorite = Favorite(card.id, card, false)
-        realm.insertOrUpdate(favorite)
-        realm.commitTransaction()
+    private fun removeFavorite(card: Card) {
+        useCaseHandler!!.execute(
+                useCaseProvider!!.removeFavoriteUseCase,
+                RemoveFavoriteUseCase.Input(card),
+                object : UseCasePartialCallback<RemoveFavoriteUseCase.OkOutput, RemoveFavoriteUseCase.ErrorOutput>() {
+                    override fun isReady(): Boolean {
+                        return true
+                    }
+
+                    override fun onSuccess(tag: String?, response: RemoveFavoriteUseCase.OkOutput?) {
+                        favorite = false
+                        view!!.setIsFavorite(false)
+                    }
+                }
+        )
     }
 
     override fun onShowReprintsClicked(card: Card?) {

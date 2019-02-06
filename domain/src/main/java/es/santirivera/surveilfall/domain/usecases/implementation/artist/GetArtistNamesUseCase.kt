@@ -1,4 +1,4 @@
-package es.santirivera.surveilfall.domain.usecases
+package es.santirivera.surveilfall.domain.usecases.implementation.artist
 
 import es.santirivera.surveilfall.data.repository.AppRepository
 import es.santirivera.surveilfall.domain.usecases.base.StringErrorOutput
@@ -8,7 +8,7 @@ import es.santirivera.surveilfall.domain.usecases.base.UseCaseResponse
 class GetArtistNamesUseCase(private val appRepository: AppRepository) : UseCase<Void, GetArtistNamesUseCase.OkOutput, GetArtistNamesUseCase.ErrorOutput>() {
 
     override fun executeUseCase(requestValues: Void?): UseCaseResponse<OkOutput, ErrorOutput> {
-        val response = appRepository.artistNames
+        val response = appRepository.getArtistNames()
         return if (response.isSuccess!!) {
             val list = response.responseData
             UseCaseResponse.ok(OkOutput(list!!))

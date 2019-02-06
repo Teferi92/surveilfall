@@ -25,10 +25,11 @@ class CardViewHolder(itemView: View, private val listener: OnCardClickedListener
         ViewCompat.setTransitionName(itemView, card.id)
         val requestOptions = RequestOptions().placeholder(R.drawable.placeholder)
         var imageUris = card.imageUris
-        if (imageUris == null && card.cardFaces != null) {
-            imageUris = card.cardFaces!![0]!!.imageUris
+
+        if (imageUris.small == "" && card.cardFaces.size > 0) {
+            imageUris = card.cardFaces[0].imageUris!!
         }
-        requestBuilder.load(imageUris?.normal).apply(requestOptions).into(imageViewIcon)
+        requestBuilder.load(imageUris.normal).apply(requestOptions).into(imageViewIcon)
     }
 
 }

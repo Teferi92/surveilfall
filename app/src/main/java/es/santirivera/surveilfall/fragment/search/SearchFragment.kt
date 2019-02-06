@@ -5,12 +5,10 @@ import es.santirivera.surveilfall.activity.MainActivity
 import es.santirivera.surveilfall.base.activity.BaseActivity
 import es.santirivera.surveilfall.base.presenter.BasePresenter
 import es.santirivera.surveilfall.base.view.BaseView
-import es.santirivera.surveilfall.data.model.WordBankItem
-import es.santirivera.surveilfall.domain.usecases.GetRandomCardUseCase
-import es.santirivera.surveilfall.domain.usecases.GetWordBankUseCase
+import es.santirivera.surveilfall.domain.usecases.implementation.wordbank.UpdateWordBankUseCase
 import es.santirivera.surveilfall.domain.usecases.base.UseCasePartialCallback
-import io.realm.Realm
-import io.realm.RealmChangeListener
+import es.santirivera.surveilfall.domain.usecases.implementation.wordbank.GetWordBankUseCase
+
 
 class SearchFragment : BasePresenter<SearchListener>(), SearchListener {
 
@@ -24,15 +22,6 @@ class SearchFragment : BasePresenter<SearchListener>(), SearchListener {
     }
 
     override fun loadViewData() {
-        val realm = Realm.getDefaultInstance()
-        val search = realm
-                .where(WordBankItem::class.java)
-                .findAllAsync()
-        view?.onWordBankReceived(search)
-        search.addChangeListener(RealmChangeListener {
-            view?.onWordBankReceived(it)
-        })
-
         useCaseHandler!!.execute(
                 useCaseProvider!!.getWordBankUseCase,
                 object : UseCasePartialCallback<GetWordBankUseCase.OkOutput, GetWordBankUseCase.ErrorOutput>() {
@@ -41,17 +30,10 @@ class SearchFragment : BasePresenter<SearchListener>(), SearchListener {
                     }
 
                     override fun onSuccess(tag: String?, response: GetWordBankUseCase.OkOutput) {
-                        realm.beginTransaction()
-                        for (word in response.words) {
-                            realm.insertOrUpdate(word)
-                        }
-                        realm.commitTransaction()
                         view?.onWordBankReceived(response.words)
                     }
                 }
         )
-
-        // There's no data to load
     }
 
     override fun onSearchClicked(query: String, listener: SearchListener) {

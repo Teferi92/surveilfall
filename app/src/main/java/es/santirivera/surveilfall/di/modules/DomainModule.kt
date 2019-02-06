@@ -5,6 +5,7 @@ import javax.inject.Singleton
 import dagger.Module
 import dagger.Provides
 import es.santirivera.surveilfall.data.repository.AppRepository
+import es.santirivera.surveilfall.data.repository.DBRepository
 import es.santirivera.surveilfall.domain.usecases.base.UseCaseHandler
 import es.santirivera.surveilfall.domain.usecases.base.UseCaseScheduler
 import es.santirivera.surveilfall.domain.usecases.base.UseCaseThreadPoolScheduler
@@ -15,8 +16,8 @@ class DomainModule {
 
     @Singleton
     @Provides
-    fun provideUseCaseProvider(appRepository: AppRepository): UseCaseProvider {
-        return UseCaseProvider(appRepository)
+    fun provideUseCaseProvider(appRepository: AppRepository, dbRepository: DBRepository): UseCaseProvider {
+        return UseCaseProvider(appRepository, dbRepository)
     }
 
     @Singleton

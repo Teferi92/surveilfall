@@ -6,7 +6,6 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.media.MediaScannerConnection
-import android.net.Uri
 import android.os.Environment
 import android.view.MenuItem
 import android.view.View
@@ -18,7 +17,6 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
-import androidx.core.view.ViewCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -32,8 +30,8 @@ import es.santirivera.surveilfall.base.activity.BaseActivity
 import es.santirivera.surveilfall.data.model.Card
 import es.santirivera.surveilfall.data.model.ImageUris
 import es.santirivera.surveilfall.data.model.Set
-import es.santirivera.surveilfall.domain.usecases.GetBitmapFromURLUseCase
-import es.santirivera.surveilfall.domain.usecases.GetCardsForQueryUseCase
+import es.santirivera.surveilfall.domain.usecases.implementation.bitmap.GetBitmapFromURLUseCase
+import es.santirivera.surveilfall.domain.usecases.implementation.cards.GetCardsForQueryUseCase
 import es.santirivera.surveilfall.domain.usecases.base.UseCasePartialCallback
 import es.santirivera.surveilfall.fragment.artists.list.ArtistListFragment
 import es.santirivera.surveilfall.fragment.artists.list.ArtistListListener
@@ -49,7 +47,6 @@ import es.santirivera.surveilfall.fragment.setlist.SetListFragment
 import es.santirivera.surveilfall.fragment.setlist.SetListListener
 import java.io.File
 import java.io.FileOutputStream
-
 
 class MainActivity : BaseActivity(),
         SetListListener,
@@ -289,7 +286,7 @@ class MainActivity : BaseActivity(),
         supportFragmentManager
                 .beginTransaction()
                 .disallowAddToBackStack()
-                .setCustomAnimations(R.anim.fade_in, R.anim.fade_out)
+                .setCustomAnimations(R.anim.fade_in, R.anim.fade_out, R.anim.fade_in, R.anim.fade_out)
                 .replace(R.id.content, fragment)
                 .commit()
     }
@@ -301,7 +298,7 @@ class MainActivity : BaseActivity(),
         supportFragmentManager
                 .beginTransaction()
                 .disallowAddToBackStack()
-                .setCustomAnimations(R.anim.fade_in, R.anim.fade_out)
+                .setCustomAnimations(R.anim.fade_in, R.anim.fade_out, R.anim.fade_in, R.anim.fade_out)
                 .replace(R.id.content, fragment)
                 .commit()
         setDrawerEnabled(true)
@@ -314,7 +311,7 @@ class MainActivity : BaseActivity(),
         supportFragmentManager
                 .beginTransaction()
                 .disallowAddToBackStack()
-                .setCustomAnimations(R.anim.fade_in, R.anim.fade_out)
+                .setCustomAnimations(R.anim.fade_in, R.anim.fade_out, R.anim.fade_in, R.anim.fade_out)
                 .replace(R.id.content, fragment)
                 .commit()
     }
@@ -326,7 +323,7 @@ class MainActivity : BaseActivity(),
         supportFragmentManager
                 .beginTransaction()
                 .disallowAddToBackStack()
-                .setCustomAnimations(R.anim.fade_in, R.anim.fade_out)
+                .setCustomAnimations(R.anim.fade_in, R.anim.fade_out, R.anim.fade_in, R.anim.fade_out)
                 .replace(R.id.content, fragment)
                 .commit()
     }
@@ -338,7 +335,7 @@ class MainActivity : BaseActivity(),
         supportFragmentManager
                 .beginTransaction()
                 .disallowAddToBackStack()
-                .setCustomAnimations(R.anim.fade_in, R.anim.fade_out)
+                .setCustomAnimations(R.anim.fade_in, R.anim.fade_out, R.anim.fade_in, R.anim.fade_out)
                 .replace(R.id.content, fragment)
                 .commit()
     }
@@ -362,7 +359,7 @@ class MainActivity : BaseActivity(),
         fragment.isQueryEditable = isQueryEditable
         fragment.searchListener = listener
         var transaction = supportFragmentManager.beginTransaction()
-        transaction = transaction.setCustomAnimations(R.anim.fade_in, R.anim.fade_out)
+        transaction = transaction.setCustomAnimations(R.anim.fade_in, R.anim.fade_out, R.anim.fade_in, R.anim.fade_out)
         transaction = if (addToBackStack) {
             transaction.addToBackStack("cardListQuery")
         } else {
@@ -374,7 +371,7 @@ class MainActivity : BaseActivity(),
 
     private fun openCard(card: Card, addToBackStack: Boolean, view: View) {
         val fragment = CardDetailFragment()
-        currentFragment.sharedElementReturnTransition = null
+        currentFragment.sharedElementReturnTransition = TransitionInflater.from(this).inflateTransition(R.transition.transition)
         currentFragment.exitTransition = null
         fragment.sharedElementEnterTransition = TransitionInflater.from(this).inflateTransition(R.transition.transition)
         fragment.enterTransition = null
@@ -408,6 +405,5 @@ class MainActivity : BaseActivity(),
             openSearch()
         }
     }
-
 
 }

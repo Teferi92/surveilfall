@@ -1,35 +1,34 @@
 package es.santirivera.surveilfall.data.model
 
 import com.google.gson.annotations.SerializedName
-import io.realm.RealmObject
 
-open class Legalities(
+data class Legalities(
         @SerializedName("standard")
-        var standard: String = "",
+        val standard: String = "",
         @SerializedName("frontier")
-        var frontier: String = "",
+        val frontier: String = "",
         @SerializedName("legacy")
-        var legacy: String = "",
+        val legacy: String = "",
         @SerializedName("commander")
-        var commander: String = "",
+        val commander: String = "",
         @SerializedName("modern")
-        var modern: String = "",
+        val modern: String = "",
         @SerializedName("pauper")
-        var pauper: String = "",
+        val pauper: String = "",
         @SerializedName("future")
-        var future: String = "",
+        val future: String = "",
         @SerializedName("vintage")
-        var vintage: String = "",
+        val vintage: String = "",
         @SerializedName("duel")
-        var duelCommander: String = "",
+        val duelCommander: String = "",
         @SerializedName("1v1")
-        var oneVsOneCommander: String = "",
+        val oneVsOneCommander: String = "",
         @SerializedName("brawl")
-        var brawl: String = "",
+        val brawl: String = "",
         @SerializedName("penny")
-        var penny: String = "",
+        val penny: String = "",
         @SerializedName("oldschool")
-        var oldSchool: String = "") : RealmObject() {
+        val oldSchool: String = "") {
 
     private val formatArray: Array<String>
         get() = arrayOf(

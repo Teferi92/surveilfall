@@ -10,7 +10,7 @@ import es.santirivera.surveilfall.base.activity.BaseActivity
 import es.santirivera.surveilfall.base.presenter.BasePresenter
 import es.santirivera.surveilfall.base.view.BaseView
 import es.santirivera.surveilfall.data.model.Card
-import es.santirivera.surveilfall.domain.usecases.GetRandomCardUseCase
+import es.santirivera.surveilfall.domain.usecases.implementation.cards.GetRandomCardUseCase
 import es.santirivera.surveilfall.domain.usecases.base.UseCasePartialCallback
 
 class MomirFragment : BasePresenter<MomirListener>(), MomirListener {

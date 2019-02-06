@@ -1,13 +1,11 @@
 package es.santirivera.surveilfall.data.model
 
 import com.google.gson.annotations.SerializedName
-import io.realm.RealmList
-import io.realm.RealmObject
 
-open class CardList(
+data class CardList(
         @SerializedName("total_cards")
-        var totalCards: Int = 0,
+        val totalCards: Int = 0,
         @SerializedName("data")
-        var data: RealmList<Card>? = null,
+        val data: ArrayList<Card>? = null,
         @SerializedName("has_more")
-        var hasMore: Boolean = false)
+        val hasMore: Boolean = false)

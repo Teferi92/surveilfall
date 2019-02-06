@@ -2,7 +2,7 @@ package es.santirivera.surveilfall.util.enumwrap
 
 import android.content.Context
 import es.santirivera.surveilfall.R
-import es.santirivera.surveilfall.domain.usecases.GetCardsForQueryUseCase
+import es.santirivera.surveilfall.domain.usecases.implementation.cards.GetCardsForQueryUseCase
 import java.util.ArrayList
 
 enum class SortOrderDescriptor(val sortOrder: GetCardsForQueryUseCase.SortOrder, val description: Int) {

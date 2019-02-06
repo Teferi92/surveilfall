@@ -13,7 +13,6 @@ import es.santirivera.surveilfall.di.modules.ActivityModule;
 import es.santirivera.surveilfall.di.modules.ApplicationModule;
 import es.santirivera.surveilfall.di.modules.DomainModule;
 import es.santirivera.surveilfall.di.modules.GsonModule;
-import es.santirivera.surveilfall.di.modules.RealmModule;
 import es.santirivera.surveilfall.di.modules.RepositoryModule;
 import es.santirivera.surveilfall.di.modules.WebServicesModule;
 import es.santirivera.surveilfall.domain.usecases.base.UseCaseHandler;
@@ -27,8 +26,7 @@ import es.santirivera.surveilfall.domain.usecases.providers.UseCaseProvider;
                 GsonModule.class,
                 DomainModule.class,
                 RepositoryModule.class,
-                WebServicesModule.class,
-                RealmModule.class
+                WebServicesModule.class
         })
 public interface ActivityComponent {
 
