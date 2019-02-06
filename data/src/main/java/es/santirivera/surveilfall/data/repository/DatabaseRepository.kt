@@ -22,9 +22,11 @@ class DatabaseRepository(val context: Context) : DBRepository {
 
     override fun updateWordBank(wordBank: List<WordBankItem>) {
         val dao = db.wordBankItemDao()
-        for (word in wordBank) {
-            dao.insert(word)
-        }
+        dao.insertAll(wordBank)
+    }
+
+    override fun clearWordBank() {
+        db.wordBankItemDao().clear()
     }
 
     override fun getFavorites(): RepositoryResponse<List<Favorite>> {
@@ -44,6 +46,10 @@ class DatabaseRepository(val context: Context) : DBRepository {
     override fun removeFavorite(card: Card) {
         val favorite = Favorite(card.id, card, false)
         db.favoriteDao().insert(favorite)
+    }
+
+    override fun clearFavorites() {
+        db.favoriteDao().clear()
     }
 
 }

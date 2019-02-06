@@ -2,9 +2,6 @@ package es.santirivera.surveilfall.base.activity
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-
-import javax.inject.Inject
-
 import butterknife.ButterKnife
 import es.santirivera.surveilfall.base.app.AndroidApplication
 import es.santirivera.surveilfall.di.components.ActivityComponent
@@ -12,6 +9,7 @@ import es.santirivera.surveilfall.di.components.DaggerActivityComponent
 import es.santirivera.surveilfall.di.modules.ApplicationModule
 import es.santirivera.surveilfall.domain.usecases.base.UseCaseHandler
 import es.santirivera.surveilfall.domain.usecases.providers.UseCaseProvider
+import javax.inject.Inject
 
 abstract class BaseActivity : AppCompatActivity() {
 

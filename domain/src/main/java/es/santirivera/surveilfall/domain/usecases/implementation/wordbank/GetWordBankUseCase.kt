@@ -10,13 +10,8 @@ class GetWordBankUseCase(private val dbRepository: DBRepository) : UseCase<Void,
 
     override fun executeUseCase(requestValues: Void?): UseCaseResponse<OkOutput, ErrorOutput> {
         val response = dbRepository.getWordBank()
-
         val list = response.responseData
-        val worldBankList = ArrayList<WordBankItem>()
-        for (item in (list as List<String>)) {
-            worldBankList.add(WordBankItem(item))
-        }
-        return UseCaseResponse.ok(OkOutput(worldBankList))
+        return UseCaseResponse.ok(OkOutput(list as List<WordBankItem>))
 
     }
 

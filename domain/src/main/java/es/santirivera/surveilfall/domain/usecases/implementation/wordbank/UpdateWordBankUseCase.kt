@@ -17,6 +17,7 @@ class UpdateWordBankUseCase(private val appRepository: AppRepository, private va
             for (item in (list as List<String>)) {
                 worldBankList.add(WordBankItem(item))
             }
+            dbRepository.clearWordBank()
             dbRepository.updateWordBank(worldBankList)
             UseCaseResponse.ok()
         } else {
@@ -24,7 +25,7 @@ class UpdateWordBankUseCase(private val appRepository: AppRepository, private va
         }
     }
 
-    class OkOutput()
+    class OkOutput
 
     class ErrorOutput(errorDesc: String) : StringErrorOutput(errorDesc)
 

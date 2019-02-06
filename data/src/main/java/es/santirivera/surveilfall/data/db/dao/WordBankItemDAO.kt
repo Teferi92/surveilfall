@@ -12,7 +12,12 @@ interface WordBankItemDAO {
     @Query("SELECT * FROM WordBankItem")
     fun loadWordBankItems(): List<WordBankItem>
 
-    @Insert(onConflict = OnConflictStrategy.ABORT)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(item: WordBankItem)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertAll(list: List<WordBankItem>)
+
+    @Query("DELETE FROM WordBankItem")
+    fun clear()
 }

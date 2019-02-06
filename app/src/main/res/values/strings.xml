@@ -40,4 +40,11 @@
     <string name="title_sort_method">Choose a sorting method</string>
     <string name="title_sort_order">How should the sorting be performed?</string>
     <string name="show_reprints">Show Reprints</string>
+    <string name="preference_title_local_storage">Local Storage</string>
+    <string name="preference_title_clear_favorites">Clear favorites</string>
+    <string name="preference_title_clear_word_bank">Reset word bank</string>
+    <string name="preference_summary_clear_word_bank">The word bank is used to suggest terms on the Search screen. It\'s composed of every word that is at least 2 characters long that can appear in a card name. To save data, the app only downloads it once, but you can reset it after a set release to get the new updated list.</string>
+    <string name="word_bank_has_been_reset">Word bank has been reset</string>
+    <string name="favorites_have_been_deleted">All of your Favorites have been deleted.</string>
+    <string name="preference_summary_clear_favorites">This deletes all the cards you have marked as favorites. All the card data is stored locally when you favorite it so you can access it offline, however there is no guarantee it will stay updated as the legality changes or any of the data changes (such as in an Oracle text change or when the real name of a card is revealed during spoiler season and the unofficial one disappears).</string>
 </resources>

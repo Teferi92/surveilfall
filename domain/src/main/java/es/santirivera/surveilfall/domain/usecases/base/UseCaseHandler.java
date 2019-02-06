@@ -77,10 +77,13 @@ public class UseCaseHandler {
 						notifyError(tag, useCaseResponse.getErrorResult(), weakCallback);
 					}
 				} catch (NetworkUnavailableException e) {
+					e.printStackTrace();
 					notifyNetworkUnavailable(tag, weakCallback);
 				} catch (WSUnexpectedCodeException | WSUnexpectedResponseException | WSNetworkException | RepositoryException e) {
+					e.printStackTrace();
 					notifyGenericError(tag, weakCallback);
 				} catch (RuntimeException e) {
+					e.printStackTrace();
 					notifyGenericError(tag, weakCallback);
 				}
 

@@ -6,11 +6,9 @@ import es.santirivera.surveilfall.domain.usecases.implementation.artist.GetArtis
 import es.santirivera.surveilfall.domain.usecases.implementation.bitmap.GetBitmapFromURLUseCase
 import es.santirivera.surveilfall.domain.usecases.implementation.cards.GetCardsForQueryUseCase
 import es.santirivera.surveilfall.domain.usecases.implementation.cards.GetRandomCardUseCase
-import es.santirivera.surveilfall.domain.usecases.implementation.favorite.AddFavoriteUseCase
-import es.santirivera.surveilfall.domain.usecases.implementation.favorite.GetFavoritesUseCase
-import es.santirivera.surveilfall.domain.usecases.implementation.favorite.IsFavoriteUseCase
-import es.santirivera.surveilfall.domain.usecases.implementation.favorite.RemoveFavoriteUseCase
+import es.santirivera.surveilfall.domain.usecases.implementation.favorite.*
 import es.santirivera.surveilfall.domain.usecases.implementation.sets.GetSetsUseCase
+import es.santirivera.surveilfall.domain.usecases.implementation.wordbank.ClearWordBankUseCase
 import es.santirivera.surveilfall.domain.usecases.implementation.wordbank.GetWordBankUseCase
 import es.santirivera.surveilfall.domain.usecases.implementation.wordbank.UpdateWordBankUseCase
 
@@ -48,5 +46,11 @@ class UseCaseProvider(private val appRepository: AppRepository, private val dbRe
 
     val getFavoritesUseCase: GetFavoritesUseCase
         get() = GetFavoritesUseCase(dbRepository)
+
+    val clearFavoritesUseCase: ClearFavoritesUseCase
+        get() = ClearFavoritesUseCase(dbRepository)
+
+    val clearWordBankUseCase: ClearWordBankUseCase
+        get() = ClearWordBankUseCase(dbRepository)
 
 }

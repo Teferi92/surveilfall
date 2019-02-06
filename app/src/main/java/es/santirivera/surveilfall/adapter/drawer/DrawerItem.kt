@@ -7,5 +7,6 @@ enum class DrawerItem(val nameId: Int) {
     SETS(R.string.sets),
     ARTISTS(R.string.artists),
     MOMIR(R.string.momir),
-    FAVORITES(R.string.favorites)
+    FAVORITES(R.string.favorites),
+    SETTINGS(R.string.settings)
 }

@@ -15,8 +15,9 @@ interface FavoriteDao {
     @Query("SELECT count(*) from (SELECT * FROM favorite WHERE card_id == :cardId AND is_favorite == 1)")
     fun isFavorite(cardId: String): Int
 
-
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(Favorites: Favorite)
 
+    @Query("DELETE FROM favorite")
+    fun clear()
 }

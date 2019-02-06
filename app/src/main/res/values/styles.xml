@@ -9,4 +9,9 @@
         <item name="android:windowContentTransitions">true</item>
     </style>
 
+    <style name="AppTheme.FixForPreferenceFragmentList">
+        <item name="android:paddingLeft">0dp</item>
+        <item name="android:paddingRight">0dp</item>
+    </style>
+
 </resources>

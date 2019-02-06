@@ -9,17 +9,15 @@ interface DBRepository {
 
     // Word Bank
     fun getWordBank(): RepositoryResponse<List<WordBankItem>>
-
     fun updateWordBank(wordBank: List<WordBankItem>)
+    fun clearWordBank()
 
     // Favorites
 
     fun getFavorites(): RepositoryResponse<List<Favorite>>
-
     fun isFavorite(cardId: String): Boolean
-
     fun addFavorite(card: Card)
-
     fun removeFavorite(card: Card)
+    fun clearFavorites()
 
 }

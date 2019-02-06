@@ -33,6 +33,8 @@ import es.santirivera.surveilfall.data.model.Set
 import es.santirivera.surveilfall.domain.usecases.implementation.bitmap.GetBitmapFromURLUseCase
 import es.santirivera.surveilfall.domain.usecases.implementation.cards.GetCardsForQueryUseCase
 import es.santirivera.surveilfall.domain.usecases.base.UseCasePartialCallback
+import es.santirivera.surveilfall.domain.usecases.implementation.favorite.ClearFavoritesUseCase
+import es.santirivera.surveilfall.domain.usecases.implementation.wordbank.UpdateWordBankUseCase
 import es.santirivera.surveilfall.fragment.artists.list.ArtistListFragment
 import es.santirivera.surveilfall.fragment.artists.list.ArtistListListener
 import es.santirivera.surveilfall.fragment.cards.detail.CardDetailFragment
@@ -45,6 +47,7 @@ import es.santirivera.surveilfall.fragment.search.SearchFragment
 import es.santirivera.surveilfall.fragment.search.SearchListener
 import es.santirivera.surveilfall.fragment.setlist.SetListFragment
 import es.santirivera.surveilfall.fragment.setlist.SetListListener
+import es.santirivera.surveilfall.fragment.settings.SettingsFragment
 import java.io.File
 import java.io.FileOutputStream
 
@@ -70,6 +73,7 @@ class MainActivity : BaseActivity(),
             DrawerItem.ARTISTS -> openArtists()
             DrawerItem.MOMIR -> openMomir()
             DrawerItem.FAVORITES -> openFavorites()
+            DrawerItem.SETTINGS -> openSettings()
         }
         drawerLayout?.closeDrawer(GravityCompat.START)
     }
@@ -136,7 +140,7 @@ class MainActivity : BaseActivity(),
                 query = "a:\"$artist\"",
                 title = artist,
                 addToBackStack = true,
-                isQueryEditable = true,
+                isQueryEditable = false,
                 prints = GetCardsForQueryUseCase.PrintsToInclude.PRINTS)
     }
 
@@ -340,6 +344,18 @@ class MainActivity : BaseActivity(),
                 .commit()
     }
 
+    private fun openSettings() {
+        val fragment = SettingsFragment()
+        currentFragment = fragment
+        supportFragmentManager
+                .beginTransaction()
+                .setCustomAnimations(R.anim.fade_in, R.anim.fade_out, R.anim.fade_in, R.anim.fade_out)
+                .replace(R.id.content, fragment)
+                .commit()
+        setTitle(R.string.settings)
+    }
+
+
     private fun executeQuery(
             query: String,
             title: String,
@@ -404,6 +420,30 @@ class MainActivity : BaseActivity(),
         } else {
             openSearch()
         }
+    }
+
+    fun resetWordBank() {
+        useCaseHandler!!.execute(
+                useCaseProvider!!.updateWordBankUseCase,
+                object : UseCasePartialCallback<UpdateWordBankUseCase.OkOutput, UpdateWordBankUseCase.ErrorOutput>() {
+                    override fun onSuccess(tag: String?, response: UpdateWordBankUseCase.OkOutput?) {
+                        Toast.makeText(this@MainActivity, R.string.word_bank_has_been_reset, Toast.LENGTH_LONG).show()
+                    }
+
+                    override fun onGenericError(tag: String?) {
+                        Toast.makeText(this@MainActivity, "onGenericError", Toast.LENGTH_LONG).show()
+                    }
+                })
+    }
+
+    fun resetFavorites() {
+        useCaseHandler!!.execute(
+                useCaseProvider!!.clearFavoritesUseCase,
+                object : UseCasePartialCallback<ClearFavoritesUseCase.OkOutput, ClearFavoritesUseCase.ErrorOutput>() {
+                    override fun onSuccess(tag: String?, response: ClearFavoritesUseCase.OkOutput?) {
+                        Toast.makeText(this@MainActivity, R.string.favorites_have_been_deleted, Toast.LENGTH_LONG).show()
+                    }
+                })
     }
 
 }

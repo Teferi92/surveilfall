@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <Preference
+        android:key="favs"
+        android:summary="@string/preference_summary_clear_favorites"
+        android:title="@string/preference_title_clear_favorites"
+        android:iconSpaceReserved="false"/>
+    <Preference
+        android:key="wordbank"
+        android:summary="@string/preference_summary_clear_word_bank"
+        android:title="@string/preference_title_clear_word_bank"
+        android:iconSpaceReserved="false"/>
+</PreferenceScreen>

@@ -30,7 +30,26 @@ class SearchFragment : BasePresenter<SearchListener>(), SearchListener {
                     }
 
                     override fun onSuccess(tag: String?, response: GetWordBankUseCase.OkOutput) {
-                        view?.onWordBankReceived(response.words)
+                        if (response.words.isEmpty()) {
+                            loadWords()
+                        } else {
+                            view?.onWordBankReceived(response.words)
+                        }
+                    }
+                }
+        )
+    }
+
+    private fun loadWords() {
+        useCaseHandler!!.execute(
+                useCaseProvider!!.updateWordBankUseCase,
+                object : UseCasePartialCallback<UpdateWordBankUseCase.OkOutput, UpdateWordBankUseCase.ErrorOutput>() {
+                    override fun isReady(): Boolean {
+                        return true
+                    }
+
+                    override fun onSuccess(tag: String?, response: UpdateWordBankUseCase.OkOutput?) {
+                        loadViewData()
                     }
                 }
         )
