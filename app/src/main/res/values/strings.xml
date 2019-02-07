@@ -47,4 +47,7 @@
     <string name="word_bank_has_been_reset">Word bank has been reset</string>
     <string name="favorites_have_been_deleted">All of your Favorites have been deleted.</string>
     <string name="preference_summary_clear_favorites">This deletes all the cards you have marked as favorites. All the card data is stored locally when you favorite it so you can access it offline, however there is no guarantee it will stay updated as the legality changes or any of the data changes (such as in an Oracle text change or when the real name of a card is revealed during spoiler season and the unofficial one disappears).</string>
+    <string name="remove_card_title">Remove card</string>
+    <string name="remove_card_message">Do you want to remove this card from the list?</string>
+    <string name="cancel">Cancel</string>
 </resources>

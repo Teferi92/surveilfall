@@ -13,6 +13,7 @@ import es.santirivera.surveilfall.data.model.CardList
 
 class CardListView(baseActivity: BaseActivity, presenter: CardListListener) : BaseView<CardListListener>(baseActivity, presenter), CardViewHolder.OnCardClickedListener {
 
+
     override val contentView: Int get() = R.layout.fragment_simple_list
     private var recyclerView: RecyclerView? = null
     private val cardAdapter = CardAdapter(this, true)
@@ -48,6 +49,9 @@ class CardListView(baseActivity: BaseActivity, presenter: CardListListener) : Ba
         presenter.onCardClicked(card, view)
     }
 
+    override fun onCardLongClicked(card: Card, view: View) {
+        // Do nothing
+    }
 
     fun resetAdapter() {
         cardAdapter.removeAll()

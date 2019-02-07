@@ -13,6 +13,7 @@ class CardViewHolder(itemView: View, private val listener: OnCardClickedListener
 
     interface OnCardClickedListener {
         fun onCardClicked(card: Card, view: View)
+        fun onCardLongClicked(card: Card, view: View)
     }
 
     private val requestBuilder = Glide.with(itemView)
@@ -21,6 +22,10 @@ class CardViewHolder(itemView: View, private val listener: OnCardClickedListener
     fun bind(card: Card) {
         itemView.setOnClickListener {
             listener.onCardClicked(card, it)
+        }
+        itemView.setOnLongClickListener {
+            listener.onCardLongClicked(card, it)
+            true
         }
         ViewCompat.setTransitionName(itemView, card.id)
         val requestOptions = RequestOptions().placeholder(R.drawable.placeholder)

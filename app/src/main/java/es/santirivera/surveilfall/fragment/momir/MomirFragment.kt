@@ -1,5 +1,7 @@
 package es.santirivera.surveilfall.fragment.momir
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -14,6 +16,7 @@ import es.santirivera.surveilfall.domain.usecases.implementation.cards.GetRandom
 import es.santirivera.surveilfall.domain.usecases.base.UseCasePartialCallback
 
 class MomirFragment : BasePresenter<MomirListener>(), MomirListener {
+
 
     override val titleForActivity: String? get() = getString(R.string.momir)
 
@@ -45,6 +48,16 @@ class MomirFragment : BasePresenter<MomirListener>(), MomirListener {
         return super.onOptionsItemSelected(item)
     }
 
+    override fun onCardLongClicked(card: Card, view: View) {
+        AlertDialog.Builder(activity)
+                .setTitle(R.string.remove_card_title)
+                .setMessage(R.string.remove_card_message).setPositiveButton(R.string.ok) { dialogInterface: DialogInterface, i: Int ->
+                    this.view!!.removeCard(card)
+                    dialogInterface.dismiss()
+                }.setNegativeButton(R.string.cancel) { dialogInterface: DialogInterface, i: Int ->
+                    dialogInterface.dismiss()
+                }.show()
+    }
 
     override fun shouldShowMenu(): Boolean {
         return true
@@ -55,7 +68,6 @@ class MomirFragment : BasePresenter<MomirListener>(), MomirListener {
     }
 
     override fun onCardRequested(cmc: Int) {
-        // Dialog to determine the cmc
         val useCase = useCaseProvider?.getRandomCardUseCase
         val input = GetRandomCardUseCase.Input("t:creature -is:funny cmc:$cmc")
         useCaseHandler?.execute(useCase, input, MomirCallback())

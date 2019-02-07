@@ -34,4 +34,10 @@ class CardAdapter(val listener: CardViewHolder.OnCardClickedListener, val filter
         cards.clear()
     }
 
+    fun remove(card: Card) {
+        if (cards.contains(card)) {
+            cards.remove(card)
+        }
+    }
+
 }

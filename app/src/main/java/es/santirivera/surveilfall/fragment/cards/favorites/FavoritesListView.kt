@@ -36,6 +36,10 @@ class FavoritesListView(baseActivity: BaseActivity, presenter: FavoritesListList
         presenter.onCardClicked(card, view)
     }
 
+    override fun onCardLongClicked(card: Card, view: View) {
+        //do nothing
+    }
+
 
     fun resetAdapter() {
         cardAdapter.removeAll()

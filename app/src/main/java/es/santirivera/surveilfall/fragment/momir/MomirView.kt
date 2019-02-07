@@ -4,19 +4,19 @@ import android.app.AlertDialog
 import android.content.DialogInterface
 import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import es.santirivera.surveilfall.R
 import es.santirivera.surveilfall.adapter.CardAdapter
-import es.santirivera.surveilfall.adapter.SimpleStringAdapter
+import es.santirivera.surveilfall.adapter.MomirCMCAdapter
 import es.santirivera.surveilfall.adapter.viewholder.CardViewHolder
-import es.santirivera.surveilfall.adapter.viewholder.StringViewHolder
+import es.santirivera.surveilfall.adapter.viewholder.MomirCMCViewHolder
 import es.santirivera.surveilfall.base.activity.BaseActivity
 import es.santirivera.surveilfall.base.view.BaseView
 import es.santirivera.surveilfall.data.model.Card
 
-class MomirView(activity: BaseActivity, presenter: MomirListener) : BaseView<MomirListener>(activity, presenter), CardViewHolder.OnCardClickedListener, StringViewHolder.OnStringClickedListener {
+class MomirView(activity: BaseActivity, presenter: MomirListener) : BaseView<MomirListener>(activity, presenter), CardViewHolder.OnCardClickedListener, MomirCMCViewHolder.OnStringClickedListener {
+
 
     override val contentView: Int get() = R.layout.fragment_momir
 
@@ -33,7 +33,7 @@ class MomirView(activity: BaseActivity, presenter: MomirListener) : BaseView<Mom
             .create()
 
     private val cmcRecyclerView: RecyclerView = View.inflate(activity, R.layout.fragment_simple_list, null) as RecyclerView
-    private val cmcAdapter: SimpleStringAdapter = SimpleStringAdapter(cmcs, this, true)
+    private val cmcAdapter: MomirCMCAdapter = MomirCMCAdapter(cmcs, this)
 
     init {
         cmcRecyclerView.layoutManager = GridLayoutManager(activity, 4)
@@ -65,6 +65,10 @@ class MomirView(activity: BaseActivity, presenter: MomirListener) : BaseView<Mom
         presenter.onCardClicked(card, view)
     }
 
+    override fun onCardLongClicked(card: Card, view: View) {
+        presenter.onCardLongClicked(card, view)
+    }
+
     fun showHelp() {
         helpDialog.show()
     }
@@ -85,5 +89,10 @@ class MomirView(activity: BaseActivity, presenter: MomirListener) : BaseView<Mom
     override fun onStringClicked(item: String) {
         presenter.onCardRequested(item.toInt())
         dismiss()
+    }
+
+    fun removeCard(card: Card) {
+        cardAdapter.remove(card)
+        cardAdapter.notifyDataSetChanged()
     }
 }
