@@ -5,6 +5,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import es.santirivera.surveilfall.R
 import es.santirivera.surveilfall.data.model.CardData
+import es.santirivera.surveilfall.util.spanner.Spanner
 
 class CardDataViewHolder(itemView: View, val listener: OnArtistClickedListener) : RecyclerView.ViewHolder(itemView) {
 
@@ -23,7 +24,7 @@ class CardDataViewHolder(itemView: View, val listener: OnArtistClickedListener) 
     fun bind(card: CardData) {
         textViewCardName.text = card.name
         textViewCardType.text = card.typeLine
-        textViewCardText.text = card.oracleText
+        textViewCardText.text = Spanner.addManaCostsToText(itemView.context, card.oracleText, textViewCardText.textSize.toInt())
 
         if (card.power != null && !card.power!!.isEmpty()) {
             // Creature
@@ -40,7 +41,7 @@ class CardDataViewHolder(itemView: View, val listener: OnArtistClickedListener) 
 
         if (card.manaCost != null && (!card.manaCost!!.isEmpty())) {
             textViewCardCost.visibility = View.VISIBLE
-            textViewCardCost.text = card.manaCost!!
+            textViewCardCost.text = Spanner.addManaCostsToText(itemView.context, card.manaCost!!, textViewCardCost.textSize.toInt())
         } else {
             textViewCardCost.visibility = View.GONE
         }
