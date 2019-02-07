@@ -21,8 +21,9 @@
         android:layout_alignParentEnd="true"
         android:textAllCaps="false"
         android:layout_marginLeft="8dp"
+        android:layout_alignBaseline="@id/textViewCardName"
         android:textColor="@color/textColorDark"
-        android:textSize="18sp" />
+        android:textSize="20sp" />
 
     <TextView
         android:id="@+id/textViewCardType"

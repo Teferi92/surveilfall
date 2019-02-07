@@ -81,7 +81,6 @@ public class Spanner {
 
     public static Spannable addManaCostsToText(Context ctx, String str, int limit) {
         SpannableString spannable = new SpannableString(str);
-        limit-=2;
         for (String key : symbolToResource.keySet()){
             if (str.contains(key)){
                 int lastIndex = 0;
@@ -90,7 +89,7 @@ public class Spanner {
                 while (lastIndex != -1){
                     lastIndex = str.indexOf(key, lastIndex);
                     if (lastIndex != -1){
-                        ImageSpan span = new ImageSpan(icon, ImageSpan.ALIGN_BOTTOM);
+                        ImageSpan span = new ImageSpan(icon,ImageSpan.ALIGN_BOTTOM);
                         spannable.setSpan(span, lastIndex, lastIndex + key.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
                         lastIndex++;
                     }
