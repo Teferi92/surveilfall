@@ -32,7 +32,7 @@ class GetCardsForQueryUseCase(private val appRepository: AppRepository) : UseCas
     }
 
     override fun executeUseCase(requestValues: Input?): UseCaseResponse<OkOutput, ErrorOutput> {
-        val response = appRepository.cardsForQuery(
+        val response = appRepository.getCardsForQuery(
                 requestValues!!.query,
                 requestValues.page,
                 requestValues.printsToInclude.str,

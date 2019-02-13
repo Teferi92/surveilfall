@@ -8,6 +8,9 @@ import es.santirivera.surveilfall.domain.usecases.implementation.cards.GetCardsF
 import es.santirivera.surveilfall.domain.usecases.implementation.cards.GetRandomCardUseCase
 import es.santirivera.surveilfall.domain.usecases.implementation.favorite.*
 import es.santirivera.surveilfall.domain.usecases.implementation.sets.GetSetsUseCase
+import es.santirivera.surveilfall.domain.usecases.implementation.tournament.GetFormatsUseCase
+import es.santirivera.surveilfall.domain.usecases.implementation.tournament.GetTournamentURLsUseCase
+import es.santirivera.surveilfall.domain.usecases.implementation.tournament.GetTournamentUseCase
 import es.santirivera.surveilfall.domain.usecases.implementation.wordbank.ClearWordBankUseCase
 import es.santirivera.surveilfall.domain.usecases.implementation.wordbank.GetWordBankUseCase
 import es.santirivera.surveilfall.domain.usecases.implementation.wordbank.UpdateWordBankUseCase
@@ -52,5 +55,14 @@ class UseCaseProvider(private val appRepository: AppRepository, private val dbRe
 
     val clearWordBankUseCase: ClearWordBankUseCase
         get() = ClearWordBankUseCase(dbRepository)
+
+    val getTournamentURLUseCase: GetTournamentURLsUseCase
+        get() = GetTournamentURLsUseCase(appRepository)
+
+    val getTournamentUseCase: GetTournamentUseCase
+        get() = GetTournamentUseCase(appRepository)
+
+    val getFormatsUseCase : GetFormatsUseCase
+        get() = GetFormatsUseCase(appRepository)
 
 }

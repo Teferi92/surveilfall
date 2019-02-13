@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import es.santirivera.surveilfall.R
 import es.santirivera.surveilfall.adapter.viewholder.StringViewHolder
 
-class SimpleStringAdapter(private val strings: List<String>, val listener: StringViewHolder.OnStringClickedListener, private val center: Boolean) : RecyclerView.Adapter<StringViewHolder>() {
+class SimpleStringAdapter(private var strings: List<String>, val listener: StringViewHolder.OnStringClickedListener, private val center: Boolean) : RecyclerView.Adapter<StringViewHolder>() {
 
     override fun getItemCount(): Int {
         return strings.size
@@ -21,5 +21,10 @@ class SimpleStringAdapter(private val strings: List<String>, val listener: Strin
         val layout = if (center) R.layout.item_string_centered else R.layout.item_string
         val view = LayoutInflater.from(parent.context).inflate(layout, parent, false)
         return StringViewHolder(view, listener)
+    }
+
+    fun updateItems(list: List<String>) {
+        strings = list
+        notifyDataSetChanged()
     }
 }

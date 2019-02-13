@@ -9,7 +9,7 @@ import es.santirivera.surveilfall.domain.usecases.base.UseCaseResponse
 class GetRandomCardUseCase(private val appRepository: AppRepository) : UseCase<GetRandomCardUseCase.Input, GetRandomCardUseCase.OkOutput, GetRandomCardUseCase.ErrorOutput>() {
 
     override fun executeUseCase(requestValues: Input?): UseCaseResponse<OkOutput, ErrorOutput> {
-        val response = appRepository.randomCard(requestValues!!.query)
+        val response = appRepository.getRandomCard(requestValues!!.query)
         return if (response.isSuccess!!) {
             val card = response.responseData
             UseCaseResponse.ok(OkOutput(card!!))

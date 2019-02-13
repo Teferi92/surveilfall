@@ -28,6 +28,7 @@ import es.santirivera.surveilfall.adapter.drawer.DrawerItem
 import es.santirivera.surveilfall.adapter.viewholder.DrawerViewHolder
 import es.santirivera.surveilfall.base.activity.BaseActivity
 import es.santirivera.surveilfall.data.model.Card
+import es.santirivera.surveilfall.data.model.Deck
 import es.santirivera.surveilfall.data.model.ImageUris
 import es.santirivera.surveilfall.data.model.Set
 import es.santirivera.surveilfall.domain.usecases.implementation.bitmap.GetBitmapFromURLUseCase
@@ -42,6 +43,12 @@ import es.santirivera.surveilfall.fragment.cards.detail.CardDetailListener
 import es.santirivera.surveilfall.fragment.cards.favorites.FavoritesListFragment
 import es.santirivera.surveilfall.fragment.cards.favorites.FavoritesListListener
 import es.santirivera.surveilfall.fragment.cards.list.CardListFragment
+import es.santirivera.surveilfall.fragment.challenges.detail.FormatTournamentListFragment
+import es.santirivera.surveilfall.fragment.challenges.detail.FormatTournamentListListener
+import es.santirivera.surveilfall.fragment.challenges.formatselector.FormatSelectorFragment
+import es.santirivera.surveilfall.fragment.challenges.formatselector.FormatSelectorListener
+import es.santirivera.surveilfall.fragment.challenges.list.ChallengeDecksListFragment
+import es.santirivera.surveilfall.fragment.challenges.list.ChallengeDecksListListener
 import es.santirivera.surveilfall.fragment.momir.MomirFragment
 import es.santirivera.surveilfall.fragment.search.SearchFragment
 import es.santirivera.surveilfall.fragment.search.SearchListener
@@ -57,6 +64,9 @@ class MainActivity : BaseActivity(),
         FavoritesListListener,
         CardDetailListener,
         SearchListener,
+        FormatSelectorListener,
+        FormatTournamentListListener,
+        ChallengeDecksListListener,
         DrawerViewHolder.OnDrawerItemClickedListener {
 
 
@@ -74,15 +84,16 @@ class MainActivity : BaseActivity(),
             DrawerItem.MOMIR -> openMomir()
             DrawerItem.FAVORITES -> openFavorites()
             DrawerItem.SETTINGS -> openSettings()
+            DrawerItem.CHALLENGES -> openChallenges()
         }
-        drawerLayout?.closeDrawer(GravityCompat.START)
+        drawerLayout.closeDrawer(GravityCompat.START)
     }
 
 
-    private var drawerList: RecyclerView? = null
-    private var drawerLayout: DrawerLayout? = null
-    private var drawerToggle: ActionBarDrawerToggle? = null
-    private var toolbar: Toolbar? = null
+    private lateinit var drawerList: RecyclerView
+    private lateinit var drawerLayout: DrawerLayout
+    private lateinit var drawerToggle: ActionBarDrawerToggle
+    private lateinit var toolbar: Toolbar
 
     private var lastUris: ImageUris? = null
     private var lastDownloadCardRequestName: String? = null
@@ -97,13 +108,13 @@ class MainActivity : BaseActivity(),
         drawerLayout = findViewById(R.id.drawerLayout)
         drawerToggle = ActionBarDrawerToggle(this, drawerLayout, R.string.app_name, R.string.app_name)
 
-        drawerToggle!!.isDrawerIndicatorEnabled = true
-        drawerToggle!!.syncState()
+        drawerToggle.isDrawerIndicatorEnabled = true
+        drawerToggle.syncState()
 
-        drawerLayout!!.addDrawerListener(drawerToggle!!)
+        drawerLayout.addDrawerListener(drawerToggle)
 
-        drawerList!!.layoutManager = LinearLayoutManager(this)
-        drawerList!!.adapter = LeftDrawerAdapter(this)
+        drawerList.layoutManager = LinearLayoutManager(this)
+        drawerList.adapter = LeftDrawerAdapter(this)
 
         openSearch()
     }
@@ -117,7 +128,7 @@ class MainActivity : BaseActivity(),
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when {
-            drawerToggle!!.onOptionsItemSelected(item) -> true
+            drawerToggle.onOptionsItemSelected(item) -> true
             item.itemId == android.R.id.home -> {
                 onBackPressed()
                 true
@@ -171,6 +182,7 @@ class MainActivity : BaseActivity(),
         // Never called
     }
 
+
     override fun onSaveCardArtRequested(uris: ImageUris, cardName: String) {
         val permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
         if (permissionCheck == PackageManager.PERMISSION_GRANTED) {
@@ -218,13 +230,10 @@ class MainActivity : BaseActivity(),
     }
 
     private fun downloadImage(url: String, cardName: String, extension: String) {
-        useCaseHandler!!.execute(
-                useCaseProvider!!.getBitmapFromURLUseCase,
+        useCaseHandler.execute(
+                useCaseProvider.getBitmapFromURLUseCase,
                 GetBitmapFromURLUseCase.Input(url),
                 object : UseCasePartialCallback<GetBitmapFromURLUseCase.OkOutput, GetBitmapFromURLUseCase.ErrorOutput>() {
-                    override fun isReady(): Boolean {
-                        return true
-                    }
 
                     override fun onSuccess(tag: String?, response: GetBitmapFromURLUseCase.OkOutput) {
                         saveBitmap(response.bitmap, cardName, extension)
@@ -345,6 +354,7 @@ class MainActivity : BaseActivity(),
     }
 
     private fun openSettings() {
+        supportFragmentManager.popBackStack()
         val fragment = SettingsFragment()
         currentFragment = fragment
         supportFragmentManager
@@ -352,9 +362,46 @@ class MainActivity : BaseActivity(),
                 .setCustomAnimations(R.anim.fade_in, R.anim.fade_out, R.anim.fade_in, R.anim.fade_out)
                 .replace(R.id.content, fragment)
                 .commit()
-        setTitle(R.string.settings)
     }
 
+    private fun openChallenges() {
+        supportFragmentManager.popBackStack()
+        val fragment = FormatSelectorFragment()
+        currentFragment = fragment
+        supportFragmentManager
+                .beginTransaction()
+                .disallowAddToBackStack()
+                .setCustomAnimations(R.anim.fade_in, R.anim.fade_out, R.anim.fade_in, R.anim.fade_out)
+                .replace(R.id.content, fragment)
+                .commit()
+    }
+
+    override fun onFormatSelected(format: String) {
+        val fragment = FormatTournamentListFragment()
+        fragment.format = format
+        supportFragmentManager
+                .beginTransaction()
+                .disallowAddToBackStack()
+                .setCustomAnimations(R.anim.fade_in, R.anim.fade_out, R.anim.fade_in, R.anim.fade_out)
+                .replace(R.id.content, fragment)
+                .commit()
+    }
+
+    override fun onTournamentClicked(format: String, date: String) {
+        val fragment = ChallengeDecksListFragment()
+        fragment.format = format
+        fragment.date = date
+        supportFragmentManager
+                .beginTransaction()
+                .disallowAddToBackStack()
+                .setCustomAnimations(R.anim.fade_in, R.anim.fade_out, R.anim.fade_in, R.anim.fade_out)
+                .replace(R.id.content, fragment)
+                .commit()
+    }
+
+    override fun onDeckClicked(deck: Deck) {
+
+    }
 
     private fun executeQuery(
             query: String,
@@ -366,7 +413,6 @@ class MainActivity : BaseActivity(),
             sortOrder: GetCardsForQueryUseCase.SortOrder = GetCardsForQueryUseCase.SortOrder.AUTO,
             listener: SearchListener? = null) {
         val fragment = CardListFragment()
-        currentFragment = fragment
         fragment.query = query
         fragment.fragmentTitle = title
         fragment.prints = prints
@@ -391,7 +437,6 @@ class MainActivity : BaseActivity(),
         currentFragment.exitTransition = null
         fragment.sharedElementEnterTransition = TransitionInflater.from(this).inflateTransition(R.transition.transition)
         fragment.enterTransition = null
-        currentFragment = fragment
         fragment.card = card
         var transaction = supportFragmentManager.beginTransaction()
         transaction = if (addToBackStack) {
@@ -409,9 +454,9 @@ class MainActivity : BaseActivity(),
             DrawerLayout.LOCK_MODE_UNLOCKED
         else
             DrawerLayout.LOCK_MODE_LOCKED_CLOSED
-        drawerLayout!!.setDrawerLockMode(lockMode)
-        drawerToggle!!.isDrawerIndicatorEnabled = show
-        drawerToggle!!.syncState()
+        drawerLayout.setDrawerLockMode(lockMode)
+        drawerToggle.isDrawerIndicatorEnabled = show
+        drawerToggle.syncState()
     }
 
     override fun finish() {
@@ -423,8 +468,8 @@ class MainActivity : BaseActivity(),
     }
 
     fun resetWordBank() {
-        useCaseHandler!!.execute(
-                useCaseProvider!!.updateWordBankUseCase,
+        useCaseHandler.execute(
+                useCaseProvider.updateWordBankUseCase,
                 object : UseCasePartialCallback<UpdateWordBankUseCase.OkOutput, UpdateWordBankUseCase.ErrorOutput>() {
                     override fun onSuccess(tag: String?, response: UpdateWordBankUseCase.OkOutput?) {
                         Toast.makeText(this@MainActivity, R.string.word_bank_has_been_reset, Toast.LENGTH_LONG).show()
@@ -437,8 +482,8 @@ class MainActivity : BaseActivity(),
     }
 
     fun resetFavorites() {
-        useCaseHandler!!.execute(
-                useCaseProvider!!.clearFavoritesUseCase,
+        useCaseHandler.execute(
+                useCaseProvider.clearFavoritesUseCase,
                 object : UseCasePartialCallback<ClearFavoritesUseCase.OkOutput, ClearFavoritesUseCase.ErrorOutput>() {
                     override fun onSuccess(tag: String?, response: ClearFavoritesUseCase.OkOutput?) {
                         Toast.makeText(this@MainActivity, R.string.favorites_have_been_deleted, Toast.LENGTH_LONG).show()

@@ -13,15 +13,15 @@ class ArtistListFragment : BasePresenter<ArtistListListener>(), ArtistListListen
 
     override val titleForActivity: String? get() = getString(R.string.artists)
 
-    private var view: ArtistListView? = null
+    private lateinit var view: ArtistListView
 
     override fun instanceView(): BaseView<*> {
         view = ArtistListView(activity as BaseActivity, this)
-        return view as ArtistListView
+        return view
     }
 
     override fun loadViewData() {
-        useCaseHandler?.execute(useCaseProvider?.getArtistNamesUseCase, ArtistCallback())
+        useCaseHandler.execute(useCaseProvider.getArtistNamesUseCase, ArtistCallback())
     }
 
     override fun onArtistClicked(artist: String) {
@@ -36,12 +36,8 @@ class ArtistListFragment : BasePresenter<ArtistListListener>(), ArtistListListen
 
     private inner class ArtistCallback : UseCasePartialCallback<GetArtistNamesUseCase.OkOutput, GetArtistNamesUseCase.ErrorOutput>() {
 
-        override fun isReady(): Boolean {
-            return true
-        }
-
         override fun onSuccess(tag: String?, response: GetArtistNamesUseCase.OkOutput) {
-            view!!.onArtistsReceived(response.artists)
+            view.onArtistsReceived(response.artists)
         }
     }
 

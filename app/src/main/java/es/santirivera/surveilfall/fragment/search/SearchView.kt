@@ -15,7 +15,7 @@ class SearchView(baseActivity: BaseActivity, presenter: SearchListener) : BaseVi
 
     override val contentView: Int get() = R.layout.fragment_search
 
-    private var searchEditText: AppCompatMultiAutoCompleteTextView? = null
+    private lateinit var searchEditText: AppCompatMultiAutoCompleteTextView
     private val wordBankAdapter = WordBankAdapter(baseActivity)
 
     private val values = arrayOf(
@@ -30,13 +30,13 @@ class SearchView(baseActivity: BaseActivity, presenter: SearchListener) : BaseVi
 
     override fun prepareView() {
         searchEditText = mainView?.findViewById(R.id.editTextSearch)
-        searchEditText!!.setOnEditorActionListener(this)
-        searchEditText!!.setAdapter(wordBankAdapter)
-        searchEditText!!.setTokenizer(SpaceTokenizer())
+        searchEditText.setOnEditorActionListener(this)
+        searchEditText.setAdapter(wordBankAdapter)
+        searchEditText.setTokenizer(SpaceTokenizer())
     }
 
     private fun performSearch() {
-        presenter.onSearchClicked(searchEditText!!.text.toString(), presenter)
+        presenter.onSearchClicked(searchEditText.text.toString(), presenter)
     }
 
     override fun onEditorAction(v: TextView?, actionId: Int, event: KeyEvent?): Boolean {
@@ -54,7 +54,7 @@ class SearchView(baseActivity: BaseActivity, presenter: SearchListener) : BaseVi
     }
 
     fun setQueryValue() {
-        searchEditText!!.setText(newQuery)
+        searchEditText.setText(newQuery)
     }
 
     fun onWordBankReceived(search: List<WordBankItem>) {

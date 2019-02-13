@@ -4,20 +4,16 @@ import android.content.Context
 
 import com.google.gson.Gson
 
-import java.io.IOException
-
 import javax.inject.Singleton
 
 import dagger.Module
 import dagger.Provides
 import es.santirivera.surveilfall.data.net.NetworkManager
 import es.santirivera.surveilfall.data.net.NetworkManagerImpl
-import es.santirivera.surveilfall.data.net.WServices
+import es.santirivera.surveilfall.data.net.ScryfallWebServices
+import es.santirivera.surveilfall.data.net.GithubWebServices
 import okhttp3.Cache
-import okhttp3.Interceptor
 import okhttp3.OkHttpClient
-import okhttp3.Request
-import okhttp3.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -26,13 +22,7 @@ class WebServicesModule {
 
     @Provides
     @Singleton
-    fun provideWServices(retrofit: Retrofit): WServices {
-        return retrofit.create(WServices::class.java)
-    }
-
-    @Provides
-    @Singleton
-    fun provideRetrofit(gson: Gson, context: Context, manager: NetworkManager): Retrofit {
+    fun provideScryfallWebServices(gson: Gson, context: Context, manager: NetworkManager): ScryfallWebServices {
         val cache = Cache(context.cacheDir, (50 * 1024 * 1024).toLong())
         val okHttpClient = OkHttpClient.Builder().cache(cache).addInterceptor { chain ->
             val request = chain.request()
@@ -47,8 +37,18 @@ class WebServicesModule {
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .client(okHttpClient)
                 .baseUrl("https://api.scryfall.com")
-                .build()
+                .build().create(ScryfallWebServices::class.java)
     }
+
+    @Provides
+    @Singleton
+    fun provideGithubWebServices(gson: Gson): GithubWebServices {
+        return Retrofit.Builder()
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .baseUrl("https://raw.githubusercontent.com/")
+                .build().create(GithubWebServices::class.java)
+    }
+
 
     @Singleton
     @Provides

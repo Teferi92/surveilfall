@@ -14,26 +14,23 @@ class SearchFragment : BasePresenter<SearchListener>(), SearchListener {
 
     override val titleForActivity: String? get() = getString(R.string.search)
 
-    private var view: SearchView? = null
+    private lateinit var view: SearchView
 
     override fun instanceView(): BaseView<*> {
         view = SearchView(activity as BaseActivity, this)
-        return view as SearchView
+        return view
     }
 
     override fun loadViewData() {
-        useCaseHandler!!.execute(
-                useCaseProvider!!.getWordBankUseCase,
+        useCaseHandler.execute(
+                useCaseProvider.getWordBankUseCase,
                 object : UseCasePartialCallback<GetWordBankUseCase.OkOutput, GetWordBankUseCase.ErrorOutput>() {
-                    override fun isReady(): Boolean {
-                        return true
-                    }
 
                     override fun onSuccess(tag: String?, response: GetWordBankUseCase.OkOutput) {
                         if (response.words.isEmpty()) {
                             loadWords()
                         } else {
-                            view?.onWordBankReceived(response.words)
+                            view.onWordBankReceived(response.words)
                         }
                     }
                 }
@@ -41,12 +38,9 @@ class SearchFragment : BasePresenter<SearchListener>(), SearchListener {
     }
 
     private fun loadWords() {
-        useCaseHandler!!.execute(
-                useCaseProvider!!.updateWordBankUseCase,
+        useCaseHandler.execute(
+                useCaseProvider.updateWordBankUseCase,
                 object : UseCasePartialCallback<UpdateWordBankUseCase.OkOutput, UpdateWordBankUseCase.ErrorOutput>() {
-                    override fun isReady(): Boolean {
-                        return true
-                    }
 
                     override fun onSuccess(tag: String?, response: UpdateWordBankUseCase.OkOutput?) {
                         loadViewData()
@@ -64,11 +58,11 @@ class SearchFragment : BasePresenter<SearchListener>(), SearchListener {
     }
 
     override fun onNewQuery(query: String) {
-        view!!.onNewQuery(query)
+        view.onNewQuery(query)
     }
 
     override fun onResume() {
         super.onResume()
-        view!!.setQueryValue()
+        view.setQueryValue()
     }
 }

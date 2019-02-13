@@ -14,14 +14,14 @@ import es.santirivera.surveilfall.data.model.Favorite
 class FavoritesListView(baseActivity: BaseActivity, presenter: FavoritesListListener) : BaseView<FavoritesListListener>(baseActivity, presenter), CardViewHolder.OnCardClickedListener {
 
     override val contentView: Int get() = R.layout.fragment_simple_list
-    private var recyclerView: RecyclerView? = null
+    private lateinit var recyclerView: RecyclerView
     private val cardAdapter = CardAdapter(this, true)
 
     override fun prepareView() {
-        recyclerView = mainView?.findViewById(R.id.recyclerView)
+        recyclerView = mainView.findViewById(R.id.recyclerView)
         val layoutManager = GridLayoutManager(baseActivity, 2)
-        recyclerView!!.layoutManager = layoutManager
-        recyclerView!!.adapter = cardAdapter
+        recyclerView.layoutManager = layoutManager
+        recyclerView.adapter = cardAdapter
     }
 
     fun onFavoritesReceived(favorites: List<Favorite>) {

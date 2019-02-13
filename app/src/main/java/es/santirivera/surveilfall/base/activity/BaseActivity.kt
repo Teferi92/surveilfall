@@ -16,9 +16,9 @@ abstract class BaseActivity : AppCompatActivity() {
     private var component: ActivityComponent? = null
 
     @set:Inject
-    public var useCaseProvider: UseCaseProvider? = null
+    lateinit var useCaseProvider: UseCaseProvider
     @set:Inject
-    public var useCaseHandler: UseCaseHandler? = null
+    lateinit var useCaseHandler: UseCaseHandler
 
     protected abstract val contentView: Int
 

@@ -18,33 +18,29 @@ import javax.inject.Inject
 @Suppress("UNCHECKED_CAST")
 abstract class BasePresenter<ListenerType : BaseNavigation> : Fragment() {
 
-    protected val LOG_TAG: String = javaClass.simpleName
-
-    protected var callback: ListenerType? = null
+    private lateinit var callback: ListenerType
 
     @set:Inject
-    var useCaseHandler: UseCaseHandler? = null
+    lateinit var useCaseHandler: UseCaseHandler
 
     @set:Inject
-    var useCaseProvider: UseCaseProvider? = null
+    lateinit var useCaseProvider: UseCaseProvider
 
-    protected var baseView: BaseView<*>? = null
+    private lateinit var baseView: BaseView<*>
 
     abstract val titleForActivity: String?
 
-    interface ViewCreatedListener {
-        fun onViewCreated(view: View)
-    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        try {
-            callback = parentFragment as ListenerType?
-            if (callback == null) {
-                callback = context as ListenerType
+        callback = try {
+            if (parentFragment != null) {
+                parentFragment as ListenerType
+            } else {
+                context as ListenerType
             }
         } catch (e: ClassCastException) {
-            throw RuntimeException(context.toString() + " must implement " + callback!!.javaClass.simpleName)
+            throw RuntimeException(context.toString() + " must implement " + callback.javaClass.simpleName)
         }
         if (context is BaseActivity) {
             (this.context as BaseActivity).component().inject(this as BasePresenter<BaseNavigation>)
@@ -58,7 +54,7 @@ abstract class BasePresenter<ListenerType : BaseNavigation> : Fragment() {
         val title = titleForActivity
         val showMenu = shouldShowMenu()
         val activity = activity as BaseActivity?
-        if (title != null && title.length > 0 && activity != null) {
+        if (title != null && title.isNotEmpty() && activity != null) {
             activity.title = title
         }
         activity!!.setDrawerEnabled(showMenu)
@@ -67,7 +63,7 @@ abstract class BasePresenter<ListenerType : BaseNavigation> : Fragment() {
     fun updateTitle() {
         val title = titleForActivity
         val activity = activity as BaseActivity?
-        if (title != null && title.length > 0 && activity != null) {
+        if (title != null && title.isNotEmpty() && activity != null) {
             activity.title = title
         }
     }
@@ -78,9 +74,9 @@ abstract class BasePresenter<ListenerType : BaseNavigation> : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val mainView = inflater.inflate(baseView!!.contentView, container, false)
+        val mainView = inflater.inflate(baseView.contentView, container, false)
         ButterKnife.bind(this, mainView)
-        baseView!!.setupLayout(mainView)
+        baseView.setupLayout(mainView)
         return mainView
     }
 

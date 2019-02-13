@@ -20,23 +20,23 @@ import es.santirivera.surveilfall.data.model.CardData
 
 class CardDetailView(baseActivity: BaseActivity, presenter: CardDetailListener) : BaseView<CardDetailListener>(baseActivity, presenter), CardDataViewHolder.OnArtistClickedListener {
 
-    private var imageViewCard: ImageView? = null
-    private var recyclerViewCardData: RecyclerView? = null
-    private var recyclerViewLegality: RecyclerView? = null
-    private var fab: FloatingActionButton? = null
-    private var showReprintsButton: Button? = null
+    private lateinit var imageViewCard: ImageView
+    private lateinit var recyclerViewCardData: RecyclerView
+    private lateinit var recyclerViewLegality: RecyclerView
+    private lateinit var fab: FloatingActionButton
+    private lateinit var showReprintsButton: Button
 
     private var currentFace = 0
-    private var cardDataList: ArrayList<CardData>? = null
+    private lateinit var cardDataList: ArrayList<CardData>
 
     override val contentView: Int get() = R.layout.fragment_card_detail
 
     override fun prepareView() {
-        imageViewCard = mainView?.findViewById(R.id.imageViewCardImage)
-        recyclerViewCardData = mainView?.findViewById(R.id.recyclerViewCardData)
-        recyclerViewLegality = mainView?.findViewById(R.id.recyclerViewLegality)
-        fab = mainView?.findViewById(R.id.fabFlipCard)
-        showReprintsButton = mainView?.findViewById(R.id.buttonShowReprints)
+        imageViewCard = mainView.findViewById(R.id.imageViewCardImage)
+        recyclerViewCardData = mainView.findViewById(R.id.recyclerViewCardData)
+        recyclerViewLegality = mainView.findViewById(R.id.recyclerViewLegality)
+        fab = mainView.findViewById(R.id.fabFlipCard)
+        showReprintsButton = mainView.findViewById(R.id.buttonShowReprints)
     }
 
     fun onCardLoaded(card: Card) {
@@ -45,42 +45,42 @@ class CardDetailView(baseActivity: BaseActivity, presenter: CardDetailListener) 
 
         if (card.imageUris.small.isNotEmpty()) {
             // Only one face
-            Glide.with(imageViewCard as ImageView).load(card.imageUris.large).apply(requestOptions).into(imageViewCard as ImageView)
-            imageViewCard!!.setOnLongClickListener {
+            Glide.with(imageViewCard).load(card.imageUris.large).apply(requestOptions).into(imageViewCard)
+            imageViewCard.setOnLongClickListener {
                 presenter.onSaveCardArtRequested(card.imageUris, card.name)
                 true
             }
-            fab!!.hide()
+            fab.hide()
         } else {
             // Two faces
-            Glide.with(imageViewCard as ImageView).load(cardDataList!![0].imageUris!!.png).apply(requestOptions).into(imageViewCard as ImageView)
-            imageViewCard!!.setOnLongClickListener {
-                presenter.onSaveCardArtRequested(cardDataList!![currentFace].imageUris!!, cardDataList!![currentFace].name!!)
+            Glide.with(imageViewCard).load(cardDataList[0].imageUris!!.png).apply(requestOptions).into(imageViewCard)
+            imageViewCard.setOnLongClickListener {
+                presenter.onSaveCardArtRequested(cardDataList[currentFace].imageUris!!, cardDataList[currentFace].name!!)
                 true
             }
-            fab!!.show()
-            fab!!.setOnClickListener {
+            fab.show()
+            fab.setOnClickListener {
                 currentFace = if (currentFace == 1) {
-                    fab!!.setImageResource(R.drawable.ic_back_side)
+                    fab.setImageResource(R.drawable.ic_back_side)
                     0
                 } else {
-                    fab!!.setImageResource(R.drawable.ic_front_side)
+                    fab.setImageResource(R.drawable.ic_front_side)
                     1
                 }
-                Glide.with(imageViewCard as ImageView).load(cardDataList!![currentFace].imageUris!!.png).apply(requestOptions).into(imageViewCard as ImageView)
+                Glide.with(imageViewCard).load(cardDataList[currentFace].imageUris!!.png).apply(requestOptions).into(imageViewCard)
 
             }
         }
 
-        showReprintsButton!!.setOnClickListener {
+        showReprintsButton.setOnClickListener {
             presenter.onShowReprintsClicked(null)
         }
 
-        recyclerViewCardData!!.layoutManager = LinearLayoutManager(baseActivity)
-        recyclerViewCardData!!.adapter = CardDetailsAdapter(cardDataList!!, this)
+        recyclerViewCardData.layoutManager = LinearLayoutManager(baseActivity)
+        recyclerViewCardData.adapter = CardDetailsAdapter(cardDataList, this)
 
-        recyclerViewLegality!!.layoutManager = GridLayoutManager(baseActivity, 2)
-        recyclerViewLegality!!.adapter = LegalityAdapter(card.legalities.toLegalityList())
+        recyclerViewLegality.layoutManager = GridLayoutManager(baseActivity, 2)
+        recyclerViewLegality.adapter = LegalityAdapter(card.legalities.toLegalityList())
     }
 
     override fun onArtistClicked(artist: String) {
@@ -92,7 +92,7 @@ class CardDetailView(baseActivity: BaseActivity, presenter: CardDetailListener) 
     }
 
     fun setTransitionName(id: String) {
-        ViewCompat.setTransitionName(imageViewCard!!, id)
+        ViewCompat.setTransitionName(imageViewCard, id)
     }
 
 

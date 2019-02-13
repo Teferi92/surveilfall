@@ -11,7 +11,7 @@ class UpdateWordBankUseCase(private val appRepository: AppRepository, private va
 
     override fun executeUseCase(requestValues: Void?): UseCaseResponse<OkOutput, ErrorOutput> {
         val response = appRepository.getWordBank()
-        return if (response.isSuccess!!) {
+        return if (response.isSuccess) {
             val list = response.responseData
             val worldBankList = ArrayList<WordBankItem>()
             for (item in (list as List<String>)) {

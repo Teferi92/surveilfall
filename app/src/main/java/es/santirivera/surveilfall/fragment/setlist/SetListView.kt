@@ -13,15 +13,15 @@ class SetListView(baseActivity: BaseActivity, presenter: SetListListener) : Base
 
     override val contentView: Int get() = R.layout.fragment_simple_list
 
-    private var recyclerView: RecyclerView? = null
+    private lateinit var recyclerView: RecyclerView
 
     override fun prepareView() {
         recyclerView = mainView?.findViewById(R.id.recyclerView)
-        recyclerView!!.layoutManager = GridLayoutManager(baseActivity, 4)
+        recyclerView.layoutManager = GridLayoutManager(baseActivity, 4)
     }
 
     fun onSetsReceived(sets: List<Set>) {
-        recyclerView!!.adapter = SetAdapter(sets, this)
+        recyclerView.adapter = SetAdapter(sets, this)
     }
 
     override fun onSetClicked(set: Set) {

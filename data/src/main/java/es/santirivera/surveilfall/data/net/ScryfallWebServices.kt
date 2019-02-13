@@ -9,7 +9,7 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
 
-interface WServices {
+interface ScryfallWebServices {
 
     @get:GET("/sets")
     val setList: Call<SetList>

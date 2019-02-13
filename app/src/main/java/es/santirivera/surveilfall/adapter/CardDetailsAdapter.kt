@@ -7,7 +7,7 @@ import es.santirivera.surveilfall.R
 import es.santirivera.surveilfall.adapter.viewholder.CardDataViewHolder
 import es.santirivera.surveilfall.data.model.CardData
 
-class CardDetailsAdapter(val cardFaces: ArrayList<CardData>, val listener: CardDataViewHolder.OnArtistClickedListener) : RecyclerView.Adapter<CardDataViewHolder>() {
+class CardDetailsAdapter(private val cardFaces: ArrayList<CardData>, val listener: CardDataViewHolder.OnArtistClickedListener) : RecyclerView.Adapter<CardDataViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardDataViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_card_data, parent, false)
         return CardDataViewHolder(view, listener)

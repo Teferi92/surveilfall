@@ -1,9 +1,7 @@
 package es.santirivera.surveilfall.data.repository
 
 
-import es.santirivera.surveilfall.data.model.Card
-import es.santirivera.surveilfall.data.model.CardList
-import es.santirivera.surveilfall.data.model.SetList
+import es.santirivera.surveilfall.data.model.*
 import es.santirivera.surveilfall.data.repository.responses.RepositoryResponse
 
 interface AppRepository {
@@ -14,11 +12,17 @@ interface AppRepository {
 
     fun getWordBank(): RepositoryResponse<List<String>>
 
-    fun cardsForQuery(query: String, page: Int, prints: String, sortMethod: String, sortDirection: String): RepositoryResponse<CardList>
+    fun getCardsForQuery(query: String, page: Int, prints: String, sortMethod: String, sortDirection: String): RepositoryResponse<CardList>
 
-    fun cardInSet(setCode: String, cardInSet: Int): RepositoryResponse<Card>
+    fun getCardInSet(setCode: String, cardInSet: Int): RepositoryResponse<Card>
 
-    fun randomCard(query: String): RepositoryResponse<Card>
+    fun getRandomCard(query: String): RepositoryResponse<Card>
+
+    fun getTournamentURLs(): RepositoryResponse<TournamentURLs>
+
+    fun getTournament(format: String, date: String): RepositoryResponse<Tournament>
+
+    fun getFormats(): RepositoryResponse<List<Format>>
 
 }
 

@@ -8,7 +8,7 @@ import es.santirivera.surveilfall.base.activity.BaseActivity
 
 abstract class BaseView<ViewInterfaceType>(protected val baseActivity: BaseActivity, protected val presenter: ViewInterfaceType) {
 
-    protected var mainView: View? = null
+    protected lateinit var mainView: View
 
     abstract val contentView: Int
 

@@ -22,10 +22,12 @@ import es.santirivera.surveilfall.util.enumwrap.SortOrderDescriptor
 class CardListFragment : BasePresenter<CardListListener>(), CardListListener {
 
     override val titleForActivity: String? get() = if (isQueryEditable) query!! else fragmentTitle!!
-    private var view: CardListView? = null
+
     private val cardCallback: CardListCallback = CardListCallback()
-    private var menuItemSearch: MenuItem? = null
-    private var menuItemSort: MenuItem? = null
+
+    private lateinit var view: CardListView
+    private lateinit var menuItemSearch: MenuItem
+    private lateinit var menuItemSort: MenuItem
 
     var query: String? = ""
     var fragmentTitle: String? = ""
@@ -48,13 +50,13 @@ class CardListFragment : BasePresenter<CardListListener>(), CardListListener {
     override fun instanceView(): BaseView<*> {
         setHasOptionsMenu(true)
         view = CardListView(activity as BaseActivity, this)
-        return view as CardListView
+        return view
     }
 
     override fun loadViewData() {
         val input = GetCardsForQueryUseCase.Input(this.query!!, page, prints, sortMethod, sortOrder)
         val useCase = useCaseProvider?.getCardsForQueryUseCase
-        useCaseHandler?.execute(useCase, input, cardCallback)
+        useCaseHandler.execute(useCase, input, cardCallback)
     }
 
     override fun onCardClicked(card: Card, view: View) {
@@ -65,7 +67,7 @@ class CardListFragment : BasePresenter<CardListListener>(), CardListListener {
     fun performNewQuery(newQuery: String) {
         query = newQuery
         page = 1
-        view!!.resetAdapter()
+        view.resetAdapter()
         updateTitle()
         loadViewData()
         if (searchListener != null) {
@@ -89,7 +91,7 @@ class CardListFragment : BasePresenter<CardListListener>(), CardListListener {
         if (isQueryEditable) {
             inflater.inflate(R.menu.menu_search, menu)
             menuItemSearch = menu.findItem(R.id.action_search)
-            val searchView = menuItemSearch!!.actionView as SearchView
+            val searchView = menuItemSearch.actionView as SearchView
             searchView.setQuery(query, false)
             searchView.clearFocus()
             searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
@@ -99,7 +101,7 @@ class CardListFragment : BasePresenter<CardListListener>(), CardListListener {
                     if (!searchView.isIconified) {
                         searchView.isIconified = true
                     }
-                    menuItemSearch!!.collapseActionView()
+                    menuItemSearch.collapseActionView()
                     return true
                 }
 
@@ -122,7 +124,7 @@ class CardListFragment : BasePresenter<CardListListener>(), CardListListener {
         return when (item) {
             menuItemSearch -> {
                 justOpened = true
-                val searchView = menuItemSearch!!.actionView as SearchView
+                val searchView = menuItemSearch.actionView as SearchView
                 searchView.setQuery(query, false)
                 searchView.clearFocus()
                 true
@@ -150,12 +152,9 @@ class CardListFragment : BasePresenter<CardListListener>(), CardListListener {
 
 
     private inner class CardListCallback : UseCasePartialCallback<GetCardsForQueryUseCase.OkOutput, GetCardsForQueryUseCase.ErrorOutput>() {
-        override fun isReady(): Boolean {
-            return true
-        }
 
         override fun onSuccess(tag: String?, response: GetCardsForQueryUseCase.OkOutput) {
-            view!!.onCardListReceived(response.cardList, page)
+            view.onCardListReceived(response.cardList, page)
             page++
         }
 

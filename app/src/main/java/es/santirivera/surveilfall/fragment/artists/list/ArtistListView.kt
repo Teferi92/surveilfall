@@ -13,12 +13,12 @@ class ArtistListView(baseActivity: BaseActivity, presenter: ArtistListListener) 
 
     override val contentView: Int get() = R.layout.fragment_simple_list
 
-    private var recyclerView: RecyclerView? = null
+    private lateinit var recyclerView: RecyclerView
 
 
     override fun prepareView() {
-        recyclerView = mainView?.findViewById(R.id.recyclerView)
-        recyclerView?.layoutManager = GridLayoutManager(baseActivity, 2)
+        recyclerView = mainView.findViewById(R.id.recyclerView)
+        recyclerView.layoutManager = GridLayoutManager(baseActivity, 2)
     }
 
     override fun onStringClicked(item: String) {
@@ -27,7 +27,7 @@ class ArtistListView(baseActivity: BaseActivity, presenter: ArtistListListener) 
 
     fun onArtistsReceived(artists: List<String>) {
         val adapter = SimpleStringAdapter(artists, this, false)
-        recyclerView!!.adapter = adapter
+        recyclerView.adapter = adapter
     }
 
 }

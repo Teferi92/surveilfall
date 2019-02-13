@@ -20,13 +20,13 @@ class MomirFragment : BasePresenter<MomirListener>(), MomirListener {
 
     override val titleForActivity: String? get() = getString(R.string.momir)
 
-    private var view: MomirView? = null
-    private var help: MenuItem? = null
+    private lateinit var view: MomirView
+    private lateinit var help: MenuItem
 
     override fun instanceView(): BaseView<*> {
         setHasOptionsMenu(true)
         view = MomirView(activity as BaseActivity, this)
-        return view as MomirView
+        return view
     }
 
     override fun loadViewData() {
@@ -36,13 +36,13 @@ class MomirFragment : BasePresenter<MomirListener>(), MomirListener {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         help = menu.add(R.string.momir_help)
-        help?.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
-        help?.setIcon(R.drawable.ic_help)
+        help.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
+        help.setIcon(R.drawable.ic_help)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item == help) {
-            view?.showHelp()
+            view.showHelp()
             return true
         }
         return super.onOptionsItemSelected(item)
@@ -51,10 +51,10 @@ class MomirFragment : BasePresenter<MomirListener>(), MomirListener {
     override fun onCardLongClicked(card: Card, view: View) {
         AlertDialog.Builder(activity)
                 .setTitle(R.string.remove_card_title)
-                .setMessage(R.string.remove_card_message).setPositiveButton(R.string.ok) { dialogInterface: DialogInterface, i: Int ->
-                    this.view!!.removeCard(card)
+                .setMessage(R.string.remove_card_message).setPositiveButton(R.string.ok) { dialogInterface: DialogInterface, _: Int ->
+                    this.view.removeCard(card)
                     dialogInterface.dismiss()
-                }.setNegativeButton(R.string.cancel) { dialogInterface: DialogInterface, i: Int ->
+                }.setNegativeButton(R.string.cancel) { dialogInterface: DialogInterface, _: Int ->
                     dialogInterface.dismiss()
                 }.show()
     }
@@ -68,18 +68,16 @@ class MomirFragment : BasePresenter<MomirListener>(), MomirListener {
     }
 
     override fun onCardRequested(cmc: Int) {
-        val useCase = useCaseProvider?.getRandomCardUseCase
+        val useCase = useCaseProvider.getRandomCardUseCase
         val input = GetRandomCardUseCase.Input("t:creature -is:funny cmc:$cmc")
-        useCaseHandler?.execute(useCase, input, MomirCallback())
+        useCaseHandler.execute(useCase, input, MomirCallback())
     }
 
     inner class MomirCallback : UseCasePartialCallback<GetRandomCardUseCase.OkOutput, GetRandomCardUseCase.ErrorOutput>() {
-        override fun isReady(): Boolean {
-            return true
-        }
+
 
         override fun onSuccess(tag: String, response: GetRandomCardUseCase.OkOutput) {
-            view!!.onCardReceived(response.card)
+            view.onCardReceived(response.card)
         }
     }
 

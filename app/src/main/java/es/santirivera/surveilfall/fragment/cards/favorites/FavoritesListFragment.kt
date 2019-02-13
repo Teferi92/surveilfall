@@ -13,29 +13,25 @@ import es.santirivera.surveilfall.domain.usecases.implementation.favorite.GetFav
 class FavoritesListFragment : BasePresenter<FavoritesListListener>(), FavoritesListListener {
 
     override val titleForActivity: String? get() = getString(R.string.favorites)
-    private var view: FavoritesListView? = null
+    private lateinit var view: FavoritesListView
 
     override fun instanceView(): BaseView<*> {
         view = FavoritesListView(activity as BaseActivity, this)
-        return view as FavoritesListView
+        return view
     }
 
     override fun onResume() {
         super.onResume()
-        view!!.resetAdapter()
+        view.resetAdapter()
         loadViewData()
     }
 
     override fun loadViewData() {
-        useCaseHandler!!.execute(
-                useCaseProvider!!.getFavoritesUseCase,
+        useCaseHandler.execute(
+                useCaseProvider.getFavoritesUseCase,
                 object : UseCasePartialCallback<GetFavoritesUseCase.OkOutput, GetFavoritesUseCase.ErrorOutput>() {
                     override fun onSuccess(tag: String?, response: GetFavoritesUseCase.OkOutput) {
-                        view!!.onFavoritesReceived(response.favorites)
-                    }
-
-                    override fun isReady(): Boolean {
-                        return true
+                        view.onFavoritesReceived(response.favorites)
                     }
                 }
         )

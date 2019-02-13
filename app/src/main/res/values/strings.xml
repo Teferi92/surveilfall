@@ -50,4 +50,12 @@
     <string name="remove_card_title">Remove card</string>
     <string name="remove_card_message">Do you want to remove this card from the list?</string>
     <string name="cancel">Cancel</string>
+    <string name="challenges">MTGO Challenges</string>
+
+    <string name="format_modern">Modern</string>
+    <string name="format_legacy">Legacy</string>
+    <string name="format_pauper">Pauper</string>
+    <string name="format_vintage">Vintage</string>
+
+    <string name="challenge">%1$s challenge (%2$s)</string>
 </resources>

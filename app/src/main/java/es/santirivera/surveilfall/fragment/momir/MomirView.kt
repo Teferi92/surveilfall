@@ -20,8 +20,9 @@ class MomirView(activity: BaseActivity, presenter: MomirListener) : BaseView<Mom
 
     override val contentView: Int get() = R.layout.fragment_momir
 
-    var recyclerView: RecyclerView? = null
-    var fab: FloatingActionButton? = null
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var fab: FloatingActionButton
+
     private val cardAdapter: CardAdapter = CardAdapter(this, false)
     private val cmcs = generateCmcList()
     private val helpDialog: AlertDialog = AlertDialog.Builder(baseActivity)
@@ -47,13 +48,13 @@ class MomirView(activity: BaseActivity, presenter: MomirListener) : BaseView<Mom
 
 
     override fun prepareView() {
-        fab = mainView?.findViewById(R.id.fabAddCard)
-        fab!!.setOnClickListener {
+        fab = mainView.findViewById(R.id.fabAddCard)
+        fab.setOnClickListener {
             cmcDialog.show()
         }
-        recyclerView = mainView?.findViewById(R.id.recyclerViewCards)
-        recyclerView?.layoutManager = GridLayoutManager(baseActivity, 2)
-        recyclerView?.adapter = cardAdapter
+        recyclerView = mainView.findViewById(R.id.recyclerViewCards)
+        recyclerView.layoutManager = GridLayoutManager(baseActivity, 2)
+        recyclerView.adapter = cardAdapter
     }
 
     fun onCardReceived(card: Card) {
@@ -61,7 +62,7 @@ class MomirView(activity: BaseActivity, presenter: MomirListener) : BaseView<Mom
         cardAdapter.notifyDataSetChanged()
     }
 
-    override fun onCardClicked(card: Card, view:View) {
+    override fun onCardClicked(card: Card, view: View) {
         presenter.onCardClicked(card, view)
     }
 

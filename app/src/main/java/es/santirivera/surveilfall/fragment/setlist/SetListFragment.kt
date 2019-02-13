@@ -13,16 +13,16 @@ class SetListFragment : BasePresenter<SetListListener>(), SetListListener {
 
     override val titleForActivity: String? get() = getString(R.string.sets)
 
-    private var view: SetListView? = null
+    private lateinit var view: SetListView
     private val setCallback: SetCallback = SetCallback()
 
     override fun instanceView(): BaseView<*> {
         view = SetListView(activity as BaseActivity, this)
-        return view as SetListView
+        return view
     }
 
     override fun loadViewData() {
-        useCaseHandler?.execute<GetSetsUseCase.OkOutput, GetSetsUseCase.ErrorOutput>(useCaseProvider?.getSetsUseCase, setCallback)
+        useCaseHandler.execute<GetSetsUseCase.OkOutput, GetSetsUseCase.ErrorOutput>(useCaseProvider.getSetsUseCase, setCallback)
     }
 
     override fun onSetClicked(set: Set) {
@@ -35,12 +35,9 @@ class SetListFragment : BasePresenter<SetListListener>(), SetListListener {
 
     private inner class SetCallback : UseCasePartialCallback<GetSetsUseCase.OkOutput, GetSetsUseCase.ErrorOutput>() {
 
-        override fun isReady(): Boolean {
-            return true
-        }
 
         override fun onSuccess(tag: String?, response: GetSetsUseCase.OkOutput) {
-            view!!.onSetsReceived(response.sets)
+            view.onSetsReceived(response.sets)
         }
     }
 }
