@@ -381,7 +381,7 @@ class MainActivity : BaseActivity(),
         fragment.format = format
         supportFragmentManager
                 .beginTransaction()
-                .disallowAddToBackStack()
+                .addToBackStack("format")
                 .setCustomAnimations(R.anim.fade_in, R.anim.fade_out, R.anim.fade_in, R.anim.fade_out)
                 .replace(R.id.content, fragment)
                 .commit()
@@ -393,7 +393,7 @@ class MainActivity : BaseActivity(),
         fragment.date = date
         supportFragmentManager
                 .beginTransaction()
-                .disallowAddToBackStack()
+                .addToBackStack("tournament")
                 .setCustomAnimations(R.anim.fade_in, R.anim.fade_out, R.anim.fade_in, R.anim.fade_out)
                 .replace(R.id.content, fragment)
                 .commit()
