@@ -1,6 +1,9 @@
 package es.santirivera.surveilfall.base.activity
 
+import android.content.Context
 import android.os.Bundle
+import android.view.View
+import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import butterknife.ButterKnife
 import es.santirivera.surveilfall.base.app.AndroidApplication
@@ -10,6 +13,9 @@ import es.santirivera.surveilfall.di.modules.ApplicationModule
 import es.santirivera.surveilfall.domain.usecases.base.UseCaseHandler
 import es.santirivera.surveilfall.domain.usecases.providers.UseCaseProvider
 import javax.inject.Inject
+import android.R
+import es.santirivera.surveilfall.base.interfaces.BaseNavigation
+
 
 abstract class BaseActivity : AppCompatActivity() {
 
@@ -51,5 +57,10 @@ abstract class BaseActivity : AppCompatActivity() {
     protected abstract fun prepareInterface()
 
     abstract fun setDrawerEnabled(show: Boolean)
+
+    fun hideKeyboard(v: View) {
+        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.let { imm.hideSoftInputFromWindow(v.windowToken, 0) }
+    }
 
 }

@@ -10,7 +10,7 @@ class GetSetsUseCase(private val appRepository: AppRepository) : UseCase<Void, G
 
     override fun executeUseCase(requestValues: Void?): UseCaseResponse<OkOutput, ErrorOutput> {
         val response = appRepository.getSetList()
-        return if (response.isSuccess!!) {
+        return if (response.isSuccess) {
             val list = response.responseData?.data
             UseCaseResponse.ok(OkOutput(list!!))
         } else {

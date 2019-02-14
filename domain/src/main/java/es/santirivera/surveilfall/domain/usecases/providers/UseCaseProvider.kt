@@ -4,6 +4,7 @@ import es.santirivera.surveilfall.data.repository.AppRepository
 import es.santirivera.surveilfall.data.repository.DBRepository
 import es.santirivera.surveilfall.domain.usecases.implementation.artist.GetArtistNamesUseCase
 import es.santirivera.surveilfall.domain.usecases.implementation.bitmap.GetBitmapFromURLUseCase
+import es.santirivera.surveilfall.domain.usecases.implementation.cards.GetCardCollectionUseCase
 import es.santirivera.surveilfall.domain.usecases.implementation.cards.GetCardsForQueryUseCase
 import es.santirivera.surveilfall.domain.usecases.implementation.cards.GetRandomCardUseCase
 import es.santirivera.surveilfall.domain.usecases.implementation.favorite.*
@@ -62,7 +63,10 @@ class UseCaseProvider(private val appRepository: AppRepository, private val dbRe
     val getTournamentUseCase: GetTournamentUseCase
         get() = GetTournamentUseCase(appRepository)
 
-    val getFormatsUseCase : GetFormatsUseCase
+    val getFormatsUseCase: GetFormatsUseCase
         get() = GetFormatsUseCase(appRepository)
+
+    val getCardCollectionUseCase: GetCardCollectionUseCase
+        get() = GetCardCollectionUseCase(appRepository)
 
 }

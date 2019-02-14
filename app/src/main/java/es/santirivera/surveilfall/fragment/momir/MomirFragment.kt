@@ -81,5 +81,4 @@ class MomirFragment : BasePresenter<MomirListener>(), MomirListener {
         }
     }
 
-
 }

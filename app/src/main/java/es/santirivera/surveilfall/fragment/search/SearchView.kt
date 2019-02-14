@@ -1,21 +1,31 @@
 package es.santirivera.surveilfall.fragment.search
 
+import android.animation.ObjectAnimator
+import android.transition.TransitionManager
 import android.view.KeyEvent
-import android.widget.MultiAutoCompleteTextView
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatMultiAutoCompleteTextView
+import androidx.constraintlayout.widget.ConstraintSet
 import es.santirivera.surveilfall.R
 import es.santirivera.surveilfall.adapter.WordBankAdapter
 import es.santirivera.surveilfall.base.activity.BaseActivity
 import es.santirivera.surveilfall.base.view.BaseView
 import es.santirivera.surveilfall.data.model.WordBankItem
+import es.santirivera.surveilfall.util.layout.SurveilfallConstraintLayout
 import es.santirivera.surveilfall.util.tokenizer.SpaceTokenizer
 
-class SearchView(baseActivity: BaseActivity, presenter: SearchListener) : BaseView<SearchListener>(baseActivity, presenter), TextView.OnEditorActionListener {
+class SearchView(baseActivity: BaseActivity, presenter: SearchListener) : BaseView<SearchListener>(baseActivity, presenter), TextView.OnEditorActionListener, SurveilfallConstraintLayout.OnBackPressedListener {
+
 
     override val contentView: Int get() = R.layout.fragment_search
 
     private lateinit var searchEditText: AppCompatMultiAutoCompleteTextView
+    private lateinit var textViewTitle: TextView
+    private lateinit var constraintLayout: SurveilfallConstraintLayout
+
+    private lateinit var constraintSet1: ConstraintSet
+    private lateinit var constraintSet2: ConstraintSet
+
     private val wordBankAdapter = WordBankAdapter(baseActivity)
 
     private val values = arrayOf(
@@ -26,13 +36,60 @@ class SearchView(baseActivity: BaseActivity, presenter: SearchListener) : BaseVi
             KeyEvent.KEYCODE_SEARCH
     )
 
+    private var center = true
+
     private var newQuery = ""
 
     override fun prepareView() {
-        searchEditText = mainView?.findViewById(R.id.editTextSearch)
+        constraintLayout = mainView.findViewById(R.id.constraintLayout)
+        constraintLayout.onBackPressedListener = this
+
+        constraintSet1 = ConstraintSet()
+        constraintSet1.clone(constraintLayout)
+        constraintSet2 = ConstraintSet()
+        constraintSet2.clone(baseActivity, R.layout.fragment_search_open)
+
+        searchEditText = mainView.findViewById(R.id.editTextSearch)
+        textViewTitle = mainView.findViewById(R.id.textViewTitle)
         searchEditText.setOnEditorActionListener(this)
         searchEditText.setAdapter(wordBankAdapter)
         searchEditText.setTokenizer(SpaceTokenizer())
+
+        searchEditText.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                animateToTop()
+            } else {
+                animateToCenter()
+                baseActivity.hideKeyboard(searchEditText)
+            }
+        }
+        constraintLayout.setOnClickListener {
+            clearFocus()
+        }
+    }
+
+    private fun animateToTop() {
+        if (center) {
+            center = false
+            val animatorTitleAlpha = ObjectAnimator.ofFloat(textViewTitle, "alpha", 0f)
+            animatorTitleAlpha.duration = 500L
+            animatorTitleAlpha.start()
+            TransitionManager.beginDelayedTransition(constraintLayout)
+            val constraint = constraintSet2
+            constraint.applyTo(constraintLayout)
+        }
+    }
+
+    private fun animateToCenter() {
+        if (!center) {
+            center = true
+            val animatorTitleAlpha = ObjectAnimator.ofFloat(textViewTitle, "alpha", 1f)
+            animatorTitleAlpha.duration = 500L
+            animatorTitleAlpha.start()
+            TransitionManager.beginDelayedTransition(constraintLayout)
+            val constraint = constraintSet1
+            constraint.applyTo(constraintLayout)
+        }
     }
 
     private fun performSearch() {
@@ -63,5 +120,16 @@ class SearchView(baseActivity: BaseActivity, presenter: SearchListener) : BaseVi
             list.add(item.name)
         }
         wordBankAdapter.update(list)
+    }
+
+    fun clearFocus() {
+        searchEditText.let {
+            searchEditText.clearFocus()
+            baseActivity.hideKeyboard(searchEditText)
+        }
+    }
+
+    override fun onBackPressed() {
+        clearFocus()
     }
 }

@@ -37,7 +37,7 @@ class FavoritesListFragment : BasePresenter<FavoritesListListener>(), FavoritesL
         )
     }
 
-    override fun onCardClicked(card: Card, view: View) {
+    override fun onCardClicked(card: Card, view: View?) {
         (activity as MainActivity).onCardClicked(card, view)
     }
 

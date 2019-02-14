@@ -13,6 +13,8 @@ import es.santirivera.surveilfall.data.model.Card;
 import es.santirivera.surveilfall.data.model.CardList;
 import es.santirivera.surveilfall.data.model.Catalog;
 import es.santirivera.surveilfall.data.model.Format;
+import es.santirivera.surveilfall.data.model.Identifier;
+import es.santirivera.surveilfall.data.model.IdentifierList;
 import es.santirivera.surveilfall.data.model.SetList;
 import es.santirivera.surveilfall.data.model.Tournament;
 import es.santirivera.surveilfall.data.model.TournamentURLs;
@@ -173,6 +175,22 @@ public class AppRepositoryImpl implements AppRepository {
             Response<List<Format>> response = call.execute();
             if (response.isSuccessful()) {
                 return new NetRepositoryResponse<>(response.body());
+            } else {
+                return new NetErrorResponse<>();
+            }
+        } catch (IOException e) {
+            throw new WSNetworkException(e);
+        }
+    }
+
+    @NotNull
+    @Override
+    public RepositoryResponse<List<Card>> getCardCollection(@NonNull List<Identifier> list) {
+        Call<CardList> call = scryfallWebServices.cardCollection(new IdentifierList(list));
+        try {
+            Response<CardList> response = call.execute();
+            if (response.isSuccessful()) {
+                return new NetRepositoryResponse<>((List<Card>) response.body().getData());
             } else {
                 return new NetErrorResponse<>();
             }

@@ -20,9 +20,9 @@ class DeckViewHolder(itemView: View, val listener: OnDeckClickedListener) : Recy
 
     @SuppressLint("SetTextI18n")
     fun bind(item: Deck) {
-        textViewTitle.text = item.n
-        textViewPlayer.text = item.pl
-        textViewResult.text = "${item.w} - ${item.l}"
+        textViewTitle.text = item.name
+        textViewPlayer.text = item.player
+        textViewResult.text = "${item.wins} - ${item.losses}"
         itemView.setOnClickListener {
             listener.onDeckClicked(item)
         }

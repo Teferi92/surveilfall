@@ -24,5 +24,7 @@ interface AppRepository {
 
     fun getFormats(): RepositoryResponse<List<Format>>
 
+    fun getCardCollection(list: List<Identifier>): RepositoryResponse<List<Card>>
+
 }
 

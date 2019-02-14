@@ -134,4 +134,5 @@ class CardDetailFragment : BasePresenter<CardDetailListener>(), CardDetailListen
         (activity as MainActivity).onShowReprintsClicked(this.card)
     }
 
+
 }

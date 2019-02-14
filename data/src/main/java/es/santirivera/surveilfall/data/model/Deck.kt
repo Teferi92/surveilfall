@@ -1,32 +1,34 @@
 package es.santirivera.surveilfall.data.model
 
-import com.google.gson.Gson
+import com.google.gson.annotations.SerializedName
 
-data class Deck(val p: Int,
-                val s: List<CardInDeck>,
-                val w: String,
-                val l: String,
-                val pl: String,
-                val m: List<CardInDeck>,
-                val n: String) {
+data class Deck(@SerializedName("p") val position: Int,
+                @SerializedName("s") val sideboard: List<CardInDeck>,
+                @SerializedName("w") val wins: String,
+                @SerializedName("l") val losses: String,
+                @SerializedName("pl") val player: String,
+                @SerializedName("m") val maindeck: List<CardInDeck>,
+                @SerializedName("n") val name: String) {
 
-    fun getCardIds(): String {
-        val ids = ArrayList<String>()
-        for (card in m){
-            if (!ids.contains(card.id)){
-                ids.add(card.id)
+    fun getCardIdentifiers(): List<Identifier> {
+        val ids = ArrayList<Identifier>()
+        for (card in maindeck) {
+            val identifier = Identifier(id = card.scryfallId)
+            if (!ids.contains(identifier)) {
+                ids.add(identifier)
             }
         }
-        for (card in s){
-            if (!ids.contains(card.id)){
-                ids.add(card.id)
+        for (card in sideboard) {
+            val identifier = Identifier(id = card.scryfallId)
+            if (!ids.contains(identifier)) {
+                ids.add(identifier)
             }
         }
-        return Gson().toJson(ids)
+        return ids
     }
 
-    fun getSize() : Int {
-        return m.size + s.size
+    fun getSize(): Int {
+        return maindeck.size + sideboard.size
     }
 
 }

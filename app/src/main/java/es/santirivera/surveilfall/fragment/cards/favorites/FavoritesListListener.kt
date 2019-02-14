@@ -7,6 +7,6 @@ import es.santirivera.surveilfall.data.model.Set
 
 interface FavoritesListListener : BaseNavigation {
 
-    fun onCardClicked(card: Card, view: View)
+    fun onCardClicked(card: Card, view: View?)
 
 }

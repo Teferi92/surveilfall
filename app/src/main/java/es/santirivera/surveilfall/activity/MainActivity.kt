@@ -27,6 +27,7 @@ import es.santirivera.surveilfall.adapter.LeftDrawerAdapter
 import es.santirivera.surveilfall.adapter.drawer.DrawerItem
 import es.santirivera.surveilfall.adapter.viewholder.DrawerViewHolder
 import es.santirivera.surveilfall.base.activity.BaseActivity
+import es.santirivera.surveilfall.base.interfaces.BaseNavigation
 import es.santirivera.surveilfall.data.model.Card
 import es.santirivera.surveilfall.data.model.Deck
 import es.santirivera.surveilfall.data.model.ImageUris
@@ -43,6 +44,7 @@ import es.santirivera.surveilfall.fragment.cards.detail.CardDetailListener
 import es.santirivera.surveilfall.fragment.cards.favorites.FavoritesListFragment
 import es.santirivera.surveilfall.fragment.cards.favorites.FavoritesListListener
 import es.santirivera.surveilfall.fragment.cards.list.CardListFragment
+import es.santirivera.surveilfall.fragment.challenges.deck.DeckListDetailFragment
 import es.santirivera.surveilfall.fragment.challenges.detail.FormatTournamentListFragment
 import es.santirivera.surveilfall.fragment.challenges.detail.FormatTournamentListListener
 import es.santirivera.surveilfall.fragment.challenges.formatselector.FormatSelectorFragment
@@ -99,7 +101,6 @@ class MainActivity : BaseActivity(),
     private var lastDownloadCardRequestName: String? = null
 
     private val codePermissionWriteStorage = 1337
-
 
     override fun prepareInterface() {
         setupToolbar()
@@ -166,7 +167,7 @@ class MainActivity : BaseActivity(),
         )
     }
 
-    override fun onCardClicked(card: Card, view: View) {
+    override fun onCardClicked(card: Card, view: View?) {
         openCard(card, true, view)
     }
 
@@ -400,7 +401,15 @@ class MainActivity : BaseActivity(),
     }
 
     override fun onDeckClicked(deck: Deck) {
-
+        val fragment = DeckListDetailFragment()
+        fragment.title = "${deck.name} by ${deck.player} (${deck.wins} - ${deck.losses})"
+        fragment.deck = deck
+        supportFragmentManager
+                .beginTransaction()
+                .addToBackStack("deck")
+                .setCustomAnimations(R.anim.fade_in, R.anim.fade_out, R.anim.fade_in, R.anim.fade_out)
+                .replace(R.id.content, fragment)
+                .commit()
     }
 
     private fun executeQuery(
@@ -431,7 +440,7 @@ class MainActivity : BaseActivity(),
         transaction.commit()
     }
 
-    private fun openCard(card: Card, addToBackStack: Boolean, view: View) {
+    private fun openCard(card: Card, addToBackStack: Boolean, view: View?) {
         val fragment = CardDetailFragment()
         currentFragment.sharedElementReturnTransition = TransitionInflater.from(this).inflateTransition(R.transition.transition)
         currentFragment.exitTransition = null
@@ -444,7 +453,9 @@ class MainActivity : BaseActivity(),
         } else {
             transaction.disallowAddToBackStack()
         }
-        transaction = transaction.addSharedElement(view, card.id)
+        if (view != null) {
+            transaction = transaction.addSharedElement(view, card.id)
+        }
         transaction = transaction.replace(R.id.content, fragment)
         transaction.commit()
     }

@@ -55,7 +55,7 @@ class CardListFragment : BasePresenter<CardListListener>(), CardListListener {
 
     override fun loadViewData() {
         val input = GetCardsForQueryUseCase.Input(this.query!!, page, prints, sortMethod, sortOrder)
-        val useCase = useCaseProvider?.getCardsForQueryUseCase
+        val useCase = useCaseProvider.getCardsForQueryUseCase
         useCaseHandler.execute(useCase, input, cardCallback)
     }
 

@@ -1,13 +1,8 @@
 package es.santirivera.surveilfall.data.net
 
-import es.santirivera.surveilfall.data.model.Card
-import es.santirivera.surveilfall.data.model.CardList
-import es.santirivera.surveilfall.data.model.Catalog
-import es.santirivera.surveilfall.data.model.SetList
+import es.santirivera.surveilfall.data.model.*
 import retrofit2.Call
-import retrofit2.http.GET
-import retrofit2.http.Path
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface ScryfallWebServices {
 
@@ -19,6 +14,9 @@ interface ScryfallWebServices {
 
     @get:GET("/catalog/word-bank")
     val wordBank: Call<Catalog>
+
+    @POST("/cards/collection")
+    fun cardCollection(@Body list: IdentifierList): Call<CardList>
 
     @GET("/cards/search")
     fun cardsForQuery(

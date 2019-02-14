@@ -16,7 +16,7 @@ class SetListView(baseActivity: BaseActivity, presenter: SetListListener) : Base
     private lateinit var recyclerView: RecyclerView
 
     override fun prepareView() {
-        recyclerView = mainView?.findViewById(R.id.recyclerView)
+        recyclerView = mainView.findViewById(R.id.recyclerView)
         recyclerView.layoutManager = GridLayoutManager(baseActivity, 4)
     }
 

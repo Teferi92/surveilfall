@@ -58,4 +58,8 @@
     <string name="format_vintage">Vintage</string>
 
     <string name="challenge">%1$s challenge (%2$s)</string>
+    <string name="main_deck">Main deck</string>
+    <string name="sideboard">Sideboard</string>
+    <string name="card_in_deck_quantity">%1$sx %2$s</string>
+    <string name="action_reload">Reload</string>
 </resources>

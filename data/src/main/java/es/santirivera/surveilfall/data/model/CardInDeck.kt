@@ -1,4 +1,6 @@
 package es.santirivera.surveilfall.data.model
 
-data class CardInDeck(val q: String = "",
-                      val id: String = "")
+import com.google.gson.annotations.SerializedName
+
+data class CardInDeck(@SerializedName("q") val quantity: String = "",
+                      @SerializedName("id") val scryfallId: String = "")

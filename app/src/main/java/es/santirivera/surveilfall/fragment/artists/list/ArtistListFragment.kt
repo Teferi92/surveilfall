@@ -28,14 +28,12 @@ class ArtistListFragment : BasePresenter<ArtistListListener>(), ArtistListListen
         (activity as MainActivity).onArtistClicked(artist)
     }
 
-
     override fun shouldShowMenu(): Boolean {
         return true
     }
 
 
     private inner class ArtistCallback : UseCasePartialCallback<GetArtistNamesUseCase.OkOutput, GetArtistNamesUseCase.ErrorOutput>() {
-
         override fun onSuccess(tag: String?, response: GetArtistNamesUseCase.OkOutput) {
             view.onArtistsReceived(response.artists)
         }

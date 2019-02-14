@@ -65,4 +65,6 @@ class SearchFragment : BasePresenter<SearchListener>(), SearchListener {
         super.onResume()
         view.setQueryValue()
     }
+
+
 }
