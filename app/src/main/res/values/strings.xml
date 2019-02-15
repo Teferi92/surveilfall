@@ -62,4 +62,5 @@
     <string name="sideboard">Sideboard</string>
     <string name="card_in_deck_quantity">%1$sx %2$s</string>
     <string name="action_reload">Reload</string>
+    <string name="share">Share</string>
 </resources>

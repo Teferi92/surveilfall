@@ -3,6 +3,7 @@ package es.santirivera.surveilfall.activity
 
 import android.Manifest
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.media.MediaScannerConnection
@@ -497,6 +498,13 @@ class MainActivity : BaseActivity(),
                         Toast.makeText(this@MainActivity, R.string.favorites_have_been_deleted, Toast.LENGTH_LONG).show()
                     }
                 })
+    }
+
+    fun shareText(exportText: String) {
+        val sharingIntent = Intent(android.content.Intent.ACTION_SEND)
+        sharingIntent.type = "text/plain"
+        sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, exportText)
+        startActivity(sharingIntent)
     }
 
 }

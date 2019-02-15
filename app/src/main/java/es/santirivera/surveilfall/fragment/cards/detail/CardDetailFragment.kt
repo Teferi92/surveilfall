@@ -22,6 +22,7 @@ class CardDetailFragment : BasePresenter<CardDetailListener>(), CardDetailListen
     override val titleForActivity: String? get() = card.name
     private lateinit var view: CardDetailView
 
+    private lateinit var shareMenu: MenuItem
     private lateinit var addToFavoritesMenu: MenuItem
     private lateinit var removeFromFavoritesMenu: MenuItem
 
@@ -51,8 +52,10 @@ class CardDetailFragment : BasePresenter<CardDetailListener>(), CardDetailListen
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.menu_detail, menu)
+        inflater.inflate(R.menu.menu_share, menu)
         addToFavoritesMenu = menu.findItem(R.id.action_add_favorite)
         removeFromFavoritesMenu = menu.findItem(R.id.action_remove_favorite)
+        shareMenu = menu.findItem(R.id.action_share)
         removeFromFavoritesMenu.isVisible = favorite
         addToFavoritesMenu.isVisible = !favorite
     }
@@ -67,8 +70,47 @@ class CardDetailFragment : BasePresenter<CardDetailListener>(), CardDetailListen
                 removeFavorite(card)
                 true
             }
+            shareMenu -> {
+                (activity as MainActivity).shareText(generateCardAsText())
+                true
+            }
             else -> false
         }
+    }
+
+    private fun generateCardAsText(): String {
+        val builder = StringBuilder()
+        val faces = card.toCardDataList()
+        val faceCount = faces.size
+        for ((faceNum, face) in faces.withIndex()) {
+            val cardName = face.name
+            val cardCost = face.manaCost
+            val cardType = face.typeLine
+            val cardText = face.oracleText
+            val cardPower = face.power
+            val cardToughness = face.toughness
+            val cardLoyalty = face.loyalty
+
+            builder.append(cardName)
+            if (cardCost != null && !cardCost.isEmpty()) {
+                builder.append(" (${cardCost.replace("{", "").replace("}", "")})")
+            }
+            builder.append("\n\n")
+            builder.append(cardType)
+            builder.append("\n\n")
+            builder.append(cardText)
+            if (cardPower != null && cardToughness != null && !cardPower.isEmpty() && !cardToughness.isEmpty()) {
+                builder.append("\n\n")
+                builder.append("$cardPower/$cardToughness")
+            } else if (cardLoyalty != null && !cardLoyalty.isEmpty()) {
+                builder.append("\n\n")
+                builder.append("Loyalty: $cardLoyalty")
+            }
+            if (faceCount != 1 && faceNum != faceCount - 1) {
+                builder.append("\n-------------------\n")
+            }
+        }
+        return builder.toString()
     }
 
     override fun onArtistClicked(artist: String) {
