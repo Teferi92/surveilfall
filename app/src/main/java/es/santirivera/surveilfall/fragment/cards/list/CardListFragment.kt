@@ -122,13 +122,6 @@ class CardListFragment : BasePresenter<CardListListener>(), CardListListener {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
         return when (item) {
-            menuItemSearch -> {
-                justOpened = true
-                val searchView = menuItemSearch.actionView as SearchView
-                searchView.setQuery(query, false)
-                searchView.clearFocus()
-                true
-            }
             menuItemSort -> {
                 val sortMethods = SortMethodDescriptor.getDescriptorsList(activity!!)
                 val sortOrders = SortOrderDescriptor.getDescriptorsList(activity!!)
@@ -143,6 +136,13 @@ class CardListFragment : BasePresenter<CardListListener>(), CardListListener {
                         performNewQuery(query!!)
                     }.show()
                 }.show()
+                true
+            }
+            menuItemSearch -> {
+                justOpened = true
+                val searchView = menuItemSearch.actionView as SearchView
+                searchView.setQuery(query, false)
+                searchView.clearFocus()
                 true
             }
             else -> false
