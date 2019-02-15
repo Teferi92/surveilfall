@@ -30,7 +30,7 @@ class FavoritesListFragment : BasePresenter<FavoritesListListener>(), FavoritesL
         useCaseHandler.execute(
                 useCaseProvider.getFavoritesUseCase,
                 object : UseCasePartialCallback<GetFavoritesUseCase.OkOutput, GetFavoritesUseCase.ErrorOutput>() {
-                    override fun onSuccess(tag: String?, response: GetFavoritesUseCase.OkOutput) {
+                    override fun onSuccess(tag: String, response: GetFavoritesUseCase.OkOutput) {
                         view.onFavoritesReceived(response.favorites)
                     }
                 }

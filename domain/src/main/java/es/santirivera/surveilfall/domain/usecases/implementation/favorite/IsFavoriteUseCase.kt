@@ -7,8 +7,8 @@ import es.santirivera.surveilfall.domain.usecases.base.UseCaseResponse
 
 class IsFavoriteUseCase(private val dbRepository: DBRepository) : UseCase<IsFavoriteUseCase.Input, IsFavoriteUseCase.OkOutput, IsFavoriteUseCase.ErrorOutput>() {
 
-    override fun executeUseCase(requestValues: IsFavoriteUseCase.Input): UseCaseResponse<OkOutput, ErrorOutput> {
-        return UseCaseResponse.ok(OkOutput(dbRepository.isFavorite(requestValues.cardId)))
+    override fun executeUseCase(requestValues: IsFavoriteUseCase.Input?): UseCaseResponse<OkOutput, ErrorOutput> {
+        return UseCaseResponse.ok(OkOutput(dbRepository.isFavorite(requestValues!!.cardId)))
     }
 
     class Input(val cardId: String)

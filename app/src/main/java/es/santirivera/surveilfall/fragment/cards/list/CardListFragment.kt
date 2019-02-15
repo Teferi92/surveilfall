@@ -152,8 +152,7 @@ class CardListFragment : BasePresenter<CardListListener>(), CardListListener {
 
 
     private inner class CardListCallback : UseCasePartialCallback<GetCardsForQueryUseCase.OkOutput, GetCardsForQueryUseCase.ErrorOutput>() {
-
-        override fun onSuccess(tag: String?, response: GetCardsForQueryUseCase.OkOutput) {
+        override fun onSuccess(tag: String, response: GetCardsForQueryUseCase.OkOutput) {
             view.onCardListReceived(response.cardList, page)
             page++
         }

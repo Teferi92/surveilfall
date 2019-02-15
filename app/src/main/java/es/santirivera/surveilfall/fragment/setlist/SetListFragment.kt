@@ -22,7 +22,7 @@ class SetListFragment : BasePresenter<SetListListener>(), SetListListener {
     }
 
     override fun loadViewData() {
-        useCaseHandler.execute<GetSetsUseCase.OkOutput, GetSetsUseCase.ErrorOutput>(useCaseProvider.getSetsUseCase, setCallback)
+        useCaseHandler.execute(useCaseProvider.getSetsUseCase, setCallback)
     }
 
     override fun onSetClicked(set: Set) {
@@ -34,9 +34,7 @@ class SetListFragment : BasePresenter<SetListListener>(), SetListListener {
     }
 
     private inner class SetCallback : UseCasePartialCallback<GetSetsUseCase.OkOutput, GetSetsUseCase.ErrorOutput>() {
-
-
-        override fun onSuccess(tag: String?, response: GetSetsUseCase.OkOutput) {
+        override fun onSuccess(tag: String, response: GetSetsUseCase.OkOutput) {
             view.onSetsReceived(response.sets)
         }
     }

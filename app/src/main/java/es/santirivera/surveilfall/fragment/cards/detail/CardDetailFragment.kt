@@ -92,8 +92,7 @@ class CardDetailFragment : BasePresenter<CardDetailListener>(), CardDetailListen
                 useCaseProvider.isFavoriteUseCase,
                 IsFavoriteUseCase.Input(card.id),
                 object : UseCasePartialCallback<IsFavoriteUseCase.OkOutput, IsFavoriteUseCase.ErrorOutput>() {
-
-                    override fun onSuccess(tag: String?, response: IsFavoriteUseCase.OkOutput) {
+                    override fun onSuccess(tag: String, response: IsFavoriteUseCase.OkOutput) {
                         favorite = response.isFavorite
                         view.setIsFavorite(response.isFavorite)
                     }
@@ -107,8 +106,7 @@ class CardDetailFragment : BasePresenter<CardDetailListener>(), CardDetailListen
                 useCaseProvider.addFavoriteUseCase,
                 AddFavoriteUseCase.Input(card),
                 object : UseCasePartialCallback<AddFavoriteUseCase.OkOutput, AddFavoriteUseCase.ErrorOutput>() {
-
-                    override fun onSuccess(tag: String?, response: AddFavoriteUseCase.OkOutput?) {
+                    override fun onSuccess(tag: String, response: AddFavoriteUseCase.OkOutput) {
                         favorite = true
                         view.setIsFavorite(true)
                     }
@@ -121,8 +119,7 @@ class CardDetailFragment : BasePresenter<CardDetailListener>(), CardDetailListen
                 useCaseProvider.removeFavoriteUseCase,
                 RemoveFavoriteUseCase.Input(card),
                 object : UseCasePartialCallback<RemoveFavoriteUseCase.OkOutput, RemoveFavoriteUseCase.ErrorOutput>() {
-
-                    override fun onSuccess(tag: String?, response: RemoveFavoriteUseCase.OkOutput?) {
+                    override fun onSuccess(tag: String, response: RemoveFavoriteUseCase.OkOutput) {
                         favorite = false
                         view.setIsFavorite(false)
                     }

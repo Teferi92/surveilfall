@@ -34,7 +34,7 @@ class ArtistListFragment : BasePresenter<ArtistListListener>(), ArtistListListen
 
 
     private inner class ArtistCallback : UseCasePartialCallback<GetArtistNamesUseCase.OkOutput, GetArtistNamesUseCase.ErrorOutput>() {
-        override fun onSuccess(tag: String?, response: GetArtistNamesUseCase.OkOutput) {
+        override fun onSuccess(tag: String, response: GetArtistNamesUseCase.OkOutput) {
             view.onArtistsReceived(response.artists)
         }
     }

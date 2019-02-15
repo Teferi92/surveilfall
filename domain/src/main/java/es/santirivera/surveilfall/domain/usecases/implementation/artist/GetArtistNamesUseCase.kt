@@ -9,7 +9,7 @@ class GetArtistNamesUseCase(private val appRepository: AppRepository) : UseCase<
 
     override fun executeUseCase(requestValues: Void?): UseCaseResponse<OkOutput, ErrorOutput> {
         val response = appRepository.getArtistNames()
-        return if (response.isSuccess!!) {
+        return if (response.isSuccess) {
             val list = response.responseData
             UseCaseResponse.ok(OkOutput(list!!))
         } else {

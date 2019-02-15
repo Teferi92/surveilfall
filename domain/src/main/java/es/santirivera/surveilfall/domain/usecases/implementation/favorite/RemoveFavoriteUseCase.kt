@@ -8,8 +8,8 @@ import es.santirivera.surveilfall.domain.usecases.base.UseCaseResponse
 
 class RemoveFavoriteUseCase(private val dbRepository: DBRepository) : UseCase<RemoveFavoriteUseCase.Input, RemoveFavoriteUseCase.OkOutput, RemoveFavoriteUseCase.ErrorOutput>() {
 
-    override fun executeUseCase(requestValues: RemoveFavoriteUseCase.Input): UseCaseResponse<RemoveFavoriteUseCase.OkOutput, RemoveFavoriteUseCase.ErrorOutput> {
-        dbRepository.removeFavorite(requestValues.card)
+    override fun executeUseCase(requestValues: RemoveFavoriteUseCase.Input?): UseCaseResponse<RemoveFavoriteUseCase.OkOutput, RemoveFavoriteUseCase.ErrorOutput> {
+        dbRepository.removeFavorite(requestValues!!.card)
         return UseCaseResponse.ok()
     }
 

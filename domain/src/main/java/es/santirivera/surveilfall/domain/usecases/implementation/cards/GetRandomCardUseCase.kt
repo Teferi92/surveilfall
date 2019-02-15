@@ -10,7 +10,7 @@ class GetRandomCardUseCase(private val appRepository: AppRepository) : UseCase<G
 
     override fun executeUseCase(requestValues: Input?): UseCaseResponse<OkOutput, ErrorOutput> {
         val response = appRepository.getRandomCard(requestValues!!.query)
-        return if (response.isSuccess!!) {
+        return if (response.isSuccess) {
             val card = response.responseData
             UseCaseResponse.ok(OkOutput(card!!))
         } else {

@@ -8,8 +8,8 @@ import es.santirivera.surveilfall.domain.usecases.base.UseCaseResponse
 
 class GetTournamentUseCase(private val appRepository: AppRepository) : UseCase<GetTournamentUseCase.Input, GetTournamentUseCase.OkOutput, GetTournamentUseCase.ErrorOutput>() {
 
-    override fun executeUseCase(requestValues: Input): UseCaseResponse<OkOutput, ErrorOutput> {
-        val response = appRepository.getTournament(requestValues.format.toLowerCase(), requestValues.date)
+    override fun executeUseCase(requestValues: Input?): UseCaseResponse<OkOutput, ErrorOutput> {
+        val response = appRepository.getTournament(requestValues!!.format.toLowerCase(), requestValues.date)
         return if (response.isSuccess) {
             val tournament = response.responseData
             UseCaseResponse.ok(OkOutput(tournament!!))

@@ -27,7 +27,7 @@ class FormatSelectorFragment : BasePresenter<FormatSelectorListener>(), FormatSe
 
     override fun loadViewData() {
         useCaseHandler.execute(useCaseProvider.getFormatsUseCase, object : UseCasePartialCallback<GetFormatsUseCase.OkOutput, GetFormatsUseCase.ErrorOutput>() {
-            override fun onSuccess(tag: String?, response: GetFormatsUseCase.OkOutput) {
+            override fun onSuccess(tag: String, response: GetFormatsUseCase.OkOutput) {
                 view.onFormatsLoaded(response.urls)
             }
         })

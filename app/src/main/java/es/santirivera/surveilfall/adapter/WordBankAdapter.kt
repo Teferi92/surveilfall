@@ -21,11 +21,11 @@ class WordBankAdapter(context: Context) : ArrayAdapter<String>(context, R.layout
             if (results?.values == null) {
                 return
             }
-            val filteredList: ArrayList<String> = results.values as ArrayList<String>
+            val filteredList: ArrayList<*> = results.values as ArrayList<*>
             if (results.count > 0) {
                 clear()
                 for (c in filteredList) {
-                    add(c)
+                    add(c as String)
                 }
                 notifyDataSetChanged()
             }
@@ -64,5 +64,4 @@ class WordBankAdapter(context: Context) : ArrayAdapter<String>(context, R.layout
         list.clear()
         list.addAll(newList)
     }
-
 }

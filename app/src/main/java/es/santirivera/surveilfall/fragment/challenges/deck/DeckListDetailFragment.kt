@@ -34,7 +34,7 @@ class DeckListDetailFragment : BasePresenter<DeckListDetailListener>(), DeckList
                 useCaseProvider.getCardCollectionUseCase,
                 GetCardCollectionUseCase.Input(deck.getCardIdentifiers()),
                 object : UseCasePartialCallback<GetCardCollectionUseCase.OkOutput, GetCardCollectionUseCase.ErrorOutput>() {
-                    override fun onSuccess(tag: String?, response: GetCardCollectionUseCase.OkOutput) {
+                    override fun onSuccess(tag: String, response: GetCardCollectionUseCase.OkOutput) {
                         view.onDataReceived(deck, response.cardList)
                     }
                 }

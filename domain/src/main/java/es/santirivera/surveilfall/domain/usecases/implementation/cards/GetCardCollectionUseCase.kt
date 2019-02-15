@@ -9,8 +9,8 @@ import es.santirivera.surveilfall.domain.usecases.base.UseCaseResponse
 
 class GetCardCollectionUseCase(val appRepository: AppRepository) : UseCase<GetCardCollectionUseCase.Input, GetCardCollectionUseCase.OkOutput, GetCardCollectionUseCase.ErrorOutput>() {
 
-    override fun executeUseCase(requestValues: Input): UseCaseResponse<OkOutput, ErrorOutput> {
-        val response = appRepository.getCardCollection(requestValues.identifiers)
+    override fun executeUseCase(requestValues: Input?): UseCaseResponse<OkOutput, ErrorOutput> {
+        val response = appRepository.getCardCollection(requestValues!!.identifiers)
         return if (response.isSuccess) {
             val list = response.responseData
             UseCaseResponse.ok(OkOutput(list!!))

@@ -35,7 +35,7 @@ class ChallengeDecksListFragment : BasePresenter<ChallengeDecksListListener>(), 
                 useCaseProvider.getTournamentUseCase,
                 GetTournamentUseCase.Input(format, date),
                 object : UseCasePartialCallback<GetTournamentUseCase.OkOutput, GetTournamentUseCase.ErrorOutput>() {
-                    override fun onSuccess(tag: String?, response: GetTournamentUseCase.OkOutput) {
+                    override fun onSuccess(tag: String, response: GetTournamentUseCase.OkOutput) {
                         view.onTournamentLoaded(response.tournament)
                     }
                 }

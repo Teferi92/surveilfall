@@ -25,8 +25,7 @@ class SearchFragment : BasePresenter<SearchListener>(), SearchListener {
         useCaseHandler.execute(
                 useCaseProvider.getWordBankUseCase,
                 object : UseCasePartialCallback<GetWordBankUseCase.OkOutput, GetWordBankUseCase.ErrorOutput>() {
-
-                    override fun onSuccess(tag: String?, response: GetWordBankUseCase.OkOutput) {
+                    override fun onSuccess(tag: String, response: GetWordBankUseCase.OkOutput) {
                         if (response.words.isEmpty()) {
                             loadWords()
                         } else {
@@ -41,8 +40,7 @@ class SearchFragment : BasePresenter<SearchListener>(), SearchListener {
         useCaseHandler.execute(
                 useCaseProvider.updateWordBankUseCase,
                 object : UseCasePartialCallback<UpdateWordBankUseCase.OkOutput, UpdateWordBankUseCase.ErrorOutput>() {
-
-                    override fun onSuccess(tag: String?, response: UpdateWordBankUseCase.OkOutput?) {
+                    override fun onSuccess(tag: String, response: UpdateWordBankUseCase.OkOutput) {
                         loadViewData()
                     }
                 }
@@ -65,6 +63,5 @@ class SearchFragment : BasePresenter<SearchListener>(), SearchListener {
         super.onResume()
         view.setQueryValue()
     }
-
 
 }

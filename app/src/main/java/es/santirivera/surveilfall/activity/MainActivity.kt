@@ -236,7 +236,7 @@ class MainActivity : BaseActivity(),
                 GetBitmapFromURLUseCase.Input(url),
                 object : UseCasePartialCallback<GetBitmapFromURLUseCase.OkOutput, GetBitmapFromURLUseCase.ErrorOutput>() {
 
-                    override fun onSuccess(tag: String?, response: GetBitmapFromURLUseCase.OkOutput) {
+                    override fun onSuccess(tag: String, response: GetBitmapFromURLUseCase.OkOutput) {
                         saveBitmap(response.bitmap, cardName, extension)
                     }
                 })
@@ -482,13 +482,10 @@ class MainActivity : BaseActivity(),
         useCaseHandler.execute(
                 useCaseProvider.updateWordBankUseCase,
                 object : UseCasePartialCallback<UpdateWordBankUseCase.OkOutput, UpdateWordBankUseCase.ErrorOutput>() {
-                    override fun onSuccess(tag: String?, response: UpdateWordBankUseCase.OkOutput?) {
+                    override fun onSuccess(tag: String, response: UpdateWordBankUseCase.OkOutput) {
                         Toast.makeText(this@MainActivity, R.string.word_bank_has_been_reset, Toast.LENGTH_LONG).show()
                     }
 
-                    override fun onGenericError(tag: String?) {
-                        Toast.makeText(this@MainActivity, "onGenericError", Toast.LENGTH_LONG).show()
-                    }
                 })
     }
 
@@ -496,7 +493,7 @@ class MainActivity : BaseActivity(),
         useCaseHandler.execute(
                 useCaseProvider.clearFavoritesUseCase,
                 object : UseCasePartialCallback<ClearFavoritesUseCase.OkOutput, ClearFavoritesUseCase.ErrorOutput>() {
-                    override fun onSuccess(tag: String?, response: ClearFavoritesUseCase.OkOutput?) {
+                    override fun onSuccess(tag: String, response: ClearFavoritesUseCase.OkOutput) {
                         Toast.makeText(this@MainActivity, R.string.favorites_have_been_deleted, Toast.LENGTH_LONG).show()
                     }
                 })

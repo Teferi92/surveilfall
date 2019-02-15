@@ -31,7 +31,7 @@ class FormatTournamentListFragment : BasePresenter<FormatTournamentListListener>
         useCaseHandler.execute(
                 useCaseProvider.getTournamentURLUseCase,
                 object : UseCasePartialCallback<GetTournamentURLsUseCase.OkOutput, GetTournamentURLsUseCase.ErrorOutput>() {
-                    override fun onSuccess(tag: String?, response: GetTournamentURLsUseCase.OkOutput) {
+                    override fun onSuccess(tag: String, response: GetTournamentURLsUseCase.OkOutput) {
                         when (format) {
                             "modern" -> view.onTournamentsLoaded(response.urls.modern)
                             "legacy" -> view.onTournamentsLoaded(response.urls.legacy)
