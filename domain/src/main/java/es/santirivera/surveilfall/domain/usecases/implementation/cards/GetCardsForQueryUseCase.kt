@@ -39,7 +39,7 @@ class GetCardsForQueryUseCase(private val appRepository: AppRepository) : UseCas
                 requestValues.sortMethod.value,
                 requestValues.sortOrder.value
         )
-        return if (response.isSuccess!!) {
+        return if (response.isSuccess) {
             val list = response.responseData
             UseCaseResponse.ok(OkOutput(list!!))
         } else {

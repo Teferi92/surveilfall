@@ -9,7 +9,7 @@ class ClearWordBankUseCase(private val dbRepository: DBRepository) : UseCase<Voi
 
     override fun executeUseCase(requestValues: Void?): UseCaseResponse<ClearWordBankUseCase.OkOutput, ClearWordBankUseCase.ErrorOutput> {
         dbRepository.clearWordBank()
-        return UseCaseResponse.ok()
+        return UseCaseResponse.ok(OkOutput())
     }
 
     class OkOutput

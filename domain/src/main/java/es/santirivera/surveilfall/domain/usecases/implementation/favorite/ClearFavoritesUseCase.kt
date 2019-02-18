@@ -9,7 +9,7 @@ class ClearFavoritesUseCase(private val dbRepository: DBRepository) : UseCase<Vo
 
     override fun executeUseCase(requestValues: Void?): UseCaseResponse<ClearFavoritesUseCase.OkOutput, ClearFavoritesUseCase.ErrorOutput> {
         dbRepository.clearFavorites()
-        return UseCaseResponse.ok()
+        return UseCaseResponse.ok(OkOutput())
     }
 
     class ErrorOutput(str: String) : StringErrorOutput(str)

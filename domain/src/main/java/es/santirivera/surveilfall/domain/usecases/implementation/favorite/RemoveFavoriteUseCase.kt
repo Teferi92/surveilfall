@@ -10,7 +10,7 @@ class RemoveFavoriteUseCase(private val dbRepository: DBRepository) : UseCase<Re
 
     override fun executeUseCase(requestValues: RemoveFavoriteUseCase.Input?): UseCaseResponse<RemoveFavoriteUseCase.OkOutput, RemoveFavoriteUseCase.ErrorOutput> {
         dbRepository.removeFavorite(requestValues!!.card)
-        return UseCaseResponse.ok()
+        return UseCaseResponse.ok(OkOutput())
     }
 
     class Input(val card: Card)

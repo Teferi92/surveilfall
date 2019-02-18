@@ -10,7 +10,7 @@ class AddFavoriteUseCase(private val dbRepository: DBRepository) : UseCase<AddFa
 
     override fun executeUseCase(requestValues: AddFavoriteUseCase.Input?): UseCaseResponse<AddFavoriteUseCase.OkOutput, AddFavoriteUseCase.ErrorOutput> {
         dbRepository.addFavorite(requestValues!!.card)
-        return UseCaseResponse.ok()
+        return UseCaseResponse.ok(OkOutput())
     }
 
     class Input(val card: Card)

@@ -30,10 +30,6 @@ protected constructor(protected val okResult: Result?, protected val errorResult
             return UseCaseResponse(okResult, null)
         }
 
-        fun <Result, Err> ok(): UseCaseResponse<Result, Err> {
-            return UseCaseResponse(null, null)
-        }
-
         fun <Result, Err> error(errorResult: Err): UseCaseResponse<Result, Err> {
             return UseCaseResponse(null, errorResult)
         }

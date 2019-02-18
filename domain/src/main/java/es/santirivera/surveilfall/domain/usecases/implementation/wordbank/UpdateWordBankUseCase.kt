@@ -19,7 +19,7 @@ class UpdateWordBankUseCase(private val appRepository: AppRepository, private va
             }
             dbRepository.clearWordBank()
             dbRepository.updateWordBank(worldBankList)
-            UseCaseResponse.ok()
+            UseCaseResponse.ok(OkOutput())
         } else {
             UseCaseResponse.error(ErrorOutput("Error retrieving word bank from Scryfall"))
         }
