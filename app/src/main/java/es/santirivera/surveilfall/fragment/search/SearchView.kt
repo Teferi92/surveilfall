@@ -20,7 +20,6 @@ class SearchView(baseActivity: BaseActivity, presenter: SearchListener) : BaseVi
     override val contentView: Int get() = R.layout.fragment_search
 
     private lateinit var searchEditText: AppCompatMultiAutoCompleteTextView
-    private lateinit var textViewTitle: TextView
     private lateinit var constraintLayout: SurveilfallConstraintLayout
 
     private lateinit var constraintSet1: ConstraintSet
@@ -50,7 +49,6 @@ class SearchView(baseActivity: BaseActivity, presenter: SearchListener) : BaseVi
         constraintSet2.clone(baseActivity, R.layout.fragment_search_open)
 
         searchEditText = mainView.findViewById(R.id.editTextSearch)
-        textViewTitle = mainView.findViewById(R.id.textViewTitle)
         searchEditText.setOnEditorActionListener(this)
         searchEditText.setAdapter(wordBankAdapter)
         searchEditText.setTokenizer(SpaceTokenizer())
@@ -71,9 +69,6 @@ class SearchView(baseActivity: BaseActivity, presenter: SearchListener) : BaseVi
     private fun animateToTop() {
         if (center) {
             center = false
-            val animatorTitleAlpha = ObjectAnimator.ofFloat(textViewTitle, "alpha", 0f)
-            animatorTitleAlpha.duration = 500L
-            animatorTitleAlpha.start()
             TransitionManager.beginDelayedTransition(constraintLayout)
             val constraint = constraintSet2
             constraint.applyTo(constraintLayout)
@@ -83,9 +78,6 @@ class SearchView(baseActivity: BaseActivity, presenter: SearchListener) : BaseVi
     private fun animateToCenter() {
         if (!center) {
             center = true
-            val animatorTitleAlpha = ObjectAnimator.ofFloat(textViewTitle, "alpha", 1f)
-            animatorTitleAlpha.duration = 500L
-            animatorTitleAlpha.start()
             TransitionManager.beginDelayedTransition(constraintLayout)
             val constraint = constraintSet1
             constraint.applyTo(constraintLayout)

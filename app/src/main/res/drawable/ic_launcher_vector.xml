@@ -1,0 +1,31 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="60dp"
+    android:height="60dp"
+    android:viewportWidth="50"
+    android:viewportHeight="50">
+    <group>
+
+        <path
+            android:name="Background"
+            android:fillColor="@color/primaryColor"
+            android:pathData="M25,48A2,2,0,2,2,25,6A2,2,0,2,2,25,45Z"
+            android:strokeWidth="1"
+            android:strokeColor="@color/primaryDarkColor" />
+
+        <path
+            android:name="First Line"
+            android:fillColor="#FFFFFFFF"
+            android:pathData="M12,23h18v-2h-18" />
+
+        <path
+            android:name="Second Line"
+            android:fillColor="#FFFFFFFF"
+            android:pathData="M12,27h26v-2h-26" />
+
+        <path
+            android:name="Third Line"
+            android:fillColor="#FFFFFFFF"
+            android:pathData="M12,31h21v-2h-21" />
+
+    </group>
+</vector>
