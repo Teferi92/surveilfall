@@ -1,6 +1,7 @@
 package es.santirivera.surveilfall.fragment.search
 
 import android.animation.ObjectAnimator
+import android.text.method.LinkMovementMethod
 import android.transition.TransitionManager
 import android.view.KeyEvent
 import android.widget.TextView
@@ -21,6 +22,7 @@ class SearchView(baseActivity: BaseActivity, presenter: SearchListener) : BaseVi
 
     private lateinit var searchEditText: AppCompatMultiAutoCompleteTextView
     private lateinit var constraintLayout: SurveilfallConstraintLayout
+    private lateinit var syntaxGuide : TextView
 
     private lateinit var constraintSet1: ConstraintSet
     private lateinit var constraintSet2: ConstraintSet
@@ -64,11 +66,16 @@ class SearchView(baseActivity: BaseActivity, presenter: SearchListener) : BaseVi
         constraintLayout.setOnClickListener {
             clearFocus()
         }
+        syntaxGuide = mainView.findViewById(R.id.textViewSyntaxGuide)
+        syntaxGuide.movementMethod = LinkMovementMethod()
     }
 
     private fun animateToTop() {
         if (center) {
             center = false
+            val animator = ObjectAnimator.ofFloat(syntaxGuide, "alpha", 0.25f)
+            animator.duration = 500
+            animator.start()
             TransitionManager.beginDelayedTransition(constraintLayout)
             val constraint = constraintSet2
             constraint.applyTo(constraintLayout)
@@ -78,6 +85,9 @@ class SearchView(baseActivity: BaseActivity, presenter: SearchListener) : BaseVi
     private fun animateToCenter() {
         if (!center) {
             center = true
+            val animator = ObjectAnimator.ofFloat(syntaxGuide, "alpha", 1f)
+            animator.duration = 500
+            animator.start()
             TransitionManager.beginDelayedTransition(constraintLayout)
             val constraint = constraintSet1
             constraint.applyTo(constraintLayout)
